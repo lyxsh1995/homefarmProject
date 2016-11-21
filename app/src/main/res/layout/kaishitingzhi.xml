@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:weightSum="1"
+              android:gravity="center_horizontal"
+              android:layout_height="32dp"
+              android:layout_marginTop="40dp">
+
+    <Button
+        android:text="开始"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        android:background="#ff3300"
+        android:layout_marginRight="30dp"/>
+
+    <Button
+        android:text="停止"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:background="#ff3300"
+        android:elevation="0dp"
+        />
+</LinearLayout>

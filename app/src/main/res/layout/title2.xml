@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:id="@+id/tiele2_image"
+            android:layout_weight="1"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:src="@mipmap/shishui"
+            android:layout_height="50dp"/>
+
+        <TextView
+            android:text="施水"
+            android:layout_width="match_parent"
+            android:id="@+id/title2_text"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textSize="40dp"
+            android:textColor="#03BB9C"/>
+    </LinearLayout>
+
+</LinearLayout>
