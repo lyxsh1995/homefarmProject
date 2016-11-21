@@ -115,11 +115,7 @@ public class MainActivity extends AppCompatActivity
                     {
                         //判断点击处像素的颜色是否为0，0表示没
                         int a = bitmap.getPixel((int) (event.getX()), ((int) event.getY()));
-                        if (bitmap.getPixel((int) (event.getX()), ((int) event.getY())) == Color.TRANSPARENT )
-                        {
-                            return false;
-                        }
-                        if (bitmap.getPixel((int) (event.getX()), ((int) event.getY())) != 0 && bitmap.getPixel((int) (event.getX()), ((int) event.getY())) != -1)
+                        if (bitmap.getPixel((int) (event.getX()), ((int) event.getY())) != 0)
                         {
                             Intent intent = new Intent(MainActivity.this, caozuojiemian.class);
                             intent.putExtra("title", "温度");
@@ -130,7 +126,7 @@ public class MainActivity extends AppCompatActivity
                     }
                     catch (Exception e) {}
                 }
-                return false;
+                return MainActivity.super.onTouchEvent(event);
             }
         });
 
@@ -158,7 +154,7 @@ public class MainActivity extends AppCompatActivity
                     }
                     catch (Exception e) {}
                 }
-                return false;
+                return MainActivity.super.onTouchEvent(event);
             }
         });
     }
