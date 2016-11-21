@@ -105,61 +105,51 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
         wendu_button = (mybutton) findViewById(R.id.wendu_button);
-        wendu_button.setOnTouchListener(new View.OnTouchListener()
-        {
+        wendu_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
+            public void onClick(View v)
             {
-                if (event.getAction() == MotionEvent.ACTION_DOWN)
-                {
-                    bitmap = ((BitmapDrawable)getResources().getDrawable(R.mipmap.zhuanpan)).getBitmap();
-                    //懒得判断位置小于图片框,大于图片,直接try
-                    try
-                    {
-                        //判断点击处像素的颜色是否为0，0表示没
-                        int a = bitmap.getPixel((int) (event.getX()), ((int) event.getY()));
-                        if (bitmap.getPixel((int) (event.getX()), ((int) event.getY())) != 0)
-                        {
-                            Intent intent = new Intent(MainActivity.this, caozuojiemian.class);
-                            intent.putExtra("title", "温度");
-                            intent.putExtra("image", R.mipmap.wendu);
-                            intent.putExtra("color", 0xFFEB4F38);
-                            startActivity(intent);
-                            return true;
-                        }
-                    }
-                    catch (Exception e) {}
-                }
-                return false;
+                Intent intent = new Intent(MainActivity.this, caozuojiemian.class);
+                intent.putExtra("title", "温度");
+                intent.putExtra("image", R.mipmap.wendu);
+                intent.putExtra("color", 0xFFEB4F38);
+                startActivity(intent);
             }
         });
+//        wendu_button.setOnTouchListener(new View.OnTouchListener()
+//        {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event)
+//            {
+//                if (event.getAction() == MotionEvent.ACTION_DOWN)
+//                {
+//                    bitmap = ((BitmapDrawable)getResources().getDrawable(R.mipmap.zhuanpan)).getBitmap();
+//                    //懒得判断位置小于图片框,大于图片,直接try
+//                    try
+//                    {
+//                        //判断点击处像素的颜色是否为0，0表示没
+//                        int a = bitmap.getPixel((int) (event.getX()), ((int) event.getY()));
+//                        if (bitmap.getPixel((int) (event.getX()), ((int) event.getY())) != 0)
+//                        {
+//
+//                        }
+//                    }
+//                    catch (Exception e) {}
+//                }
+//                return false;
+//            }
+//        });
 
         zhuanpan = (mybutton) findViewById(R.id.zhuanpan);
-        zhuanpan.setOnTouchListener(new View.OnTouchListener()
-        {
+        zhuanpan.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
+            public void onClick(View v)
             {
-                if (event.getAction() == MotionEvent.ACTION_DOWN)
-                {
-                    bitmap = ((BitmapDrawable)getResources().getDrawable(R.mipmap.zhuanpan)).getBitmap();
-                    //懒得判断位置小于图片框,大于图片,直接try
-                    try
-                    {
-                        //判断点击处像素的颜色是否为0，0表示没
-                        if (bitmap.getPixel((int) (event.getX()), ((int) event.getY())) != 0)
-                        {
-                            Intent intent = new Intent(MainActivity.this, caozuojiemian.class);
-                            intent.putExtra("title", "施肥");
-                            intent.putExtra("image", R.mipmap.shifei);
-                            intent.putExtra("color", 0xFFF4C600);
-                            startActivity(intent);
-                            return true;
-                        }
-                    }
-                    catch (Exception e) {}
-                }
-                return false;
+                Intent intent = new Intent(MainActivity.this, caozuojiemian.class);
+                intent.putExtra("title", "施肥");
+                intent.putExtra("image", R.mipmap.shifei);
+                intent.putExtra("color", 0xFFF4C600);
+                startActivity(intent);
             }
         });
     }
