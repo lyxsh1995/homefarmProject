@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import bean.mybutton;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -22,8 +25,8 @@ public class MainActivity extends AppCompatActivity
     OkHttpClient mOkHttpClient;
     private Request request;
     private Bitmap bitmap;
-    private ImageButton wendu_button;
-    private ImageButton zhuanpan;
+    private mybutton wendu_button;
+    private mybutton zhuanpan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity
 ////                });
 //            }
 //        });
-        wendu_button = (ImageButton) findViewById(R.id.wendu_button);
+        wendu_button = (mybutton) findViewById(R.id.wendu_button);
         wendu_button.setOnTouchListener(new View.OnTouchListener()
         {
             @Override
@@ -109,7 +112,7 @@ public class MainActivity extends AppCompatActivity
             {
                 if (event.getAction() == MotionEvent.ACTION_DOWN)
                 {
-                    bitmap=((BitmapDrawable)(wendu_button.getDrawable())).getBitmap();
+                    bitmap = ((BitmapDrawable)getResources().getDrawable(R.mipmap.zhuanpan)).getBitmap();
                     //懒得判断位置小于图片框,大于图片,直接try
                     try
                     {
@@ -122,15 +125,16 @@ public class MainActivity extends AppCompatActivity
                             intent.putExtra("image", R.mipmap.wendu);
                             intent.putExtra("color", 0xFFEB4F38);
                             startActivity(intent);
+                            return true;
                         }
                     }
                     catch (Exception e) {}
                 }
-                return MainActivity.super.onTouchEvent(event);
+                return false;
             }
         });
 
-        zhuanpan = (ImageButton) findViewById(R.id.zhuanpan);
+        zhuanpan = (mybutton) findViewById(R.id.zhuanpan);
         zhuanpan.setOnTouchListener(new View.OnTouchListener()
         {
             @Override
@@ -138,7 +142,7 @@ public class MainActivity extends AppCompatActivity
             {
                 if (event.getAction() == MotionEvent.ACTION_DOWN)
                 {
-                    bitmap=((BitmapDrawable)(zhuanpan.getDrawable())).getBitmap();
+                    bitmap = ((BitmapDrawable)getResources().getDrawable(R.mipmap.zhuanpan)).getBitmap();
                     //懒得判断位置小于图片框,大于图片,直接try
                     try
                     {
@@ -150,11 +154,12 @@ public class MainActivity extends AppCompatActivity
                             intent.putExtra("image", R.mipmap.shifei);
                             intent.putExtra("color", 0xFFF4C600);
                             startActivity(intent);
+                            return true;
                         }
                     }
                     catch (Exception e) {}
                 }
-                return MainActivity.super.onTouchEvent(event);
+                return false;
             }
         });
     }

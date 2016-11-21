@@ -10,19 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/zhuanpan"
+        <bean.mybutton
             android:id="@+id/zhuanpan"
-            android:background="#CCCCCC"
-            android:layout_width="match_parent"/>
-
-        <ImageButton
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/wendu_button"
+            android:layout_gravity="center"
+            android:background="@mipmap/zhuanpan" />
+
+        <bean.mybutton
             android:id="@+id/wendu_button"
-            android:layout_width="match_parent"
-            android:background="#00000000"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/wendu_button" />
 
     </FrameLayout>
 
