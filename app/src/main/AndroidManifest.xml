@@ -10,15 +10,18 @@
         android:theme="@style/AppTheme.Base">
 
         <activity android:name=".Login">
+
+        </activity>
+
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity"/>
         <activity android:name=".Caozuojiemian"/>
+        <activity android:name=".Zhuangtai"/>
         //zxing
         <activity android:name="com.dtr.zxing.activity.CaptureActivity"/>
         <activity android:name="com.dtr.zxing.activity.ResultActivity"/>

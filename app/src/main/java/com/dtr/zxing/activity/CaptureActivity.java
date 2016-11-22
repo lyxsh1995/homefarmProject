@@ -91,12 +91,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_capture);
 
-		if (Build.VERSION.SDK_INT >= 23) {
-			Toast.makeText(getApplicationContext(),"扫描二维码",Toast.LENGTH_SHORT).show();
-			ActivityCompat.requestPermissions(this,
-											  new String[]{Manifest.permission.CAMERA},4);
-		}
-
 		scanPreview = (SurfaceView) findViewById(R.id.capture_preview);
 		scanContainer = (RelativeLayout) findViewById(R.id.capture_container);
 		scanCropView = (RelativeLayout) findViewById(R.id.capture_crop_view);

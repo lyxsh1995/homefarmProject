@@ -10,7 +10,7 @@
         android:text="开始"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button2"
+        android:id="@+id/kaishi"
         android:background="#ff3300"
         android:layout_marginRight="30dp"/>
 
@@ -18,7 +18,7 @@
         android:text="停止"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
+        android:id="@+id/tingzhi"
         android:background="#ff3300"
         android:elevation="0dp"
         />

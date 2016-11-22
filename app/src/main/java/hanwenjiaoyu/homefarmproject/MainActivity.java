@@ -14,6 +14,8 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity
 {
+    public static MainActivity mainActivitythis;
+
     Response response;
     OkHttpClient mOkHttpClient;
     private Request request;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mainActivitythis = this;
 
 //        Button button1 = (Button) findViewById(R.id.button1);
 //        button1.setOnClickListener(new View.OnClickListener()
@@ -111,6 +114,9 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra("title", "施水");
                 intent.putExtra("image", R.mipmap.shishui);
                 intent.putExtra("color", 0xFF00BB9C);
+                intent.putExtra("buttonid",v.getId());
+                intent.putExtra("res",R.mipmap.shishui_button);
+                intent.putExtra("respro",R.mipmap.shishui_button_pro);
                 startActivity(intent);
             }
         });
