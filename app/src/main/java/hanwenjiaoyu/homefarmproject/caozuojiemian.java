@@ -10,7 +10,7 @@ import android.widget.TextView;
  * Created by Administrator on 2016/11/21.
  */
 
-public class caozuojiemian extends Activity
+public class Caozuojiemian extends Activity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)

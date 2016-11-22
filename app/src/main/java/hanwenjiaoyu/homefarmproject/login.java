@@ -10,7 +10,7 @@ import android.widget.Button;
  * Created by Administrator on 2016/11/22.
  */
 
-public class login extends Activity
+public class Login extends Activity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -23,7 +23,7 @@ public class login extends Activity
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(login.this,MainActivity.class);
+                Intent intent = new Intent(Login.this,com.dtr.zxing.activity.CaptureActivity.class);
                 startActivity(intent);
                 finish();
             }
