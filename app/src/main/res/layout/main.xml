@@ -18,11 +18,39 @@
             android:background="@mipmap/zhuanpan" />
 
         <bean.mybutton
+            android:id="@+id/buguang_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/buguang_button" />
+
+        <bean.mybutton
             android:id="@+id/wendu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@mipmap/wendu_button" />
+
+        <bean.mybutton
+            android:id="@+id/tongfeng_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/tongfeng_button" />
+
+        <bean.mybutton
+        android:id="@+id/shifei_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@mipmap/shifei_button" />
+
+        <bean.mybutton
+            android:id="@+id/shishui_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/shishui_button" />
 
     </FrameLayout>
 
