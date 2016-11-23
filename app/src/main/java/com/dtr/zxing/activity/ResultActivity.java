@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import hanwenjiaoyu.homefarmproject.R;
+import hanwenjiaoyu.homefarm.R;
 
 import com.dtr.zxing.decode.DecodeThread;
 

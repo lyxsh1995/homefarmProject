@@ -1,4 +1,4 @@
-package hanwenjiaoyu.homefarmproject;
+package hanwenjiaoyu.homefarm;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -172,29 +172,6 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-//        wendu_button.setOnTouchListener(new View.OnTouchListener()
-//        {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event)
-//            {
-//                if (event.getAction() == MotionEvent.ACTION_DOWN)
-//                {
-//                    bitmap = ((BitmapDrawable)getResources().getDrawable(R.mipmap.zhuanpan)).getBitmap();
-//                    //懒得判断位置小于图片框,大于图片,直接try
-//                    try
-//                    {
-//                        //判断点击处像素的颜色是否为0，0表示没
-//                        int a = bitmap.getPixel((int) (event.getX()), ((int) event.getY()));
-//                        if (bitmap.getPixel((int) (event.getX()), ((int) event.getY())) != 0)
-//                        {
-//
-//                        }
-//                    }
-//                    catch (Exception e) {}
-//                }
-//                return false;
-//            }
-//        });
 
         zhuanpan = (mybutton) findViewById(R.id.zhuanpan);
         zhuanpan.setOnClickListener(new View.OnClickListener() {

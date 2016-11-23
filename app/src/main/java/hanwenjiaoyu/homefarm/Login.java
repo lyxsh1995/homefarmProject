@@ -1,4 +1,4 @@
-package hanwenjiaoyu.homefarmproject;
+package hanwenjiaoyu.homefarm;
 
 import android.Manifest;
 import android.app.Activity;
@@ -23,6 +23,18 @@ public class Login extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
+        //临时登录按钮,以后删除
+        Button denglu = (Button) findViewById(R.id.denglu);
+        denglu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(Login.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         Button login_button = (Button) findViewById(R.id.login_button);
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +49,16 @@ public class Login extends Activity
                     startActivity(intent);
                     finish();
                 }
+            }
+        });
+
+        Button wifi_button = (Button) findViewById(R.id.wifi_button);
+        wifi_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(Login.this,com.rtk.simpleconfig_wizard.MainActivity.class);
+                startActivity(intent);
             }
         });
     }

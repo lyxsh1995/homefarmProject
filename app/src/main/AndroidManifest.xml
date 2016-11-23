@@ -1,30 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="hanwenjiaoyu.homefarmproject">
+    package="hanwenjiaoyu.homefarm">
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_144"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base">
 
-        <activity android:name=".Login">
-
-        </activity>
-
-        <activity android:name=".MainActivity">
+        <activity android:name="hanwenjiaoyu.homefarm.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Caozuojiemian"/>
-        <activity android:name=".Zhuangtai"/>
+
+        <activity android:name="hanwenjiaoyu.homefarm.MainActivity">
+
+        </activity>
+        <activity android:name="hanwenjiaoyu.homefarm.Caozuojiemian"/>
+        <activity android:name="hanwenjiaoyu.homefarm.Zhuangtai"/>
         //zxing
         <activity android:name="com.dtr.zxing.activity.CaptureActivity"/>
         <activity android:name="com.dtr.zxing.activity.ResultActivity"/>
+
+        //simplewifi
+        <activity
+            android:name="com.rtk.simpleconfig_wizard.MainActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name" >
+        </activity>
+
+        <activity android:name="com.wifi.connection.MainActivity"
+                  android:theme="@android:style/Theme.Dialog"
+                  android:launchMode="singleInstance"
+                  android:excludeFromRecents="true"
+                  android:noHistory="true">
+            <intent-filter>
+                <category android:name="android.intent.category.INFO" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.wifi.connection.CONNECT_OR_EDIT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
     //网络权限
@@ -36,4 +59,20 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- wifi usage -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_SMS"></uses-permission>
+
+    <!-- file and SD Card usage -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+
+    //GPS
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
 </manifest>

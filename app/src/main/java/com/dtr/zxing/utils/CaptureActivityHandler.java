@@ -22,7 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import hanwenjiaoyu.homefarmproject.R;
+import hanwenjiaoyu.homefarm.R;
 
 import com.dtr.zxing.activity.CaptureActivity;
 import com.dtr.zxing.camera.CameraManager;

@@ -1,4 +1,4 @@
-package hanwenjiaoyu.homefarmproject;
+package hanwenjiaoyu.homefarm;
 
 import android.app.Activity;
 import android.content.Intent;

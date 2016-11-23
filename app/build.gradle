@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "25.0.0"
+    buildToolsVersion '23.0.2'
     defaultConfig {
         applicationId "com.example.administrator.homefarmproject"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -17,10 +17,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        家庭农场 {
+            applicationId 'hanwenjiaoyu.homefarm'
+        }
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.google.code.gson:gson:2.2.1'
+    compile files('libs/simpleconfigwizardlib.jar')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
