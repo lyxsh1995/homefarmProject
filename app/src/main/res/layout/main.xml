@@ -3,49 +3,49 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:background="#CCCCCC">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <bean.mybutton
+        <bean.Mybutton
             android:id="@+id/zhuanpan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@mipmap/zhuanpan" />
 
-        <bean.mybutton
+        <bean.Mybutton
             android:id="@+id/buguang_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@mipmap/buguang_button" />
 
-        <bean.mybutton
+        <bean.Mybutton
             android:id="@+id/wendu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@mipmap/wendu_button" />
 
-        <bean.mybutton
+        <bean.Mybutton
             android:id="@+id/tongfeng_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@mipmap/tongfeng_button" />
 
-        <bean.mybutton
+        <bean.Mybutton
         android:id="@+id/shifei_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@mipmap/shifei_button" />
 
-        <bean.mybutton
+        <bean.Mybutton
             android:id="@+id/shishui_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

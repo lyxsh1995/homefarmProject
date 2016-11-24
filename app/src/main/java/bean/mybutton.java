@@ -10,21 +10,21 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
-public class mybutton extends FrameLayout {
+public class Mybutton extends FrameLayout {
 
     private int width = -1;
     private int height = -1;
     private Bitmap bitmap;
 
-    public mybutton(Context context) {
+    public Mybutton(Context context) {
         super( context);
     }
 
-    public mybutton(Context context, AttributeSet attrs, int defStyle) {
+    public Mybutton(Context context, AttributeSet attrs, int defStyle) {
         super( context, attrs, defStyle);
     }
 
-    public mybutton(Context context, AttributeSet attrs) {
+    public Mybutton(Context context, AttributeSet attrs) {
         super( context, attrs);
     }
 

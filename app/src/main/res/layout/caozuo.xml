@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="30dp"
+            android:id="@+id/diyiceng">
 
             <TextView
                 android:text="种植第一层"
@@ -50,7 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="30dp"
+            android:id="@+id/dierceng">
 
             <TextView
                 android:text="种植第二层"
@@ -85,7 +87,8 @@
             android:gravity="center_vertical"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp">
+            android:layout_marginBottom="30dp"
+            android:id="@+id/disanceng">
 
             <TextView
                 android:text="种植第三层"
