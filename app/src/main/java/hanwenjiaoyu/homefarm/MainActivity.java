@@ -2,13 +2,23 @@ package hanwenjiaoyu.homefarm;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -24,6 +34,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity
 {
     public static MainActivity mainActivitythis;
+    public IWXAPI api;
 
     public String url = "http://192.168.1.100:8011/";
     public Response response;
@@ -45,6 +56,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainActivitythis = this;
+        api = WXAPIFactory.createWXAPI(this, "wx6dd2baabb3de7c7b", true);
+        api.registerApp("wx6dd2baabb3de7c7b");
 
         Button button1 = (Button) findViewById(R.id.postbutton);
         button1.setOnClickListener(new View.OnClickListener()
@@ -202,6 +215,24 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),"dianjiguanbi",Toast.LENGTH_SHORT).show();
             }
         });
+
+        ImageButton weixin = (ImageButton) findViewById(R.id.weixin);
+        weixin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                weixinfengxiang(0);
+            }
+        });
+
+        ImageButton pengyouquan = (ImageButton) findViewById(R.id.pengyouquan);
+        pengyouquan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                weixinfengxiang(1);
+            }
+        });
     }
 
     @Override
@@ -221,5 +252,27 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void weixinfengxiang(int flag) {
+        //flag 0是朋友,1是朋友圈
+        if (!api.isWXAppInstalled()) {
+            Toast.makeText(MainActivity.this, "您还未安装微信客户端",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = "http://www.baidu.com";
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+
+        msg.title = "城市农场";
+        msg.description ="弟一科技城市农场项目微信分享";
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(),R.mipmap.weixinhaoyou);
+        msg.setThumbImage(thumb);
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = String.valueOf(System.currentTimeMillis());
+        req.message = msg;
+        req.scene = flag;
+        api.sendReq(req);
     }
 }

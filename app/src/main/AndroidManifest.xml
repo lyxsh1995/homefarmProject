@@ -50,8 +50,6 @@
         </activity>
     </application>
 
-    //网络权限
-    <uses-permission android:name="android.permission.INTERNET"/>
     //摄像头权限
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
@@ -75,4 +73,11 @@
     //GPS
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+
+    //微信
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 </manifest>

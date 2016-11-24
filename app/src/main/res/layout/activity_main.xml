@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:id="@+id/activity_main"
               android:layout_width="match_parent"
@@ -16,4 +17,56 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/postbutton"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:background="#CCCCCC">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pengyouquan"
+                android:src="@mipmap/pengyouquan"/>
+
+            <TextView
+                android:text="分享到朋友圈"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/weixin"
+                android:src="@mipmap/weixinhaoyou"
+                />
+
+            <TextView
+                android:text="分享到微信"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </LinearLayout>
