@@ -259,11 +259,11 @@ public class MainActivity extends AppCompatActivity
 
                 final Bundle params = new Bundle();
                 params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
-                params.putString(QQShare.SHARE_TO_QQ_TITLE, "来自家庭农场的消息");
-                params.putString(QQShare.SHARE_TO_QQ_SUMMARY, "家庭农场是弟一科技城市农场项目的APP端");
-                params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://www.qq.com/news/1.html");
+                params.putString(QQShare.SHARE_TO_QQ_TITLE, "来自城市农场的消息");
+                params.putString(QQShare.SHARE_TO_QQ_SUMMARY, "城市农场是弟一科技城市农场项目的APP端");
+                params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://www.baidu.com/");
                 params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "http://chuantu.biz/t5/42/1479975573x1996140247.png");
-                params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "家庭农场");
+                params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "城市农场");
                 mTencent.shareToQQ(MainActivity.this, params, new BaseUiListener());
             }
         });
@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity
 
         msg.title = "城市农场";
         msg.description = "弟一科技城市农场项目微信分享";
-        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.weixinhaoyou);
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.logo_144);
         msg.setThumbImage(thumb);
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = String.valueOf(System.currentTimeMillis());
