@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra("color", 0xFF00BB9C);
                 intent.putExtra("buttonid", v.getId());
                 intent.putExtra("res", R.mipmap.shishui_button);
-                intent.putExtra("respro", R.mipmap.shishui_button_pro);
+                intent.putExtra("respro", R.mipmap.shishui_button_wating);
                 startActivity(intent);
             }
         });
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra("color", 0xFFF4C600);
                 intent.putExtra("buttonid", v.getId());
                 intent.putExtra("res", R.mipmap.shifei_button);
-                intent.putExtra("respro", R.mipmap.shifei_button_pro);
+                intent.putExtra("respro", R.mipmap.shifei_button_wating);
                 startActivity(intent);
             }
         });
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra("color", 0xFF5AB3F0);
                 intent.putExtra("buttonid", v.getId());
                 intent.putExtra("res", R.mipmap.tongfeng_button);
-                intent.putExtra("respro", R.mipmap.tongfeng_button_pro);
+                intent.putExtra("respro", R.mipmap.tongfeng_button_wating);
                 startActivity(intent);
             }
         });
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra("color", 0xFFEB4F38);
                 intent.putExtra("buttonid", v.getId());
                 intent.putExtra("res", R.mipmap.wendu_button);
-                intent.putExtra("respro", R.mipmap.wendu_button_pro);
+                intent.putExtra("respro", R.mipmap.wendu_button_wating);
                 startActivity(intent);
             }
         });
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra("color", 0xFFA65AC3);
                 intent.putExtra("buttonid", v.getId());
                 intent.putExtra("res", R.mipmap.buguang_button);
-                intent.putExtra("respro", R.mipmap.buguang_button_pro);
+                intent.putExtra("respro", R.mipmap.buguang_button_wating);
                 startActivity(intent);
             }
         });
@@ -256,7 +256,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-
                 final Bundle params = new Bundle();
                 params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
                 params.putString(QQShare.SHARE_TO_QQ_TITLE, "来自城市农场的消息");

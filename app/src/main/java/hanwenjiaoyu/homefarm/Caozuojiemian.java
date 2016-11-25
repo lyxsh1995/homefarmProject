@@ -38,9 +38,13 @@ public class Caozuojiemian extends Activity
     private Button checkButton1;
     private Button checkButton2;
     private Button checkButton3;
+    private Button checkButton4;
+    private Button checkButton5;
     private CheckBox checkBox1;
     private CheckBox checkBox2;
     private CheckBox checkBox3;
+    private CheckBox checkBox4;
+    private CheckBox checkBox5;
     private int buttonid;
     private int res;
     private int respro;
@@ -78,6 +82,14 @@ public class Caozuojiemian extends Activity
                     {
                         disanceng.setVisibility(View.GONE);
                     }
+                    if (myjson.FDouyaji.equals("2"))
+                    {
+                        disanceng.setVisibility(View.GONE);
+                    }
+                    if (myjson.FMG.equals("2"))
+                    {
+                        disanceng.setVisibility(View.GONE);
+                    }
                     break;
             }
         }
@@ -106,9 +118,13 @@ public class Caozuojiemian extends Activity
         checkButton1 = (Button) findViewById(R.id.checkButton1);
         checkButton2 = (Button) findViewById(R.id.checkButton2);
         checkButton3 = (Button) findViewById(R.id.checkButton3);
+        checkButton4 = (Button) findViewById(R.id.checkButton4);
+        checkButton5 = (Button) findViewById(R.id.checkButton5);
         checkBox1 = (CheckBox) findViewById(R.id.checkBox1);
         checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
         checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
+        checkBox4 = (CheckBox) findViewById(R.id.checkBox4);
+        checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
 
         checkButton1.setOnClickListener(new View.OnClickListener()
         {
@@ -155,6 +171,36 @@ public class Caozuojiemian extends Activity
             }
         });
 
+        checkButton4.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (checkBox4.isChecked())
+                {
+                    checkBox4.setChecked(false);
+                } else
+                {
+                    checkBox4.setChecked(true);
+                }
+            }
+        });
+
+        checkButton5.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (checkBox5.isChecked())
+                {
+                    checkBox5.setChecked(false);
+                } else
+                {
+                    checkBox5.setChecked(true);
+                }
+            }
+        });
+
         mOkHttpClient = new OkHttpClient();
 
         //读取可操作层数
@@ -181,8 +227,10 @@ public class Caozuojiemian extends Activity
                 {
                     if (response.isSuccessful())
                     {
+                        String resstr = response.body().string();
+                        Log.i("jieshou",resstr);
                         java.lang.reflect.Type type = new TypeToken<Myjson>() {}.getType();
-                        myjson = gson.fromJson(response.body().string(), type);
+                        myjson = gson.fromJson(resstr, type);
                         msg = Message.obtain();
                         msg.what = 0;
                         handler.sendMessage(msg);

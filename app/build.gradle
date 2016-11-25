@@ -18,8 +18,7 @@ android {
         }
     }
     productFlavors {
-        家庭农场 {
-            applicationId 'hanwenjiaoyu.homefarm'
+        城市农场 {
         }
     }
 }
