@@ -1,24 +1,75 @@
 package com.dtr.zxing.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import hanwenjiaoyu.homefarm.Login;
+import hanwenjiaoyu.homefarm.MainActivity;
 import hanwenjiaoyu.homefarm.R;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import com.dtr.zxing.decode.DecodeThread;
 
-public class ResultActivity extends Activity {
+import java.io.IOException;
 
+public class ResultActivity extends Activity {
+    String url = "http://192.168.1.100:8011/";
 	private ImageView mResultImage;
 	private TextView mResultText;
 
-	@Override
+	OkHttpClient mOkHttpClient;
+	Request request;
+	Response response;
+
+    private Message msg;
+	private String mresult;
+	private String eqid;
+	private String eqidmd5;
+
+    Handler handler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            super.handleMessage(msg);
+            switch (msg.what)
+            {
+                //登陆成功
+                case 0:
+                    Intent intent = new Intent(ResultActivity.this, MainActivity.class);
+                    intent.putExtra("EQID", eqid);
+                    intent.putExtra("EQIDMD5", eqidmd5);
+                    startActivity(intent);
+                    finish();
+                    break;
+                //登录失败
+                case 1:
+                    Toast.makeText(getApplicationContext(),"登录失败",Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
@@ -39,8 +90,17 @@ public class ResultActivity extends Activity {
 			
 			mResultImage.setLayoutParams(lps);
 
-			String result = extras.getString("result");
-			mResultText.setText(result);
+			mresult = extras.getString("result");
+			try
+			{
+				eqid = mresult.substring(0, mresult.indexOf("|"));
+				eqidmd5 = mresult.substring(mresult.indexOf("|")+1);
+				mResultText.setText("设备ID:"+ eqid);
+			}catch (Exception e)
+			{
+				Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+			}
+
 
 			Bitmap barcode = null;
 			byte[] compressedBitmap = extras.getByteArray(DecodeThread.BARCODE_BITMAP);
@@ -49,8 +109,69 @@ public class ResultActivity extends Activity {
 				// Mutable copy:
 				barcode = barcode.copy(Bitmap.Config.RGB_565, true);
 			}
-
 			mResultImage.setImageBitmap(barcode);
+
+            mOkHttpClient = new OkHttpClient();
+            RequestBody requestBody = new FormBody.Builder()
+                    .add("fangfa", "denglu")
+                    .add("EQID", eqid)
+                    .add("EQIDMD5",eqidmd5)
+                    .build();
+            request = new Request.Builder()
+                    .url(url)
+                    .post(requestBody)
+                    .build();
+            response = null;
+            mOkHttpClient.newCall(request).enqueue(new Callback()
+            {
+                @Override
+                public void onFailure(Call call, IOException e)
+                {
+                    Log.e("jieshou", "testHttpPost ... onFailure() e=" + e);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException
+                {
+                    try
+                    {
+                        if (response.isSuccessful())
+                        {
+                            String resstr = response.body().string();
+                            Log.i("jieshou",resstr);
+                            if (resstr.equals("1"))
+                            {
+                                msg = Message.obtain();
+                                msg.what = 0;
+                                handler.sendMessage(msg);
+                            }
+                            else
+                            {
+                                msg = Message.obtain();
+                                msg.what = 1;
+                                handler.sendMessage(msg);
+                            }
+                        }
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            });
 		}
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)
+	{
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN)
+		{
+			Intent intent = new Intent(ResultActivity.this, Login.class);
+			startActivity(intent);
+			finish();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

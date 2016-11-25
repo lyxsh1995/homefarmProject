@@ -51,10 +51,10 @@ public class Caozuojiemian extends Activity
 
 
     String Json = "";
+    private OkHttpClient mOkHttpClient;
     Request request;
     Gson gson = new Gson();
     Message msg = new Message();
-    private OkHttpClient mOkHttpClient;
     public Myjson myjson;
     private LinearLayout diyiceng;
     private LinearLayout dierceng;

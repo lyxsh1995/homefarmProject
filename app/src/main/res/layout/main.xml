@@ -4,11 +4,15 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="#CCCCCC">
+              android:background="#CCCCCC"
+              android:elevation="0dp"
+              android:gravity="center">
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="311dp"
+        android:layout_height="306dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
         <bean.Mybutton
             android:id="@+id/zhuanpan"
