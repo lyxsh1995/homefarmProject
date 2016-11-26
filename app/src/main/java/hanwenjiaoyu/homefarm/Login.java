@@ -30,6 +30,8 @@ public class Login extends Activity
             public void onClick(View v)
             {
                 Intent intent = new Intent(Login.this,MainActivity.class);
+                intent.putExtra("EQID", "1111111111");
+                intent.putExtra("EQIDMD5", "737207bfff986b451956db85a7c8d380");
                 startActivity(intent);
                 finish();
             }

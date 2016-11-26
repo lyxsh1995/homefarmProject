@@ -72,12 +72,14 @@
                     android:textSize="18sp"/>
 
                 <ImageView
+                    android:id="@+id/imageView1_1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:src="@mipmap/shishui"/>
 
                 <ImageView
+                    android:id="@+id/imageView1_2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -85,21 +87,21 @@
                     app:srcCompat="@mipmap/shifei"/>
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/imageView1_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@mipmap/tongfeng"/>
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/imageView1_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@mipmap/wendu"/>
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imageView1_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="60dp"
@@ -125,12 +127,14 @@
                     android:textSize="18sp"/>
 
                 <ImageView
+                    android:id="@+id/imageView2_1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:src="@mipmap/shishui"/>
 
                 <ImageView
+                    android:id="@+id/imageView2_2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -138,21 +142,21 @@
                     app:srcCompat="@mipmap/shifei"/>
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/imageView2_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@mipmap/tongfeng"/>
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/imageView2_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@mipmap/wendu"/>
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imageView2_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="60dp"
@@ -178,12 +182,14 @@
                     android:textSize="18sp"/>
 
                 <ImageView
+                    android:id="@+id/imageView3_1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:src="@mipmap/shishui"/>
 
                 <ImageView
+                    android:id="@+id/imageView3_2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -191,21 +197,21 @@
                     app:srcCompat="@mipmap/shifei"/>
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/imageView3_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@mipmap/tongfeng"/>
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/imageView3_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@mipmap/wendu"/>
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imageView3_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="60dp"
@@ -231,12 +237,14 @@
                     android:textSize="18sp"/>
 
                 <ImageView
+                    android:id="@+id/imageView4_1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:src="@mipmap/shishui"/>
 
                 <ImageView
+                    android:id="@+id/imageView4_2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -244,21 +252,21 @@
                     app:srcCompat="@mipmap/shifei"/>
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/imageView4_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@mipmap/tongfeng"/>
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/imageView4_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@mipmap/wendu"/>
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imageView4_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="60dp"
@@ -285,12 +293,14 @@
                     android:textSize="18sp"/>
 
                 <ImageView
+                    android:id="@+id/imageView5_1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:src="@mipmap/shishui"/>
 
                 <ImageView
+                    android:id="@+id/imageView5_2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -298,21 +308,21 @@
                     app:srcCompat="@mipmap/shifei"/>
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/imageView5_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@mipmap/tongfeng"/>
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/imageView5_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@mipmap/wendu"/>
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imageView5_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="60dp"

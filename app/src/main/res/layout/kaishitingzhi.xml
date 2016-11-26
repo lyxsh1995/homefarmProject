@@ -21,5 +21,14 @@
         android:id="@+id/tingzhi"
         android:background="#ff3300"
         android:elevation="0dp"
+        android:layout_marginRight="30dp"/>
+
+    <Button
+        android:text="返回"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fanhui"
+        android:background="#ff3300"
+        android:elevation="0dp"
         />
 </LinearLayout>

@@ -9,15 +9,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 
+import bean.Fwjson;
 import bean.Mybutton;
 import bean.Myjson;
 import okhttp3.Call;
@@ -45,6 +52,7 @@ public class Caozuojiemian extends Activity
     private CheckBox checkBox3;
     private CheckBox checkBox4;
     private CheckBox checkBox5;
+    private EditText time;
     private int buttonid;
     private int res;
     private int respro;
@@ -56,9 +64,12 @@ public class Caozuojiemian extends Activity
     Gson gson = new Gson();
     Message msg = new Message();
     public Myjson myjson;
+    public Fwjson fwjson;
     private LinearLayout diyiceng;
     private LinearLayout dierceng;
     private LinearLayout disanceng;
+    private LinearLayout douyaji;
+    private LinearLayout moguxiang;
 
     Handler handler = new Handler()
     {
@@ -70,23 +81,23 @@ public class Caozuojiemian extends Activity
             {
                 //判断第一层第二层第三层
                 case 0:
-                    if (myjson.FFloorOne.equals("2"))
+                    if (fwjson.ceng1.equals("dis"))
                     {
                         diyiceng.setVisibility(View.GONE);
                     }
-                    if (myjson.FFloorTwo.equals("2"))
+                    if (fwjson.ceng2.equals("dis"))
                     {
                         dierceng.setVisibility(View.GONE);
                     }
-                    if (myjson.FFloorThree.equals("2"))
+                    if (fwjson.ceng3.equals("dis"))
                     {
                         disanceng.setVisibility(View.GONE);
                     }
-                    if (myjson.FDouyaji.equals("2"))
+                    if (fwjson.douyaji.equals("dis"))
                     {
-                        disanceng.setVisibility(View.GONE);
+                        douyaji.setVisibility(View.GONE);
                     }
-                    if (myjson.FMG.equals("2"))
+                    if (fwjson.mogu.equals("dis"))
                     {
                         disanceng.setVisibility(View.GONE);
                     }
@@ -94,6 +105,9 @@ public class Caozuojiemian extends Activity
             }
         }
     };
+    private TextView title2_text;
+    private ImageView title2_image;
+    private RequestBody requestBody;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -101,8 +115,8 @@ public class Caozuojiemian extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.caozuojiemian);
 
-        TextView title2_text = (TextView) findViewById(R.id.title2_text);
-        ImageView title2_image = (ImageView) findViewById(R.id.tiele2_image);
+        title2_text = (TextView) findViewById(R.id.title2_text);
+        title2_image = (ImageView) findViewById(R.id.tiele2_image);
 
         Intent intent = getIntent();
         title2_text.setTextColor(intent.getIntExtra("color", 0xFF03BB9C));
@@ -112,9 +126,12 @@ public class Caozuojiemian extends Activity
         res = intent.getIntExtra("res", 0);
         respro = intent.getIntExtra("respro", 0);
 
+        time = (EditText) findViewById(R.id.time);
         diyiceng = (LinearLayout) findViewById(R.id.diyiceng);
         dierceng = (LinearLayout) findViewById(R.id.dierceng);
         disanceng = (LinearLayout) findViewById(R.id.disanceng);
+        douyaji = (LinearLayout) findViewById(R.id.douyaji);
+        moguxiang = (LinearLayout) findViewById(R.id.moguxiang);
         checkButton1 = (Button) findViewById(R.id.checkButton1);
         checkButton2 = (Button) findViewById(R.id.checkButton2);
         checkButton3 = (Button) findViewById(R.id.checkButton3);
@@ -125,6 +142,25 @@ public class Caozuojiemian extends Activity
         checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
         checkBox4 = (CheckBox) findViewById(R.id.checkBox4);
         checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
+
+        switch (title2_text.getText().toString())
+        {
+            case "施水":
+            case "施肥":
+            case "补光":
+                douyaji.setVisibility(View.GONE);
+                moguxiang.setVisibility(View.GONE);
+                break;
+            case "通风":
+                diyiceng.setVisibility(View.GONE);
+                dierceng.setVisibility(View.GONE);
+                disanceng.setVisibility(View.GONE);
+            case "温度":
+                douyaji.setVisibility(View.GONE);
+                break;
+
+
+        }
 
         checkButton1.setOnClickListener(new View.OnClickListener()
         {
@@ -203,10 +239,19 @@ public class Caozuojiemian extends Activity
 
         mOkHttpClient = new OkHttpClient();
 
-        //读取可操作层数
-        RequestBody requestBody =   new FormBody.Builder()
-                .add("fangfa", "chaxun")
-                .add("sqlstr", "select * from shoudongapp Order by FInterID desc LIMIT 1")
+//        //读取可操作层数
+//        RequestBody requestBody =   new FormBody.Builder()
+//                .add("fangfa", "chaxun")
+//                .add("sqlstr", "select * from shoudongapp where EQID = '"
+//                        +MainActivity.mainActivitythis.EQID
+//                        +"' and EQIDMD5 = '"
+//                        +MainActivity.mainActivitythis.EQIDMD5
+//                        +"' Order by FInterID desc LIMIT 1")
+//                .build();
+        requestBody = new FormBody.Builder()
+                .add("fangfa","shebei")
+                .add("EQID", MainActivity.mainActivitythis.EQID)
+                .add("EQIDMD5",MainActivity.mainActivitythis.EQIDMD5)
                 .build();
         request = new Request.Builder()
                 .url(MainActivity.mainActivitythis.url)
@@ -229,8 +274,8 @@ public class Caozuojiemian extends Activity
                     {
                         String resstr = response.body().string();
                         Log.i("jieshou",resstr);
-                        java.lang.reflect.Type type = new TypeToken<Myjson>() {}.getType();
-                        myjson = gson.fromJson(resstr, type);
+                        java.lang.reflect.Type type = new TypeToken<Fwjson>() {}.getType();
+                        fwjson = gson.fromJson(resstr, type);
                         msg = Message.obtain();
                         msg.what = 0;
                         handler.sendMessage(msg);
@@ -249,12 +294,24 @@ public class Caozuojiemian extends Activity
             @Override
             public void onClick(View v)
             {
+                if (time.getText().toString().equals(""))
+                {
+                    Toast.makeText(getApplicationContext(),"请填写时间",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!checkBox1.isChecked() && !checkBox2.isChecked() && !checkBox3.isChecked() && !checkBox4.isChecked() && !checkBox5.isChecked())
+                {
+                    Toast.makeText(getApplicationContext(),"请勾选停止的层数",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (res != 0)
                 {
+                    //正式操作
+                    caozuo();
+
+                    //更新Mainactivity图片
                     Mybutton button = (Mybutton) MainActivity.mainActivitythis.findViewById(buttonid);
                     button.setBackgroundResource(respro);
-                    Intent intent = new Intent(Caozuojiemian.this, Zhuangtai.class);
-                    startActivity(intent);
                     finish();
                 }
             }
@@ -271,6 +328,114 @@ public class Caozuojiemian extends Activity
                     Mybutton button = (Mybutton) MainActivity.mainActivitythis.findViewById(buttonid);
                     button.setBackgroundResource(res);
                     finish();
+                }
+            }
+        });
+
+        Button fanhui = (Button) findViewById(R.id.fanhui);
+        fanhui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                finish();
+            }
+        });
+    }
+
+    public void  caozuo()
+    {
+        Myjson json = new Myjson();
+        if (checkBox1.isChecked())
+        {
+            json.FFloorOne = "1";
+        }
+        if (checkBox2.isChecked())
+        {
+            json.FFloorOne = "1";
+        }
+        if (checkBox3.isChecked())
+        {
+            json.FFloorOne = "1";
+        }
+        if (checkBox4.isChecked())
+        {
+            json.FFloorOne = "1";
+        }
+        if (checkBox5.isChecked())
+        {
+            json.FFloorOne = "1";
+        }
+        switch (title2_text.getText().toString())
+        {
+            case "施水":
+                json.FTypeID = "3";
+                json.FFreq = "4";
+                break;
+            case "施肥":
+                json.FTypeID = "2";
+                break;
+            case "通风":
+                json.FTypeID = "6";
+                break;
+            case "温度":
+                json.FTypeID = "1";
+                json.FFreq = "2";
+                break;
+            case "补光":
+                json.FTypeID = "4";
+                break;
+        }
+        json.FContinuePM = time.getText().toString();
+        long time=System.currentTimeMillis();//long now = android.os.SystemClock.uptimeMillis();
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date d1=new Date(time);
+        String t1 = format.format(d1);
+        json.FExcTime = t1;
+        json.EQID = MainActivity.mainActivitythis.EQID;
+        json.EQIDMD5 = MainActivity.mainActivitythis.EQIDMD5;
+
+        requestBody = new FormBody.Builder()
+                .add("fangfa","charu")
+                .add("FFloorOne",json.FFloorOne)
+                .add("FFloorTwo",json.FFloorTwo)
+                .add("FFloorThree",json.FFloorThree)
+                .add("FDouyaji",json.FDouyaji)
+                .add("FMG",json.FMG)
+                .add("FTypeID",json.FTypeID)
+                .add("FFreq",json.FFreq)
+                .add("FContinuePM",json.FContinuePM)
+                .add("FExcTime",json.FExcTime)
+                .add("EQID",json.EQID)
+                .add("EQIDMD5",json.EQIDMD5)
+                .build();
+        request = new Request.Builder()
+                .url(MainActivity.mainActivitythis.url)
+                .post(requestBody)
+                .build();
+        mOkHttpClient.newCall(request).enqueue(new Callback()
+        {
+            @Override
+            public void onFailure(Call call, IOException e)
+            {
+                Log.e("jieshou", "testHttpPost ... onFailure() e=" + e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException
+            {
+                try
+                {
+                    if (response.isSuccessful())
+                    {
+                        String resstr = response.body().string();
+                        Log.i("jieshou", resstr);
+                        java.lang.reflect.Type type = new TypeToken<Fwjson>() {}.getType();
+                        fwjson = gson.fromJson(resstr, type);
+                    }
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
                 }
             }
         });

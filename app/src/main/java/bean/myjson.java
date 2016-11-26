@@ -9,47 +9,59 @@ public class Myjson {
 
     public String FBillNo;
 
-    public String FOnOrOff;
+    public String FOnOrOff = "1";
 
-    public String FFloorOne;
+    public String FFloorOne = "0";
 
-    public String FFloorTwo;
+    public String FFloorTwo = "0";
 
-    public String FFloorThree;
+    public String FFloorThree = "0";
 
-    public String FDouyaji;
+    public String FDouyaji = "0";
 
-    public String FMG;
+    public String FMG = "0";
 
-    public String FShuiXiang;
+    public String FShuiXiang = "0";
 
     public String FTypeID;
 
-    public String FSourceType;
+    public String FSourceType = "3";
 
-    public String FFreq;
+    public String FFreq = "0";
 
     public String FContinuePM;
 
-    public String FCorS;
+    public String FCorS = "0";
 
-    public String zhouqijiange;
+    public String zhouqijiange = "0";
 
-    public String kaishitime;
+    public String kaishitime = "0";
 
-    public String begintime;
+    public String begintime = "0";
 
-    public String endtime;
+    public String endtime = "0";
 
-    public String firsttime;
+    public String firsttime = "0";
 
-    public String FExcTime;
+    public String FExcTime = "0";
 
-    public String FStatus;
+    public String FStatus = "0";
 
-    public String FEndReason;
+    public String FEndReason = "0";
 
     public String EQID;
+
+    public String EQIDMD5;
+
+    public String getEQIDMD5()
+    {
+        return EQIDMD5;
+    }
+
+    public void setEQIDMD5(String EQIDMD5)
+    {
+        this.EQIDMD5 = EQIDMD5;
+    }
 
     public void setFInterID(String FInterID){
         this.FInterID = FInterID;

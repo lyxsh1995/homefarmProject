@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity
     public String url = "http://192.168.1.100:8011/";
     public Response response;
     public OkHttpClient mOkHttpClient = new OkHttpClient();
+
+    public String EQID;
+    public String EQIDMD5;
+
     private Request request;
     private Bitmap bitmap;
     private long exitTime = 0;
@@ -66,6 +70,10 @@ public class MainActivity extends AppCompatActivity
         api.registerApp("wx6dd2baabb3de7c7b");
 
         mTencent = Tencent.createInstance("1105607320", this.getApplicationContext());
+
+        Intent intent = getIntent();
+        EQID = intent.getStringExtra("EQID");
+        EQIDMD5 = intent.getStringExtra("EQIDMD5");
 
         Button button1 = (Button) findViewById(R.id.postbutton);
         button1.setOnClickListener(new View.OnClickListener()
