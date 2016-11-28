@@ -13,15 +13,50 @@
     <include layout="@layout/main"/>
 
     <Button
-        android:text="Button"
+        android:text="退出"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/postbutton"/>
+        android:layout_height="40dp"
+        android:id="@+id/tuichu"
+        />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.55">
+
+            <include layout="@layout/window"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:text="悬浮窗"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textView8"
+            android:layout_weight="0.15"
+            android:gravity="center"/>
+
+        <Switch
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:id="@+id/kaiguan"
+            android:textOff="off"
+            android:textOn="on"
+            android:textColor="#ffffff"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:weightSum="1"
         android:background="#CCCCCC">
 

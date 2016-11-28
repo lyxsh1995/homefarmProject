@@ -63,8 +63,8 @@ public class Caozuojiemian extends Activity
     Request request;
     Gson gson = new Gson();
     Message msg = new Message();
-    public Myjson myjson;
-    public Fwjson fwjson;
+    Myjson myjson;
+    Fwjson fwjson;
     private LinearLayout diyiceng;
     private LinearLayout dierceng;
     private LinearLayout disanceng;
@@ -249,9 +249,10 @@ public class Caozuojiemian extends Activity
 //                        +"' Order by FInterID desc LIMIT 1")
 //                .build();
         requestBody = new FormBody.Builder()
-                .add("fangfa","shebei")
+                .add("fangfa","termparam")
                 .add("EQID", MainActivity.mainActivitythis.EQID)
                 .add("EQIDMD5",MainActivity.mainActivitythis.EQIDMD5)
+                .add("p_type","fw")
                 .build();
         request = new Request.Builder()
                 .url(MainActivity.mainActivitythis.url)
@@ -308,7 +309,6 @@ public class Caozuojiemian extends Activity
                 {
                     //正式操作
                     caozuo();
-
                     //更新Mainactivity图片
                     Mybutton button = (Mybutton) MainActivity.mainActivitythis.findViewById(buttonid);
                     button.setBackgroundResource(respro);

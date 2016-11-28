@@ -4,12 +4,17 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import bean.Sqlite;
 
 /**
  * Created by Administrator on 2016/11/22.
@@ -17,11 +22,40 @@ import android.widget.Toast;
 
 public class Login extends Activity
 {
+    public static Login loginthis;
+
+    public Sqlite sqlite;
+    public SQLiteDatabase db;
+    private Cursor cursor;
+
+    public String EQID,EQIDMD5;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        loginthis = this;
+
+        //创建数据库
+        sqlite = new Sqlite(getApplication(), "homefarm", null, 1);
+        db = sqlite.getWritableDatabase();
+        //读取EQID
+        String sqlstr = "select * from xinxi where _id = 1";
+        cursor = db.rawQuery(sqlstr,null);
+        if(cursor.getCount() == 1)
+        {
+            cursor.move(1);
+            EQID = cursor.getString(1);
+            EQIDMD5 = cursor.getString(2);
+        }
+        if (EQID != null)
+        {
+            Intent intent = new Intent(Login.this,MainActivity.class);
+            intent.putExtra("EQID", EQID);
+            intent.putExtra("EQIDMD5", EQIDMD5);
+            startActivity(intent);
+            finish();
+        }
 
         //临时登录按钮,以后删除
         Button denglu = (Button) findViewById(R.id.denglu);
@@ -32,6 +66,7 @@ public class Login extends Activity
                 Intent intent = new Intent(Login.this,MainActivity.class);
                 intent.putExtra("EQID", "1111111111");
                 intent.putExtra("EQIDMD5", "737207bfff986b451956db85a7c8d380");
+                Login.loginthis.db.execSQL("update xinxi set EQID = '1111111111', EQIDMD5 = '737207bfff986b451956db85a7c8d380' where _id =1");
                 startActivity(intent);
                 finish();
             }

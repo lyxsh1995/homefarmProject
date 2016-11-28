@@ -56,6 +56,7 @@ public class ResultActivity extends Activity {
                 //登陆成功
                 case 0:
                     Intent intent = new Intent(ResultActivity.this, MainActivity.class);
+                    Login.loginthis.db.execSQL("update xinxi set EQID = '"+eqid+"', EQIDMD5 = '"+eqidmd5+"' where _id =1");
                     intent.putExtra("EQID", eqid);
                     intent.putExtra("EQIDMD5", eqidmd5);
                     startActivity(intent);

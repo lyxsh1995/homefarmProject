@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base">
 
-        <activity android:name="hanwenjiaoyu.homefarm.Login">
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,11 +17,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="hanwenjiaoyu.homefarm.MainActivity">
+        <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name="hanwenjiaoyu.homefarm.Caozuojiemian"/>
-        <activity android:name="hanwenjiaoyu.homefarm.Zhuangtai"/>
+        <activity android:name=".Caozuojiemian"/>
+        <activity android:name=".Zhuangtai"/>
+
+        //悬浮窗
+        <service
+            android:name="FloatWindowService"
+            android:enabled="true" >
+        </service>
         //zxing
         <activity android:name="com.dtr.zxing.activity.CaptureActivity"/>
         <activity android:name="com.dtr.zxing.activity.ResultActivity"/>
@@ -97,4 +103,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    //悬浮窗
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    //应用信息
+    <uses-permission android:name="android.permission.GET_TASKS" />
 </manifest>
