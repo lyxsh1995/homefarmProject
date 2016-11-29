@@ -1,127 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/activity_main"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              tools:context="hanwenjiaoyu.homefarm.MainActivity"
-              android:orientation="vertical">
-
-    <include layout="@layout/title"/>
-
-    <include layout="@layout/main"/>
-
-    <Button
-        android:text="退出"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/tuichu"
-        />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:orientation="vertical"
+<ScrollView android:id="@+id/scrollView1"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="0.55">
-
-            <include layout="@layout/window"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:text="悬浮窗"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/textView8"
-            android:layout_weight="0.15"
-            android:gravity="center"/>
-
-        <Switch
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.3"
-            android:id="@+id/kaiguan"
-            android:textOff="off"
-            android:textOn="on"
-            android:textColor="#ffffff"/>
-
-    </LinearLayout>
+            tools:context="hanwenjiaoyu.homefarm.MainActivity">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/activity_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:background="#CCCCCC">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/title"/>
+
+        <include layout="@layout/main"/>
+
+        <Button
+            android:id="@+id/tuichu"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="退出"
+            />
+
+        <Button
+            android:id="@+id/lianwang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="辅助设备联网"/>
+
+        <Button
+            android:text="拍照"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/paizhao"/>
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <ImageButton
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/pengyouquan"
-                android:src="@mipmap/pengyouquan"/>
+                android:layout_weight="0.55"
+                android:orientation="vertical">
+
+                <include layout="@layout/window"/>
+
+            </LinearLayout>
 
             <TextView
-                android:text="分享到朋友圈"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="#000000"
-                android:gravity="center"/>
+                android:id="@+id/textView8"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:gravity="center"
+                android:text="悬浮窗"/>
+
+            <Switch
+                android:id="@+id/kaiguan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:textColor="#ffffff"
+                android:textOff="off"
+                android:textOn="on"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#CCCCCC"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-            <ImageButton
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/weixin"
-                android:src="@mipmap/weixinhaoyou"
-                />
+                android:orientation="vertical">
 
-            <TextView
-                android:text="分享到微信"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="#000000"
-                android:gravity="center"/>
-        </LinearLayout>
+                <ImageButton
+                    android:id="@+id/pengyouquan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/pengyouquan"/>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="分享到朋友圈"
+                    android:textColor="#000000"/>
 
-            <ImageButton
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/qqhaoyou"
-                android:src="@mipmap/qq"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:text="分享到QQ好友"
-                android:layout_width="match_parent"
+                <ImageButton
+                    android:id="@+id/weixin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/weixinhaoyou"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="分享到微信"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="#000000"
-                android:gravity="center"/>
+                android:orientation="vertical">
 
+                <ImageButton
+                    android:id="@+id/qqhaoyou"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/qq"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="分享到QQ好友"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

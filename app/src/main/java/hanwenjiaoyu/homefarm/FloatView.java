@@ -2,19 +2,43 @@ package hanwenjiaoyu.homefarm;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import bean.Cljson;
+import bean.Sqlite;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by lyxsh on 2016/11/18.
  */
 public class FloatView extends LinearLayout
 {
+    Context context;
+
     private float mTouchX;
     private float mTouchY;
     private float x;
@@ -27,9 +51,70 @@ public class FloatView extends LinearLayout
     WindowManager.LayoutParams windowManagerParams;
     long touchTime = 0;
 
+    public static Timer timer;
+    Message msg = new Message();
+
+    public String url = "http://192.168.1.100:8011/";
+    public Response response;
+    public OkHttpClient mOkHttpClient = new OkHttpClient();
+    private Request request;
+    private RequestBody requestBody;
+    Gson gson = new Gson();
+
+    private List<Cljson> rs;
+    private TextView wendu_shuju;
+    private TextView shidu_shuju;
+
+    Handler handler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            super.handleMessage(msg);
+            switch (msg.what)
+            {
+                //定时更新悬浮窗数据
+                case 0:
+                    //计算平均值
+                    java.text.DecimalFormat df  =new java.text.DecimalFormat("#.00");
+                    float a = 0;
+                    float b = 0;
+                    int c = 0;
+                    int d = 0;
+                    for (int i = 0; i < rs.size(); i++)
+                    {
+                        if (rs.get(i).d_liang != 0)
+                        {
+                            switch (rs.get(i).d_name.substring(6, 7))
+                            {
+                                //温度
+                                case "w":
+                                    a += rs.get(i).d_liang;
+                                    c++;
+                                    break;
+                                //湿度
+                                case "s":
+                                    b += rs.get(i).d_liang;
+                                    d++;
+                                    break;
+                            }
+                        }
+                    }
+                    a /= c;
+                    b /= d;
+
+                    //更新UI
+                    wendu_shuju.setText(df.format(a));
+                    shidu_shuju.setText(df.format(b));
+                    break;
+            }
+        }
+    };
+
     public FloatView(Context context)
     {
         super(context);
+        this.context = context;
         //获取浮动窗口视图所在布局
         View view = LayoutInflater.from(context).inflate(
                 R.layout.window, null);
@@ -37,6 +122,64 @@ public class FloatView extends LinearLayout
         // 此windowManagerParams变量为获取的全局变量，用以保存悬浮窗口的属性
         windowManagerParams = FloatWindowService.floatWindowServicethis.params;
         this.addView(view);
+
+        wendu_shuju = (TextView) view.findViewById(R.id.wendu_shuju);
+        shidu_shuju = (TextView) view.findViewById(R.id.shidu_shuju);
+
+        String sqlstr = "SELECT d_name,d_liang FROM device where d_type = 'cl' and EQID = '" + FloatWindowService.floatWindowServicethis.EQID + "' and EQIDMD5 = '" + FloatWindowService.floatWindowServicethis.EQIDMD5 + "' and d_name like 'turangshidu%' or d_name like 'turangwendu%'";
+        requestBody = new FormBody.Builder()
+                .add("fangfa", "chaxun")
+                .add("EQID", FloatWindowService.floatWindowServicethis.EQID)
+                .add("EQIDMD5", FloatWindowService.floatWindowServicethis.EQIDMD5)
+                .add("sqlstr", sqlstr)
+                .build();
+        request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        response = null;
+
+        TimerTask task = new TimerTask()
+        {
+            public void run()
+            {
+                mOkHttpClient.newCall(request).enqueue(new Callback()
+                {
+                    @Override
+                    public void onFailure(Call call, IOException e)
+                    {
+                        Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
+                    }
+
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException
+                    {
+                        try
+                        {
+                            if (response.isSuccessful())
+                            {
+                                String resstr = response.body().string();
+                                Log.i("jieshou", resstr);
+                                rs = new ArrayList<Cljson>();
+                                java.lang.reflect.Type type = new TypeToken<List<Cljson>>() {}.getType();
+                                rs = gson.fromJson(resstr, type);
+                                msg = Message.obtain();
+                                msg.what = 0;
+                                handler.sendMessage(msg);
+                            }
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        };
+        timer = new Timer(true);
+        timer.schedule(task, 0, 1000);
     }
 
 
@@ -71,6 +214,9 @@ public class FloatView extends LinearLayout
                     //双击
                     if ((System.currentTimeMillis() - touchTime) < 1000)
                     {
+                        //销毁定时器
+                        FloatView.timer.cancel();
+                        //停止服务
                         FloatWindowService.floatWindowServicethis.stopSelf();
                         try
                         {
