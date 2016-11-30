@@ -1,5 +1,8 @@
 package bean;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import com.tencent.connect.UserInfo;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
@@ -13,22 +16,20 @@ import hanwenjiaoyu.homefarm.MainActivity;
  */
 
 public class BaseUiListener implements IUiListener {
-    private String scope;
-
-    public BaseUiListener() {
+    public String result;
+    @Override
+    public void onComplete(Object o)
+    {
+        Toast.makeText(MainActivity.mainActivitythis.getApplicationContext(),"QQ分享成功",Toast.LENGTH_SHORT).show();
+        Log.i("QQ",o.toString());
     }
 
+    @Override
+    public void onError(UiError e) {
+        Toast.makeText(MainActivity.mainActivitythis.getApplicationContext(),"QQ分享错误",Toast.LENGTH_SHORT).show();
+    }
     @Override
     public void onCancel() {
-    }
-
-    @Override
-    public void onError(UiError arg0) {
-        System.err.println(arg0.errorCode);
-    }
-
-    @Override
-    public void onComplete(Object arg0) {
-
+        Toast.makeText(MainActivity.mainActivitythis.getApplicationContext(),"QQ分享失败",Toast.LENGTH_SHORT).show();
     }
 }

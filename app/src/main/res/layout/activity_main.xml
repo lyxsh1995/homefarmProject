@@ -30,12 +30,6 @@
             android:layout_height="wrap_content"
             android:text="辅助设备联网"/>
 
-        <Button
-            android:text="拍照"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/paizhao"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,18 +69,43 @@
             android:layout_height="wrap_content"
             android:background="#CCCCCC"
             android:orientation="horizontal"
-            android:weightSum="1">
+            android:weightSum="5">
 
             <LinearLayout
                 android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/paizhao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:src="@mipmap/paizhao"
+                    android:scaleType="fitCenter"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="拍照"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <ImageButton
                     android:id="@+id/pengyouquan"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/pengyouquan"/>
+                    android:layout_height="80dp"
+                    android:src="@mipmap/pengyouquan"
+                    android:scaleType="fitCenter"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -100,20 +119,20 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <ImageButton
                     android:id="@+id/weixin"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="80dp"
                     android:src="@mipmap/weixinhaoyou"
-                    />
+                    android:scaleType="fitCenter"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="分享到微信"
                     android:textColor="#000000"/>
@@ -121,14 +140,16 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <ImageButton
                     android:id="@+id/qqhaoyou"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/qq"/>
+                    android:src="@mipmap/qq"
+                    android:scaleType="fitCenter"
+                    android:layout_height="80dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -136,6 +157,29 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="分享到QQ好友"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/qqkongjian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:src="@mipmap/qqkongjian"
+                    android:scaleType="fitCenter"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="分享到QQ空间"
                     android:textColor="#000000"/>
 
             </LinearLayout>

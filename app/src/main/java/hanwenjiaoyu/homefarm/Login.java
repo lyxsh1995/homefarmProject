@@ -11,7 +11,11 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import bean.Sqlite;
@@ -29,6 +33,8 @@ public class Login extends Activity
     private Cursor cursor;
 
     public String EQID,EQIDMD5;
+    private LinearLayout login_layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -57,6 +63,8 @@ public class Login extends Activity
             finish();
         }
 
+        //做动画的layout容器
+        login_layout = (LinearLayout) findViewById(R.id.login_layout);
         //临时登录按钮,以后删除
         Button denglu = (Button) findViewById(R.id.denglu);
         denglu.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +109,13 @@ public class Login extends Activity
     }
 
     @Override
+    protected void onStart()
+    {
+        super.onStart();
+        donghua();
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 4) {
@@ -112,5 +127,15 @@ public class Login extends Activity
                 Toast.makeText(getApplicationContext(),"未成功获取权限,请手动打开",Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void donghua()
+    {
+//        AlphaAnimation myAnimation_Alpha;
+//        myAnimation_Alpha=new AlphaAnimation(0.1f, 1.0f);
+//        myAnimation_Alpha.setDuration(5000);
+        Animation myAnimation= AnimationUtils.loadAnimation(this, R.anim.alpha);
+        login_layout.setAnimation(myAnimation);
+
     }
 }

@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tencent.connect.share.QQShare;
+import com.tencent.connect.share.QzoneShare;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXImageObject;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
@@ -79,7 +81,6 @@ public class MainActivity extends AppCompatActivity
     Cdjson cdjson = new Cdjson();
     private List<Cljson> rs;
 
-    private Bitmap bitmap;
     private long exitTime = 0;
     private LinearLayout window_layout;
     public Switch kaiguan;
@@ -194,8 +195,10 @@ public class MainActivity extends AppCompatActivity
             {
                 if (kaiguan.isChecked())
                 {
+                    //判断是否安卓6.0
                     if (Build.VERSION.SDK_INT >= 23)
                     {
+                        //判断是否已经授权
                         if (Settings.canDrawOverlays(MainActivity.this))
                         {
                             Intent intent = new Intent(getApplicationContext(), FloatWindowService.class);
@@ -204,6 +207,7 @@ public class MainActivity extends AppCompatActivity
                             startService(intent);
                         } else
                         {
+                            //打开系统悬浮窗设置页面
                             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                             startActivity(intent);
                         }
@@ -216,9 +220,12 @@ public class MainActivity extends AppCompatActivity
                     }
                 } else
                 {
-                    Intent intent = new Intent(getApplicationContext(), FloatWindowService.class);
-                    FloatView.timer.cancel();
-                    stopService(intent);
+                    try
+                    {
+                        Intent intent = new Intent(getApplicationContext(), FloatWindowService.class);
+                        FloatView.timer.cancel();
+                        stopService(intent);
+                    }catch (Exception e){}
                 }
             }
         });
@@ -374,7 +381,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        Button paizhao = (Button) findViewById(R.id.paizhao);
+        ImageButton paizhao = (ImageButton) findViewById(R.id.paizhao);
         paizhao.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -420,14 +427,67 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                final Bundle params = new Bundle();
-                params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
-                params.putString(QQShare.SHARE_TO_QQ_TITLE, "来自城市农场的消息");
-                params.putString(QQShare.SHARE_TO_QQ_SUMMARY, "城市农场是弟一科技城市农场项目的APP端");
-                params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://www.baidu.com/");
-                params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "http://chuantu.biz/t5/42/1479975573x1996140247.png");
-                params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "城市农场");
-                mTencent.shareToQQ(MainActivity.this, params, new BaseUiListener());
+                Bundle params = new Bundle();
+                //bp是在应用拍照的图片
+                if (mUri != null)
+                {
+                    //分享在应用里拍的图片
+                    bp = getimage(file.getPath());
+                }
+                if (bp != null)
+                {
+                    params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE);
+                    params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL,file.getPath());
+                    params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "城市农场");
+                    mTencent.shareToQQ(MainActivity.this, params, new BaseUiListener());
+                }else
+                {
+                    params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+                    params.putString(QQShare.SHARE_TO_QQ_TITLE, "来自城市农场的消息");
+                    params.putString(QQShare.SHARE_TO_QQ_SUMMARY, "城市农场是弟一科技城市农场项目的APP端");
+                    params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://sj.qq.com/myapp/detail.htm?apkName=hanwenjiaoyu.homefarm");
+                    params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "http://chuantu.biz/t5/42/1479975573x1996140247.png");
+                    params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "城市农场");
+                    mTencent.shareToQQ(MainActivity.this, params, new BaseUiListener());
+                }
+
+            }
+        });
+
+        ImageButton qqkongjian = (ImageButton) findViewById(R.id.qqkongjian);
+        qqkongjian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Bundle params = new Bundle();
+                //bp是在应用拍照的图片
+                if (mUri != null)
+                {
+                    //分享在应用里拍的图片
+                    bp = getimage(file.getPath());
+                }
+                if (bp != null)
+                {
+                    //把分享到QQ,添加一个自动分享到QQ空间的flag
+                    params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE);
+                    params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN);
+                    params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL,file.getPath());
+                    params.putString(QQShare.SHARE_TO_QQ_TITLE, "来自城市农场的消息");
+                    params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "城市农场");
+                    mTencent.shareToQQ(MainActivity.this, params, new BaseUiListener());
+                }else
+                {
+                    params.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE, QzoneShare.SHARE_TO_QZONE_TYPE_IMAGE_TEXT );
+                    params.putString(QzoneShare.SHARE_TO_QQ_TITLE, "来自城市农场的消息");
+                    params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, "城市农场是弟一科技城市农场项目的APP端");
+                    params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, "http://sj.qq.com/myapp/detail.htm?apkName=hanwenjiaoyu.homefarm");
+                    //图片要做处理
+                    ArrayList<String> path_arr = new ArrayList<>();
+                    path_arr.add("http://chuantu.biz/t5/42/1479975573x1996140247.png");
+                    params.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, path_arr);
+                    mTencent.shareToQzone(MainActivity.this, params, new BaseUiListener());
+                }
+
             }
         });
 
@@ -581,7 +641,7 @@ public class MainActivity extends AppCompatActivity
         } else
         {
             WXWebpageObject webpage = new WXWebpageObject();
-            webpage.webpageUrl = "http://www.baidu.com";
+            webpage.webpageUrl = "http://sj.qq.com/myapp/detail.htm?apkName=hanwenjiaoyu.homefarm";
             WXMediaMessage msg = new WXMediaMessage(webpage);
 
             msg.title = "城市农场";
@@ -679,24 +739,28 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         // TODO Auto-generated method stub
-        if (resultCode == RESULT_OK)
+        switch (requestCode)
         {
-            switch (requestCode)
-            {
-                case 3023:
-                    try
+            case 3023:
+                try
+                {
+                    if (resultCode == RESULT_OK)
                     {
                         Toast.makeText(getApplicationContext(), "请选择需要分享的社交工具", Toast.LENGTH_SHORT).show();
-                    }
-                    catch (Exception e)
+                    }else
                     {
-                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "拍照失败", Toast.LENGTH_SHORT).show();
                     }
-                    break;
-            }
-        }else
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                break;
+        }
+        if (requestCode == 10103 || requestCode == 10104)
         {
-            Toast.makeText(getApplicationContext(), "拍照失败", Toast.LENGTH_SHORT).show();
+            Tencent.onActivityResultData(requestCode,resultCode,data,new BaseUiListener());
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
