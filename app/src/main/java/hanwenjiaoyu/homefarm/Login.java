@@ -2,12 +2,19 @@ package hanwenjiaoyu.homefarm;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +25,18 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
 import bean.Sqlite;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2016/11/22.
@@ -26,6 +44,9 @@ import bean.Sqlite;
 
 public class Login extends Activity
 {
+    //版本号
+    int banben = 1;
+
     public static Login loginthis;
 
     public Sqlite sqlite;
@@ -34,6 +55,60 @@ public class Login extends Activity
 
     public String EQID,EQIDMD5;
     private LinearLayout login_layout;
+
+    private Message msg;
+    Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                //提示更新
+                case 0:
+                    DialogInterface.OnClickListener dialogOnclicListener=new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch(which){
+                                case Dialog.BUTTON_POSITIVE:
+                                    Toast.makeText(getApplicationContext(), "开始下载", Toast.LENGTH_SHORT).show();
+                                    xizai();
+                                    break;
+                                case Dialog.BUTTON_NEGATIVE:
+                                    break;
+                            }
+                        }
+                    };
+                    //dialog参数设置
+                    AlertDialog.Builder builder=new AlertDialog.Builder(Login.this);  //先得到构造器
+                    builder.setTitle("提示"); //设置标题
+                    builder.setMessage("有新的版本是否下载?"); //设置内容
+//                    builder.setIcon(R.drawable.logo_144);//设置图标，图片id即可
+                    builder.setPositiveButton("确认",dialogOnclicListener);
+                    builder.setNegativeButton("取消", dialogOnclicListener);
+                    builder.create().show();
+                    break;
+                //下载进度更新
+                case 1:
+                    int progress = msg.arg1;
+//                    mProgressBar.setProgress(progress);
+                    break;
+                default:
+                    break;
+                case 2:
+                    Intent intent = new Intent();
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setAction(android.content.Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/homefarm/", "homefarm.apk")),
+                                          "application/vnd.android.package-archive");
+                    startActivity(intent);
+                    break;
+                case 3:
+                    Toast.makeText(getApplicationContext(),"更新文件下载失败",Toast.LENGTH_SHORT).show();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+    private String sdPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -106,6 +181,7 @@ public class Login extends Activity
                 startActivity(intent);
             }
         });
+        gengxing();
     }
 
     @Override
@@ -136,6 +212,98 @@ public class Login extends Activity
 //        myAnimation_Alpha.setDuration(5000);
         Animation myAnimation= AnimationUtils.loadAnimation(this, R.anim.alpha);
         login_layout.setAnimation(myAnimation);
+    }
 
+    public void gengxing()
+    {
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        Request request = new Request.Builder().url("http://192.168.1.100:8011/banben.txt").build();
+
+        mOkHttpClient.newCall(request).enqueue(new Callback()
+        {
+            @Override
+            public void onFailure(Call call, IOException e)
+            {
+                Log.d("h_bl", "检查更新失败");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException
+            {
+                String resstr = response.body().string();
+                Log.i("jieshou", resstr);
+                if (Integer.parseInt(resstr)>banben)
+                {
+                    msg = Message.obtain();
+                    msg.what = 0;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
+    }
+
+    public void xizai()
+    {
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        Request request = new Request.Builder().url("http://192.168.1.100:8011/apk.apk").build();
+        mOkHttpClient.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e)
+            {
+                Log.d("h_bl", "onFailure");
+                msg = Message.obtain();
+                msg.what = 3;
+                handler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException
+            {
+                InputStream is = null;
+                byte[] buf = new byte[2048];
+                int len = 0;
+                FileOutputStream fos = null;
+                sdPath = Environment.getExternalStorageDirectory() + "/homefarm/";
+                try {
+                    is = response.body().byteStream();
+                    long total = response.body().contentLength();
+                    File file = new File(sdPath, "homefarm.apk");
+                    fos = new FileOutputStream(file);
+                    long sum = 0;
+                    while ((len = is.read(buf)) != -1) {
+                        fos.write(buf, 0, len);
+                        sum += len;
+                        int progress = (int) (sum * 1.0f / total * 100);
+                        Log.d("h_bl", "progress=" + progress);
+                        msg = Message.obtain();
+                        msg.what = 1;
+                        msg.arg1 = progress;
+                        handler.sendMessage(msg);
+                    }
+                    fos.flush();
+                    Log.d("h_bl", "文件下载成功");
+                    msg = Message.obtain();
+                    msg.what = 2;
+                    handler.sendMessage(msg);
+                } catch (Exception e) {
+                    Log.d("h_bl", "文件下载失败");
+                    msg = Message.obtain();
+                    msg.what = 3;
+                    handler.sendMessage(msg);
+                } finally {
+                    try {
+                        if (is != null)
+                            is.close();
+                    } catch (IOException e) {
+                    }
+                    try {
+                        if (fos != null)
+                            fos.close();
+                    } catch (IOException e) {
+                    }
+                }
+            }
+        });
     }
 }

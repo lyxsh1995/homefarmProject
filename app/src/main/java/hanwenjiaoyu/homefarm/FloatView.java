@@ -106,6 +106,21 @@ public class FloatView extends LinearLayout
                     //更新UI
                     wendu_shuju.setText(df.format(a));
                     shidu_shuju.setText(df.format(b));
+
+                    if (20 <= a && a <= 40)
+                    {
+                        wendu_shuju.setText(wendu_shuju.getText() + "   良好");
+                    } else
+                    {
+                        wendu_shuju.setText(wendu_shuju.getText() + "   恶劣");
+                    }
+                    if (20 <= b && b <= 40)
+                    {
+                        shidu_shuju.setText(shidu_shuju.getText() + "   良好");
+                    } else
+                    {
+                        shidu_shuju.setText(shidu_shuju.getText() + "   恶劣");
+                    }
                     break;
             }
         }

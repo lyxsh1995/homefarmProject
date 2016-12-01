@@ -21,10 +21,15 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import bean.Fwjson;
+import bean.Lastjson;
 import bean.Mybutton;
 import bean.Myjson;
 import okhttp3.Call;
@@ -71,6 +76,11 @@ public class Caozuojiemian extends Activity
     private LinearLayout douyaji;
     private LinearLayout moguxiang;
 
+    private TextView title2_text;
+    private ImageView title2_image;
+    private RequestBody requestBody;
+    public String fBillNo;
+
     Handler handler = new Handler()
     {
         @Override
@@ -102,12 +112,34 @@ public class Caozuojiemian extends Activity
                         disanceng.setVisibility(View.GONE);
                     }
                     break;
+                //接收服务器返回的操作成功或失败
+                case 1:
+                    if(msg.obj.toString().substring(0,2).equals("ok"))
+                    {
+                        //更新Mainactivity图片
+                        fBillNo = msg.obj.toString().substring(2);
+                        Mybutton button = (Mybutton) MainActivity.mainActivitythis.findViewById(buttonid);
+                        button.setBackgroundResource(respro);
+                        Toast.makeText(getApplicationContext(),"已提交到服务器,等待执行",Toast.LENGTH_SHORT).show();
+
+                        chaxunfbillno();
+
+                        finish();
+
+                        //开始读取刚刚操作是否被硬件执行
+                    }else
+                    {
+                        Toast.makeText(getApplicationContext(),"提交到服务器失败",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                //该指令返回后的操作
+                case 2:
+                    Toast.makeText(getApplicationContext(),msg.obj.toString(),Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
-    private TextView title2_text;
-    private ImageView title2_image;
-    private RequestBody requestBody;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -309,10 +341,6 @@ public class Caozuojiemian extends Activity
                 {
                     //正式操作
                     caozuo();
-                    //更新Mainactivity图片
-                    Mybutton button = (Mybutton) MainActivity.mainActivitythis.findViewById(buttonid);
-                    button.setBackgroundResource(respro);
-                    finish();
                 }
             }
         });
@@ -429,8 +457,12 @@ public class Caozuojiemian extends Activity
                     {
                         String resstr = response.body().string();
                         Log.i("jieshou", resstr);
-                        java.lang.reflect.Type type = new TypeToken<Fwjson>() {}.getType();
-                        fwjson = gson.fromJson(resstr, type);
+//                        java.lang.reflect.Type type = new TypeToken<Fwjson>() {}.getType();
+//                        fwjson = gson.fromJson(resstr, type);
+                        msg = Message.obtain();
+                        msg.what = 1;
+                        msg.obj = resstr;
+                        handler.sendMessage(msg);
                     }
                 }
                 catch (IOException e)
@@ -439,5 +471,59 @@ public class Caozuojiemian extends Activity
                 }
             }
         });
+    }
+
+    //当前操作指令是否执行
+    public void chaxunfbillno()
+    {
+        final TimerTask task = new TimerTask() {
+            @Override
+            public void run()
+            {
+                requestBody = new FormBody.Builder()
+                        .add("fangfa", "fbillno")
+                        .add("EQID", MainActivity.mainActivitythis.EQID)
+                        .add("EQIDMD5", MainActivity.mainActivitythis.EQIDMD5)
+                        .add("FBillNo",fBillNo)
+                        .build();
+                request = new Request.Builder()
+                        .url(MainActivity.mainActivitythis.url)
+                        .post(requestBody)
+                        .build();
+
+                mOkHttpClient.newCall(request).enqueue(new Callback()
+                {
+                    @Override
+                    public void onFailure(Call call, IOException e)
+                    {
+                        Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
+                    }
+
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException
+                    {
+                        try
+                        {
+                            if (response.isSuccessful())
+                            {
+                                String resstr = response.body().string();
+                                Log.i("jieshou", resstr);
+                                msg = Message.obtain();
+                                msg.what = 2;
+                                msg.obj = resstr;
+                                handler.sendMessage(msg);
+                            }
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        };
+        Timer timer = new Timer(true);
+        timer.schedule(task,3000);
     }
 }

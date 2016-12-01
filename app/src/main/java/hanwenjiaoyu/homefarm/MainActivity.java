@@ -42,10 +42,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import bean.BaseUiListener;
 import bean.Cdjson;
 import bean.Cljson;
+import bean.Lastjson;
 import bean.Mybutton;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -73,6 +76,9 @@ public class MainActivity extends AppCompatActivity
     private Request request;
     private RequestBody requestBody;
 
+    public TimerTask task;
+    public Timer timer;
+
 
     public String EQID;
     public String EQIDMD5;
@@ -80,6 +86,7 @@ public class MainActivity extends AppCompatActivity
     Message msg = new Message();
     Cdjson cdjson = new Cdjson();
     private List<Cljson> rs;
+    private List<Lastjson> rslist;
 
     private long exitTime = 0;
     private LinearLayout window_layout;
@@ -168,9 +175,42 @@ public class MainActivity extends AppCompatActivity
                         shidu_shuju.setText(shidu_shuju.getText() + "   恶劣");
                     }
                     break;
+                case 2:
+                    String zhuangtai = "";
+                    for (int i=0;i<rslist.size();i++)
+                    {
+                        switch (rslist.get(i).FTypeId)
+                        {
+                            case "1":
+                                //温度
+                            case "7":
+                                //蘑菇喷水
+                                wendu_button.setBackgroundResource(R.mipmap.wendu_button_pro);
+//                                zhuangtai += "正在喷水\n";
+                                break;
+                            case "2":
+                                //施肥
+                                shifei_button.setBackgroundResource(R.mipmap.shifei_button_pro);
+                                break;
+                            case "3":
+                                //施水
+                                shishui_button.setBackgroundResource(R.mipmap.shishui_button_pro);
+                                break;
+                            case "4":
+                                //补光:
+                                buguang_button.setBackgroundResource(R.mipmap.buguang_button_pro);
+                                break;
+                            case "6":
+                                //通风
+                                tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button_pro);
+                                break;
+                        }
+                    }
+                    break;
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -587,6 +627,12 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+
+        //更新正在运行的操作
+        Createtask();
+        timer = new Timer(true);
+        //一分钟刷新一次
+        timer.schedule(task, 0,60*1000);
     }
 
 
@@ -656,7 +702,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    //微信开发文档什么也不也,都要从网上找
+    //微信开发文档什么也不写,都要从网上找
     //设置缩略图
     public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle)
     {
@@ -733,6 +779,61 @@ public class MainActivity extends AppCompatActivity
         //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
         bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
         return cQuality(bitmap);//压缩好比例大小后再进行质量压缩
+    }
+
+    //创建定时器任务
+    protected  void Createtask()
+    {
+        task = new TimerTask() {
+            @Override
+            public void run()
+            {
+               requestBody = new FormBody.Builder()
+                        .add("fangfa", "yunxing")
+                        .add("EQID", EQID)
+                        .add("EQIDMD5", EQIDMD5)
+                        .build();
+                request = new Request.Builder()
+                        .url(url)
+                        .post(requestBody)
+                        .build();
+
+                response = null;
+
+                mOkHttpClient.newCall(request).enqueue(new Callback()
+                {
+                    @Override
+                    public void onFailure(Call call, IOException e)
+                    {
+                        Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
+                    }
+
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException
+                    {
+                        try
+                        {
+                            if (response.isSuccessful())
+                            {
+                                String resstr = response.body().string();
+                                Log.i("jieshou", resstr);
+                                rslist = new ArrayList<Lastjson>();
+                                java.lang.reflect.Type type = new TypeToken<List<Lastjson>>() {}.getType();
+                                rslist = gson.fromJson(resstr, type);
+                                msg = Message.obtain();
+                                msg.what = 2;
+                                handler.sendMessage(msg);
+                            }
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        };
     }
 
     @Override
