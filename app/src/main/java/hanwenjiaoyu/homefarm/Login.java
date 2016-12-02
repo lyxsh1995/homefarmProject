@@ -217,7 +217,7 @@ public class Login extends Activity
     public void gengxing()
     {
         OkHttpClient mOkHttpClient = new OkHttpClient();
-        Request request = new Request.Builder().url("http://192.168.1.100:8011/banben.txt").build();
+        Request request = new Request.Builder().url("http://192.168.1.100:80/app/banben.txt").build();
 
         mOkHttpClient.newCall(request).enqueue(new Callback()
         {

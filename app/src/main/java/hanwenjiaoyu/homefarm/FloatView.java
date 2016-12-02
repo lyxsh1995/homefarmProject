@@ -54,7 +54,7 @@ public class FloatView extends LinearLayout
     public static Timer timer;
     Message msg = new Message();
 
-    public String url = "http://192.168.1.100:8011/";
+    public String url = "http://192.168.1.100:80/app/";
     public Response response;
     public OkHttpClient mOkHttpClient = new OkHttpClient();
     private Request request;
