@@ -158,7 +158,7 @@ public class Login extends Activity
 
         //做动画的layout容器
         login_layout = (LinearLayout) findViewById(R.id.login_layout);
-        //临时登录按钮,以后删除
+        //临时登录按钮,以后删除!!!!!!!!!!!!!!!!!!!!
         Button denglu = (Button) findViewById(R.id.denglu);
         denglu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,6 +168,17 @@ public class Login extends Activity
                 intent.putExtra("EQID", "1111111111");
                 intent.putExtra("EQIDMD5", "737207bfff986b451956db85a7c8d380");
                 Login.loginthis.db.execSQL("update xinxi set EQID = '1111111111', EQIDMD5 = '737207bfff986b451956db85a7c8d380' where _id =1");
+                startActivity(intent);
+                finish();
+            }
+        });
+        //临时我的菜园,以后换位置~~~~~~~~~~~~~~~
+        Button caiyuan = (Button) findViewById(R.id.caiyuan);
+        caiyuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(Login.this,Caiyuan.class);
                 startActivity(intent);
                 finish();
             }
