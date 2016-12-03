@@ -12,22 +12,30 @@
         android:id="@+id/login_layout">
 
         <Button
-            android:text="扫描二维码"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/login_button"/>
-
-        <Button
             android:text="辅助设备联网"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/wifi_button"/>
 
         <Button
+            android:text="扫描二维码"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/login_button"/>
+
+        <Button
             android:text="登录"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/denglu"/>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:visibility="invisible"/>
+
     </LinearLayout>
 
 </LinearLayout>

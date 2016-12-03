@@ -23,6 +23,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.File;
@@ -70,6 +71,8 @@ public class Login extends Activity
                             switch(which){
                                 case Dialog.BUTTON_POSITIVE:
                                     Toast.makeText(getApplicationContext(), "开始下载", Toast.LENGTH_SHORT).show();
+                                    progressBar = (ProgressBar) findViewById(R.id.progressBar);
+                                    progressBar.setVisibility(View.VISIBLE);
                                     xizai();
                                     break;
                                 case Dialog.BUTTON_NEGATIVE:
@@ -102,7 +105,7 @@ public class Login extends Activity
                 //下载进度更新
                 case 1:
                     int progress = msg.arg1;
-//                    mProgressBar.setProgress(progress);
+                    progressBar.setProgress(progress);
                     break;
                 default:
                     break;
@@ -123,6 +126,7 @@ public class Login extends Activity
     };
     private String sdPath;
     private AlertDialog.Builder builder;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
