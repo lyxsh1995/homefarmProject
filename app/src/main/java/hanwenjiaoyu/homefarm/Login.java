@@ -78,13 +78,26 @@ public class Login extends Activity
                         }
                     };
                     //dialog参数设置
-                    AlertDialog.Builder builder=new AlertDialog.Builder(Login.this);  //先得到构造器
+
+                    //判断ACTIVITY是否会跳转
+                    if (EQID != null)
+                    {//跳转到主界面
+                        //先得到构造器
+                        builder = new AlertDialog.Builder(MainActivity.mainActivitythis);
+                    }else
+                    {
+                        builder = new AlertDialog.Builder(Login.this);
+                    }
                     builder.setTitle("提示"); //设置标题
                     builder.setMessage("有新的版本是否下载?"); //设置内容
 //                    builder.setIcon(R.drawable.logo_144);//设置图标，图片id即可
-                    builder.setPositiveButton("确认",dialogOnclicListener);
+                    builder.setPositiveButton("确认", dialogOnclicListener);
                     builder.setNegativeButton("取消", dialogOnclicListener);
-                    builder.create().show();
+                    //如果自动登录到MainActivity就会报错,所以拦截
+                    try
+                    {
+                        builder.create().show();
+                    }catch (Exception e) {}
                     break;
                 //下载进度更新
                 case 1:
@@ -109,6 +122,7 @@ public class Login extends Activity
         }
     };
     private String sdPath;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
