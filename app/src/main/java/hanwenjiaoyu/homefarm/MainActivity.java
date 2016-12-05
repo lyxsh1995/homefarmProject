@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity
     private TextView wendu_shuju;
     private TextView shidu_shuju;
 
-    public String url = "http://192.168.1.100:80/app/";
+    public String url = Login.loginthis.url;
+
     public Response response;
     public OkHttpClient mOkHttpClient = new OkHttpClient();
     private Request request;
@@ -418,6 +419,18 @@ public class MainActivity extends AppCompatActivity
             {
                 Intent intent = new Intent(MainActivity.this, com.rtk.simpleconfig_wizard.MainActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        //临时我的菜园,以后换位置~~~~~~~~~~~~~~~
+        Button caiyuan = (Button) findViewById(R.id.caiyuan);
+        caiyuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(MainActivity.this,Caiyuan.class);
+                startActivity(intent);
+                finish();
             }
         });
 

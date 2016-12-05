@@ -23,6 +23,7 @@
         <activity android:name=".Caozuojiemian"/>
         <activity android:name=".Zhuangtai"/>
         <activity android:name=".Caiyuan"/>
+        <activity android:name=".Fangan"/>
 
         //悬浮窗
         <service

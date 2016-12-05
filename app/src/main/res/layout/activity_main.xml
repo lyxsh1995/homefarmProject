@@ -30,6 +30,12 @@
             android:layout_height="wrap_content"
             android:text="辅助设备联网"/>
 
+        <Button
+            android:text="我的菜园"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/caiyuan"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

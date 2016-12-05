@@ -47,6 +47,8 @@ public class Login extends Activity
 {
     //版本号
     int banben = 1;
+    //服务器地址
+    public String url = "http://192.168.1.100:80/app/";
 
     public static Login loginthis;
 
@@ -172,17 +174,6 @@ public class Login extends Activity
                 finish();
             }
         });
-        //临时我的菜园,以后换位置~~~~~~~~~~~~~~~
-        Button caiyuan = (Button) findViewById(R.id.caiyuan);
-        caiyuan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(Login.this,Caiyuan.class);
-                startActivity(intent);
-                finish();
-            }
-        });
 
         Button login_button = (Button) findViewById(R.id.login_button);
         login_button.setOnClickListener(new View.OnClickListener() {
@@ -246,7 +237,7 @@ public class Login extends Activity
     public void gengxing()
     {
         OkHttpClient mOkHttpClient = new OkHttpClient();
-        Request request = new Request.Builder().url("http://192.168.1.100:80/app/banben.txt").build();
+        Request request = new Request.Builder().url(url+"banben.txt").build();
 
         mOkHttpClient.newCall(request).enqueue(new Callback()
         {
@@ -274,7 +265,7 @@ public class Login extends Activity
     public void xizai()
     {
         OkHttpClient mOkHttpClient = new OkHttpClient();
-        Request request = new Request.Builder().url("http://192.168.1.100:8011/apk.apk").build();
+        Request request = new Request.Builder().url(url+"apk.apk").build();
         mOkHttpClient.newCall(request).enqueue(new Callback() {
 
             @Override

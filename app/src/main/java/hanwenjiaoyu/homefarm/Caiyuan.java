@@ -26,20 +26,46 @@ import bean.myPagerAdapter;
 //V4包需要FragmentActivity
 public class Caiyuan extends FragmentActivity
 {
+    public static Caiyuan caiyuanthis;
+//    public Mycaiyuan mycaiyuan = new Mycaiyuan();
 
-    private ViewPager pager;
+    public ViewPager pager;
     private PagerTabStrip tabStrip;
+    public int pagerposition=0;
+
     java.util.List<Fragment> mFragments = new ArrayList<Fragment>();
     List<String> titleContainer = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.caiyuan);
+        caiyuanthis = this;
 
         pager = (ViewPager) findViewById(R.id.viewpager1);
         tabStrip = (PagerTabStrip) findViewById(R.id.tabstrip1);
+
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            {
+
+            }
+
+            @Override
+            public void onPageSelected(int position)
+            {
+                pagerposition = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state)
+            {
+
+            }
+        });
 
         addviewpager();
     }
@@ -63,7 +89,6 @@ public class Caiyuan extends FragmentActivity
         titleContainer.add("种植三层");
         titleContainer.add("豆芽机");
         titleContainer.add("蘑菇箱");
-
         pager.setAdapter(new myPagerAdapter(getSupportFragmentManager(), mFragments, titleContainer));
     }
 }

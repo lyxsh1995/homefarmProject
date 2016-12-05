@@ -32,7 +32,7 @@ import com.dtr.zxing.decode.DecodeThread;
 import java.io.IOException;
 
 public class ResultActivity extends Activity {
-    String url = "http://192.168.1.100:80/app/";
+    String url = Login.loginthis.url;
 	private ImageView mResultImage;
 	private TextView mResultText;
 

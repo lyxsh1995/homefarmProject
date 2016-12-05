@@ -59,16 +59,17 @@ public class Caozuojiemian extends Activity
     private CheckBox checkBox5;
     private EditText time;
     private int buttonid;
-    private int res;
-    private int respro;
+
 
 
     String Json = "";
     private OkHttpClient mOkHttpClient;
     Request request;
+    private RequestBody requestBody;
+    private int res;
+    private int respro;
     Gson gson = new Gson();
     Message msg = new Message();
-    Myjson myjson;
     Fwjson fwjson;
     private LinearLayout diyiceng;
     private LinearLayout dierceng;
@@ -78,7 +79,6 @@ public class Caozuojiemian extends Activity
 
     private TextView title2_text;
     private ImageView title2_image;
-    private RequestBody requestBody;
     public String fBillNo;
 
     Handler handler = new Handler()
@@ -270,16 +270,6 @@ public class Caozuojiemian extends Activity
         });
 
         mOkHttpClient = new OkHttpClient();
-
-//        //读取可操作层数
-//        RequestBody requestBody =   new FormBody.Builder()
-//                .add("fangfa", "chaxun")
-//                .add("sqlstr", "select * from shoudongapp where EQID = '"
-//                        +MainActivity.mainActivitythis.EQID
-//                        +"' and EQIDMD5 = '"
-//                        +MainActivity.mainActivitythis.EQIDMD5
-//                        +"' Order by FInterID desc LIMIT 1")
-//                .build();
         requestBody = new FormBody.Builder()
                 .add("fangfa","termparam")
                 .add("EQID", MainActivity.mainActivitythis.EQID)
