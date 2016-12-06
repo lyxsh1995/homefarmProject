@@ -50,7 +50,8 @@ public class Fangan extends Activity
     private ListView fangan_list;
     private Myadapter adapter;
 
-    int positions = 1;
+    //第几行
+    int positions = 0;
     public String fanganid;
 
     Handler handler = new Handler()
@@ -64,6 +65,7 @@ public class Fangan extends Activity
                 case 0:
                     adapter = new Myadapter(rs, getApplicationContext());
                     fangan_list.setAdapter(adapter);
+                    fanganid = rs.get(0).ID;
                     break;
             }
         }

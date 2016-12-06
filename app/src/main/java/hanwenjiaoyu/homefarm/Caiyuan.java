@@ -31,6 +31,7 @@ public class Caiyuan extends FragmentActivity
 
     public ViewPager pager;
     private PagerTabStrip tabStrip;
+    //第几页
     public int pagerposition=0;
 
     java.util.List<Fragment> mFragments = new ArrayList<Fragment>();

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -73,12 +74,19 @@ public class Mycaiyuan extends Fragment
             @Override
             public void onClick(View v)
             {
+                //没选择方案会直接报错
+                try{
                 requestBody = new FormBody.Builder()
                         .add("fangfa", "fangan")
                         .add("EQID", MainActivity.mainActivitythis.EQID)
                         .add("EQIDMD5",MainActivity.mainActivitythis.EQIDMD5)
                         .add("fanganid", Fangan.fanganthis.fanganid)
-                        .build();
+                        .add("cengshu",Caiyuan.caiyuanthis.pagerposition+"")
+                        .build();}catch (Exception e)
+                {
+                    Toast.makeText(getContext(),"请先选择方案",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 request = new Request.Builder()
                         .url(Login.loginthis.url)
                         .post(requestBody)
@@ -112,7 +120,6 @@ public class Mycaiyuan extends Fragment
                         }
                     }
                 });
-
             }
         });
 
