@@ -430,7 +430,6 @@ public class MainActivity extends AppCompatActivity
             {
                 Intent intent = new Intent(MainActivity.this,Caiyuan.class);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -648,7 +647,7 @@ public class MainActivity extends AppCompatActivity
         timer.schedule(task, 0,60*1000);
     }
 
-
+    //双击退出
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {

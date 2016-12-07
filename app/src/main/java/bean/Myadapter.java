@@ -7,9 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import hanwenjiaoyu.homefarm.R;
@@ -89,7 +86,6 @@ public class Myadapter extends BaseAdapter
         {
             holder.fanganlist_xuanzhe.setChecked(false);
         }
-
         return convertView;
     }
 

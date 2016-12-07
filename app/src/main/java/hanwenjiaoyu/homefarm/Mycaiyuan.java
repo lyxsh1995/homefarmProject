@@ -1,7 +1,6 @@
 package hanwenjiaoyu.homefarm;
 
 import android.content.Intent;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,14 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.reflect.TypeToken;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import bean.Cljson;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -122,7 +115,6 @@ public class Mycaiyuan extends Fragment
                 });
             }
         });
-
         return view;
     }
 }
