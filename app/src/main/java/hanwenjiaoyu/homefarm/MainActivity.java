@@ -4,7 +4,8 @@ import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,12 +13,14 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -34,6 +37,10 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.tauth.Tencent;
+import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
+import com.yalantis.contextmenu.lib.MenuObject;
+import com.yalantis.contextmenu.lib.MenuParams;
+import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 
 
 import java.io.ByteArrayInputStream;
@@ -178,7 +185,7 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case 2:
                     String zhuangtai = "";
-                    for (int i=0;i<rslist.size();i++)
+                    for (int i = 0; i < rslist.size(); i++)
                     {
                         switch (rslist.get(i).FTypeId)
                         {
@@ -211,6 +218,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
     };
+    private ContextMenuDialogFragment mMenuDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -266,7 +274,8 @@ public class MainActivity extends AppCompatActivity
                         Intent intent = new Intent(getApplicationContext(), FloatWindowService.class);
                         FloatView.timer.cancel();
                         stopService(intent);
-                    }catch (Exception e){}
+                    }
+                    catch (Exception e) {}
                 }
             }
         });
@@ -386,50 +395,60 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        LinearLayout window_layout = (LinearLayout) findViewById(R.id.window_layout);
-        window_layout.setOnClickListener(new View.OnClickListener()
+        //右上角菜单
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        ImageButton menu_button = (ImageButton) findViewById(R.id.menu_button);
+        menu_button.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(MainActivity.this, Zhuangtai.class);
-                startActivity(intent);
+                //显示菜单
+                if (fragmentManager.findFragmentByTag(ContextMenuDialogFragment.TAG) == null) {
+                    mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
+                }
             }
         });
-
-        Button tuichu = (Button) findViewById(R.id.tuichu);
-        tuichu.setOnClickListener(new View.OnClickListener()
+        MenuParams menuParams = new MenuParams();
+        menuParams.setActionBarSize(100);
+        menuParams.setMenuObjects(getMenuObjects());
+        menuParams.setClosableOutside(false);
+        mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
+        //按下某一项
+        mMenuDialogFragment.setItemClickListener(new OnMenuItemClickListener()
         {
             @Override
-            public void onClick(View v)
+            public void onMenuItemClick(View clickedView, int position)
             {
-                getApplication().deleteDatabase("homefarm");
-                Intent intent = new Intent(getApplicationContext(), FloatWindowService.class);
-                stopService(intent);
-                finish();
-                System.exit(0);
-            }
-        });
-
-        Button lianwang = (Button) findViewById(R.id.lianwang);
-        lianwang.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(MainActivity.this, com.rtk.simpleconfig_wizard.MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        //临时我的菜园,以后换位置~~~~~~~~~~~~~~~
-        Button caiyuan = (Button) findViewById(R.id.caiyuan);
-        caiyuan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(MainActivity.this,Caiyuan.class);
-                startActivity(intent);
+                switch (position)
+                {
+                    case 1:
+                        //详细状态
+                        Intent intent = new Intent(MainActivity.this, Zhuangtai.class);
+                        startActivity(intent);
+                        break;
+                    case 2:
+                        //我的菜园
+                        intent = new Intent(MainActivity.this, Caiyuan.class);
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        //辅助设备联网
+                        intent = new Intent(MainActivity.this, com.rtk.simpleconfig_wizard.MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 4:
+                        //关于
+                        break;
+                    case 5:
+                        //退出登录
+                        getApplication().deleteDatabase("homefarm");
+                        intent = new Intent(getApplicationContext(), FloatWindowService.class);
+                        stopService(intent);
+                        finish();
+                        System.exit(0);
+                        break;
+                }
             }
         });
 
@@ -440,8 +459,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                File appDir = new File(Environment.getExternalStorageDirectory()+ "/homefarm");
-                if(!appDir.exists())
+                File appDir = new File(Environment.getExternalStorageDirectory() + "/homefarm");
+                if (!appDir.exists())
                 {
                     appDir.mkdir();
                 }
@@ -489,10 +508,10 @@ public class MainActivity extends AppCompatActivity
                 if (bp != null)
                 {
                     params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE);
-                    params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL,file.getPath());
+                    params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, file.getPath());
                     params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "城市农场");
                     mTencent.shareToQQ(MainActivity.this, params, new BaseUiListener());
-                }else
+                } else
                 {
                     params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
                     params.putString(QQShare.SHARE_TO_QQ_TITLE, "来自城市农场的消息");
@@ -507,7 +526,8 @@ public class MainActivity extends AppCompatActivity
         });
 
         ImageButton qqkongjian = (ImageButton) findViewById(R.id.qqkongjian);
-        qqkongjian.setOnClickListener(new View.OnClickListener() {
+        qqkongjian.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
@@ -523,13 +543,13 @@ public class MainActivity extends AppCompatActivity
                     //把分享到QQ,添加一个自动分享到QQ空间的flag
                     params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE);
                     params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN);
-                    params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL,file.getPath());
+                    params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, file.getPath());
                     params.putString(QQShare.SHARE_TO_QQ_TITLE, "来自城市农场的消息");
                     params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "城市农场");
                     mTencent.shareToQQ(MainActivity.this, params, new BaseUiListener());
-                }else
+                } else
                 {
-                    params.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE, QzoneShare.SHARE_TO_QZONE_TYPE_IMAGE_TEXT );
+                    params.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE, QzoneShare.SHARE_TO_QZONE_TYPE_IMAGE_TEXT);
                     params.putString(QzoneShare.SHARE_TO_QQ_TITLE, "来自城市农场的消息");
                     params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, "城市农场是弟一科技城市农场项目的APP端");
                     params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, "http://sj.qq.com/myapp/detail.htm?apkName=hanwenjiaoyu.homefarm");
@@ -644,7 +664,7 @@ public class MainActivity extends AppCompatActivity
         Createtask();
         timer = new Timer(true);
         //一分钟刷新一次
-        timer.schedule(task, 0,60*1000);
+        timer.schedule(task, 0, 60 * 1000);
     }
 
     //双击退出
@@ -741,36 +761,43 @@ public class MainActivity extends AppCompatActivity
     {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
+
     /**
-     *
      * 根据bitmap压缩图片质量
+     *
      * @param bitmap 未压缩的bitmap
      * @return 压缩后的bitmap
      */
-    public static Bitmap cQuality(Bitmap bitmap){
+    public static Bitmap cQuality(Bitmap bitmap)
+    {
         ByteArrayOutputStream bOut = new ByteArrayOutputStream();
         int beginRate = 30;
         //第一个参数 ：图片格式 ，第二个参数： 图片质量，100为最高，0为最差  ，第三个参数：保存压缩后的数据的流
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bOut);
-        while(bOut.size()/1024/1024>100){  //如果压缩后大于100Kb，则提高压缩率，重新压缩
-            beginRate -=10;
+        while (bOut.size() / 1024 / 1024 > 100)
+        {  //如果压缩后大于100Kb，则提高压缩率，重新压缩
+            beginRate -= 10;
             bOut.reset();
             bitmap.compress(Bitmap.CompressFormat.JPEG, beginRate, bOut);
         }
         ByteArrayInputStream bInt = new ByteArrayInputStream(bOut.toByteArray());
         Bitmap newBitmap = BitmapFactory.decodeStream(bInt);
-        if(newBitmap!=null){
+        if (newBitmap != null)
+        {
             return newBitmap;
-        }else{
+        } else
+        {
             return bitmap;
         }
     }
+
     //图片比例压缩
-    private Bitmap getimage(String srcPath) {
+    private Bitmap getimage(String srcPath)
+    {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         //开始读入图片，此时把options.inJustDecodeBounds 设回true了
         newOpts.inJustDecodeBounds = true;
-        Bitmap bitmap = BitmapFactory.decodeFile(srcPath,newOpts);//此时返回bm为空
+        Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);//此时返回bm为空
 
         newOpts.inJustDecodeBounds = false;
         int w = newOpts.outWidth;
@@ -780,13 +807,15 @@ public class MainActivity extends AppCompatActivity
         float ww = 480f;//这里设置宽度为480f
         //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
         int be = 1;//be=1表示不缩放
-        if (w > h && w > ww) {//如果宽度大的话根据宽度固定大小缩放
+        if (w > h && w > ww)
+        {//如果宽度大的话根据宽度固定大小缩放
             be = (int) (newOpts.outWidth / ww);
-        } else if (w < h && h > hh) {//如果高度高的话根据宽度固定大小缩放
+        } else if (w < h && h > hh)
+        {//如果高度高的话根据宽度固定大小缩放
             be = (int) (newOpts.outHeight / hh);
         }
         if (be <= 0)
-            be = 1;
+        { be = 1; }
         newOpts.inSampleSize = be;//设置缩放比例
         //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
         bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
@@ -794,13 +823,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     //创建定时器任务
-    protected  void Createtask()
+    protected void Createtask()
     {
-        task = new TimerTask() {
+        task = new TimerTask()
+        {
             @Override
             public void run()
             {
-               requestBody = new FormBody.Builder()
+                requestBody = new FormBody.Builder()
                         .add("fangfa", "yunxing")
                         .add("EQID", EQID)
                         .add("EQIDMD5", EQIDMD5)
@@ -848,19 +878,22 @@ public class MainActivity extends AppCompatActivity
         };
     }
 
+    //回调监听
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         // TODO Auto-generated method stub
         switch (requestCode)
         {
+            //摄像头调用之后
             case 3023:
                 try
                 {
+                    //是否拍照并选取了图片
                     if (resultCode == RESULT_OK)
                     {
                         Toast.makeText(getApplicationContext(), "请选择需要分享的社交工具", Toast.LENGTH_SHORT).show();
-                    }else
+                    } else
                     {
                         Toast.makeText(getApplicationContext(), "拍照失败", Toast.LENGTH_SHORT).show();
                     }
@@ -871,10 +904,76 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
         }
+        //微信分享
         if (requestCode == 10103 || requestCode == 10104)
         {
-            Tencent.onActivityResultData(requestCode,resultCode,data,new BaseUiListener());
+            Tencent.onActivityResultData(requestCode, resultCode, data, new BaseUiListener());
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    //右上角菜单列表
+    private List<MenuObject> getMenuObjects()
+    {
+        // You can use any [resource, bitmap, drawable, color] as image:
+        // item.setResource(...)
+        // item.setBitmap(...)
+        // item.setDrawable(...)
+        // item.setColor(...)
+        // You can set image ScaleType:
+        // item.setScaleType(ScaleType.FIT_XY)
+        // You can use any [resource, drawable, color] as background:
+        // item.setBgResource(...)
+        // item.setBgDrawable(...)
+        // item.setBgColor(...)
+        // You can use any [color] as text color:
+        // item.setTextColor(...)
+        // You can set any [color] as divider color:
+        // item.setDividerColor(...)
+
+        List<MenuObject> menuObjects = new ArrayList<>();
+        //缩放
+        Matrix matrix = new Matrix();
+        Bitmap bitmap;
+
+        MenuObject close = new MenuObject();
+        close.setResource(R.drawable.icn_close);
+
+        MenuObject send = new MenuObject("详细状态");
+        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.nongye));
+        //设置缩放比例
+        matrix.postScale(70f/bitmap.getWidth(),70f/bitmap.getHeight());
+        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        send.setBitmap(bitmap);
+
+        MenuObject like = new MenuObject("我的菜园");
+        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.nongtian));
+        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        like.setBitmap(bitmap);
+
+
+        MenuObject addFr = new MenuObject("辅助设备联网");
+        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.wifi));
+        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        addFr.setBitmap(bitmap);
+
+        //图片太小不缩放
+        MenuObject addFav = new MenuObject("关    于");
+        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.guanyu));
+//        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        addFav.setBitmap(bitmap);
+
+        MenuObject block = new MenuObject("退出登录");
+        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.tuichu));
+//        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        block.setBitmap(bitmap);
+
+        menuObjects.add(close);
+        menuObjects.add(send);
+        menuObjects.add(like);
+        menuObjects.add(addFr);
+        menuObjects.add(addFav);
+        menuObjects.add(block);
+        return menuObjects;
     }
 }

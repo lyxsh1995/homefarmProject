@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content">
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:gravity="center_vertical"
+        android:background="#333333">
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
             android:id="@+id/imageView"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:adjustViewBounds="false"
             android:cropToPadding="false"
-            android:layout_height="50dp"
-            android:background="#333333"
             android:src="@mipmap/logo"/>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            app:srcCompat="@drawable/btn_add"
+            android:id="@+id/menu_button"
+            android:background="#333333"/>
+
     </LinearLayout>
 </LinearLayout>
