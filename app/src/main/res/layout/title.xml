@@ -4,7 +4,8 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:weightSum="1"
         android:gravity="center_vertical"
-        android:background="#333333">
+        >
 
         <ImageView
             android:layout_width="0dp"
@@ -29,7 +30,7 @@
             android:layout_weight="0.1"
             app:srcCompat="@drawable/btn_add"
             android:id="@+id/menu_button"
-            android:background="#333333"/>
+            android:background="#00000000"/>
 
     </LinearLayout>
 </LinearLayout>
