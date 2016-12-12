@@ -17,9 +17,16 @@
         android:background="@mipmap/beijing2"
         >
 
-        <include layout="@layout/title"/>
-
         <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <include layout="@layout/title"/>
+        </LinearLayout>
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -68,7 +75,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:gravity="bottom"
-            android:layout_marginBottom="40dp">
+            android:layout_marginBottom="20dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -80,11 +87,10 @@
                 <ImageButton
                     android:id="@+id/paizhao"
                     android:layout_width="wrap_content"
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:src="@mipmap/paizhao"
-                    android:scaleType="fitCenter"
                     android:background="#00000000"
-                    />
+                    android:scaleType="fitCenter"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -106,7 +112,7 @@
                 <ImageButton
                     android:id="@+id/pengyouquan"
                     android:layout_width="wrap_content"
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:src="@mipmap/pengyouquan"
                     android:scaleType="fitCenter"
                     android:background="#00000000"
@@ -132,7 +138,7 @@
                 <ImageButton
                     android:id="@+id/weixin"
                     android:layout_width="wrap_content"
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:src="@mipmap/weixinhaoyou"
                     android:scaleType="fitCenter"
                     android:background="#00000000"
@@ -158,7 +164,7 @@
                     android:layout_width="wrap_content"
                     android:src="@mipmap/qq"
                     android:scaleType="fitCenter"
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:background="#00000000"
                     />
 
@@ -181,7 +187,7 @@
                 <ImageButton
                     android:id="@+id/qqkongjian"
                     android:layout_width="wrap_content"
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:src="@mipmap/qqkongjian"
                     android:scaleType="fitCenter"
                     android:background="#00000000"/>

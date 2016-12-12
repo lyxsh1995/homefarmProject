@@ -19,6 +19,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.ColorAnimationView;
 import bean.myPagerAdapter;
 
 /**
@@ -38,6 +39,7 @@ public class Caiyuan extends FragmentActivity
 
     java.util.List<Fragment> mFragments = new ArrayList<Fragment>();
     List<String> titleContainer = new ArrayList<String>();
+    private ColorAnimationView colorAnimationView;
 
 
     @Override
@@ -49,7 +51,7 @@ public class Caiyuan extends FragmentActivity
 
         pager = (ViewPager) findViewById(R.id.viewpager1);
         tabStrip = (PagerTabStrip) findViewById(R.id.tabstrip1);
-
+        colorAnimationView = (ColorAnimationView) findViewById(R.id.ColorAnimationView);
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
@@ -80,6 +82,7 @@ public class Caiyuan extends FragmentActivity
         tabStrip.setDrawFullUnderline(false);
         //设置当前tab页签的下划线颜色
         tabStrip.setTabIndicatorColor(255255255);
+        tabStrip.setTextColor(0xdd000000);
         tabStrip.setTextSpacing(200);
 
         mFragments.add(new Mycaiyuan());
@@ -93,5 +96,7 @@ public class Caiyuan extends FragmentActivity
         titleContainer.add("豆芽机");
         titleContainer.add("蘑菇箱");
         pager.setAdapter(new myPagerAdapter(getSupportFragmentManager(), mFragments, titleContainer));
+
+        colorAnimationView.setmViewPager(pager,5);
     }
 }
