@@ -52,7 +52,7 @@ public class Caiyuan extends FragmentActivity
         pager = (ViewPager) findViewById(R.id.viewpager1);
         tabStrip = (PagerTabStrip) findViewById(R.id.tabstrip1);
         colorAnimationView = (ColorAnimationView) findViewById(R.id.ColorAnimationView);
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
             {
@@ -71,7 +71,6 @@ public class Caiyuan extends FragmentActivity
 
             }
         });
-
         addviewpager();
     }
 

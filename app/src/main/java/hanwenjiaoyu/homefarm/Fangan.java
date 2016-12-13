@@ -88,6 +88,8 @@ public class Fangan extends Activity
                 adapter.select(position);
             }
         });
+
+        //确定按钮按下后
         Button daoru = (Button) findViewById(R.id.daoru_button);
         daoru.setOnClickListener(new View.OnClickListener() {
             @Override

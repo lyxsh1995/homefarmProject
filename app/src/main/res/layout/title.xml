@@ -3,10 +3,18 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:theme="?attr/actionBarTheme"
+        android:minHeight="?attr/actionBarSize"
+        android:id="@+id/toolbar">
+
+        <FrameLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,22 +22,23 @@
         android:gravity="center_vertical"
         >
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:id="@+id/imageView"
-            android:layout_weight="0.9"
-            android:adjustViewBounds="false"
-            android:cropToPadding="false"
-            android:src="@mipmap/logo"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/imageView"
+                android:layout_weight="1.0"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:src="@mipmap/logo"/>
 
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            app:srcCompat="@drawable/btn_add"
-            android:id="@+id/menu_button"
-            android:background="#00000000"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/btn_add"
+                android:id="@+id/menu_button"
+                android:background="#00000000"
+                android:layout_gravity="right|center_vertical"/>
+        </FrameLayout>
+    </android.support.v7.widget.Toolbar>
 
-    </LinearLayout>
 </LinearLayout>
