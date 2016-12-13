@@ -12,12 +12,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -47,6 +50,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -226,6 +230,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainActivitythis = this;
+
         api = WXAPIFactory.createWXAPI(this, "wx6dd2baabb3de7c7b", true);
         api.registerApp("wx6dd2baabb3de7c7b");
 
@@ -458,7 +463,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 File appDir = new File(Environment.getExternalStorageDirectory() + "/homefarm");
                 if (!appDir.exists())
                 {
@@ -466,7 +471,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 file = new File(Environment.getExternalStorageDirectory() + "/homefarm/", String.valueOf(System.currentTimeMillis()) + ".jpg");
                 mUri = Uri.fromFile(file);
-                cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mUri);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
                 //CAMERA_WITH_DATA = 3023
                 startActivityForResult(cameraIntent, 3023);
             }
@@ -595,7 +600,7 @@ public class MainActivity extends AppCompatActivity
                     {
                         String resstr = response.body().string();
                         Log.i("jieshou", resstr);
-                        java.lang.reflect.Type type = new TypeToken<Cdjson>() {}.getType();
+                        Type type = new TypeToken<Cdjson>() {}.getType();
                         cdjson = gson.fromJson(resstr, type);
                         msg = Message.obtain();
                         msg.what = 0;
@@ -646,7 +651,7 @@ public class MainActivity extends AppCompatActivity
                         String resstr = response.body().string();
                         Log.i("jieshou", resstr);
                         rs = new ArrayList<Cljson>();
-                        java.lang.reflect.Type type = new TypeToken<List<Cljson>>() {}.getType();
+                        Type type = new TypeToken<List<Cljson>>() {}.getType();
                         rs = gson.fromJson(resstr, type);
                         msg = Message.obtain();
                         msg.what = 1;

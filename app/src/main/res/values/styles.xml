@@ -1,8 +1,9 @@
 <resources>
-
-    <style name="ImageTranslucentTheme" parent="AppTheme.Base">
+    <style name="ImageTranslucentTheme" parent="Theme.AppCompat.NoActionBar">
         <!--在Android 4.4之前的版本上运行，直接跟随系统主题-->
     </style>
+
+    <style name="AppTheme" parent="AppTheme.Base"></style>
     <style name="AppTheme.Base" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="toolbarNavigationButtonStyle">@style/mToolbarNavigationButtonStyle</item>
         <item name="android:spinnerStyle">@style/mSpinnerStyle</item>
@@ -27,12 +28,6 @@
             backward-compatibility can go here.
         -->
     </style>
-
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
-
     
     <string name="toastFailed">Failed!</string>
     <string name="buttonOp">More&#8230;</string>
