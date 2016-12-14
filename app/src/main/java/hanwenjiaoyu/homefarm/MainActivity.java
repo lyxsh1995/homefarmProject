@@ -1,7 +1,9 @@
 package hanwenjiaoyu.homefarm;
 
 import android.app.ActivityManager;
+import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -457,6 +459,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        //拍照
         ImageButton paizhao = (ImageButton) findViewById(R.id.paizhao);
         paizhao.setOnClickListener(new View.OnClickListener()
         {
@@ -469,11 +472,21 @@ public class MainActivity extends AppCompatActivity
                 {
                     appDir.mkdir();
                 }
-                file = new File(Environment.getExternalStorageDirectory() + "/homefarm/", String.valueOf(System.currentTimeMillis()) + ".jpg");
-                mUri = Uri.fromFile(file);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
                 //CAMERA_WITH_DATA = 3023
                 startActivityForResult(cameraIntent, 3023);
+            }
+        });
+
+        //相册
+        ImageButton xiangce = (ImageButton)findViewById(R.id.xiangce);
+        xiangce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -897,15 +910,35 @@ public class MainActivity extends AppCompatActivity
                     //是否拍照并选取了图片
                     if (resultCode == RESULT_OK)
                     {
+                        file = new File(Environment.getExternalStorageDirectory() + "/homefarm/", String.valueOf(System.currentTimeMillis()) + ".jpg");
+                        mUri = Uri.fromFile(file);
                         Toast.makeText(getApplicationContext(), "请选择需要分享的社交工具", Toast.LENGTH_SHORT).show();
                     } else
                     {
-                        Toast.makeText(getApplicationContext(), "拍照失败", Toast.LENGTH_SHORT).show();
+                        mUri = null;
+                        file = null;
+                        bp = null;
+                        Toast.makeText(getApplicationContext(), "您未选择照片", Toast.LENGTH_SHORT).show();
                     }
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
+                }
+                break;
+            //相册选取照片
+            case 1:
+                if (resultCode == RESULT_OK)
+                {
+                    mUri = data.getData();
+                    file = new File(getRealPathFromURI(mUri));
+                    Toast.makeText(getApplicationContext(), "请选择需要分享的社交工具", Toast.LENGTH_SHORT).show();
+                } else
+                {
+                    mUri = null;
+                    file = null;
+                    bp = null;
+                    Toast.makeText(getApplicationContext(), "您未选择图片", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -980,5 +1013,18 @@ public class MainActivity extends AppCompatActivity
         menuObjects.add(addFav);
         menuObjects.add(block);
         return menuObjects;
+    }
+
+    //获取绝对路径
+    public String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor.moveToFirst()){
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
     }
 }
