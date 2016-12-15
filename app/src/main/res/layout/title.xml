@@ -37,7 +37,8 @@
                 app:srcCompat="@drawable/btn_add"
                 android:id="@+id/menu_button"
                 android:background="#00000000"
-                android:layout_gravity="right|center_vertical"/>
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="12dp"/>
         </FrameLayout>
     </android.support.v7.widget.Toolbar>
 

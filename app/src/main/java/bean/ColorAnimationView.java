@@ -102,7 +102,7 @@ public class ColorAnimationView
     //设置颜色
     private void createDefaultAnimation() {
         colorAnim = ObjectAnimator.ofInt(this,
-                                         "backgroundColor", 0xDDFFFF00, RED, BLUE, GREEN, 0xEEFFFF00);
+                                         "backgroundColor", 0xff89a6b0,0xff62a7d1, BLUE, 0xFF67C294, 0xFFf2A444);
         colorAnim.setEvaluator(new ArgbEvaluator());
         colorAnim.setDuration(DURATION);
         colorAnim.addUpdateListener(this);

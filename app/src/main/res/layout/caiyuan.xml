@@ -32,7 +32,7 @@
                 android:id="@+id/textView5"
                 android:gravity="center"
                 android:layout_marginBottom="20dp"
-                android:textColor="#ff444444"
+                android:textColor="#ffffff"
                 android:textSize="20dp"/>
 
             <android.support.v4.view.ViewPager

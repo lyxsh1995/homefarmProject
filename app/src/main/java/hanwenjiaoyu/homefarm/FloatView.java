@@ -109,17 +109,17 @@ public class FloatView extends LinearLayout
 
                     if (20 <= a && a <= 40)
                     {
-                        wendu_shuju.setText(wendu_shuju.getText() + "   良好");
+//                        wendu_shuju.setText(wendu_shuju.getText() + " 良好");
                     } else
                     {
-                        wendu_shuju.setText(wendu_shuju.getText() + "   恶劣");
+//                        wendu_shuju.setText(wendu_shuju.getText() + " 恶劣");
                     }
                     if (20 <= b && b <= 40)
                     {
-                        shidu_shuju.setText(shidu_shuju.getText() + "   良好");
+//                        shidu_shuju.setText(shidu_shuju.getText() + " 良好");
                     } else
                     {
-                        shidu_shuju.setText(shidu_shuju.getText() + "   恶劣");
+//                        shidu_shuju.setText(shidu_shuju.getText() + " 恶劣");
                     }
                     break;
             }
@@ -132,7 +132,7 @@ public class FloatView extends LinearLayout
         this.context = context;
         //获取浮动窗口视图所在布局
         View view = LayoutInflater.from(context).inflate(
-                R.layout.window, null);
+                R.layout.xuanfuchuang, null);
         windowManager = FloatWindowService.floatWindowServicethis.windowManager;
         // 此windowManagerParams变量为获取的全局变量，用以保存悬浮窗口的属性
         windowManagerParams = FloatWindowService.floatWindowServicethis.params;
@@ -226,22 +226,22 @@ public class FloatView extends LinearLayout
                 mTouchX = mTouchY = 0;
                 if ((x - mStartX) < 5 && (y - mStartY) < 5)
                 {
-                    //双击
-                    if ((System.currentTimeMillis() - touchTime) < 1000)
-                    {
-                        //销毁定时器
-                        FloatView.timer.cancel();
-                        //停止服务
-                        FloatWindowService.floatWindowServicethis.stopSelf();
-                        try
-                        {
-                            if (MainActivity.mainActivitythis.kaiguan != null)
-                            {
-                                MainActivity.mainActivitythis.kaiguan.setChecked(false);
-                            }
-                        }catch (Exception e)
-                        {}
-                    }
+//                    //双击
+//                    if ((System.currentTimeMillis() - touchTime) < 1000)
+//                    {
+//                        //销毁定时器
+//                        FloatView.timer.cancel();
+//                        //停止服务
+//                        FloatWindowService.floatWindowServicethis.stopSelf();
+//                        try
+//                        {
+//                            if (MainActivity.mainActivitythis.kaiguan != null)
+//                            {
+//                                MainActivity.mainActivitythis.kaiguan.setChecked(false);
+//                            }
+//                        }catch (Exception e)
+//                        {}
+//                    }
                     if (mClickListener != null)
                     {
                         mClickListener.onClick(this);

@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@mipmap/beijing2"
+        android:background="@mipmap/beijing4"
         >
 
 
@@ -23,25 +23,30 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:background="#22FFFFFF"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:layout_marginBottom="10dp">
 
             <include layout="@layout/title"/>
         </LinearLayout>
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#22FFFFFF"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.55"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp">
 
                 <include layout="@layout/window"/>
             </LinearLayout>
@@ -62,20 +67,31 @@
                 android:layout_weight="0.3"
                 android:textColor="#ffffff"
                 android:textOff="off"
-                android:textOn="on"/>
+                android:textOn="on"
+                android:layout_marginRight="20dp"/>
 
         </LinearLayout>
 
-        <include layout="@layout/main"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#22FFFFFF">
+
+        <include layout="@layout/main"
+                 android:layout_weight="1"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="6"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp">
+        android:background="#22FFFFFF"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="10dp">
 
         <LinearLayout
             android:layout_width="0dp"

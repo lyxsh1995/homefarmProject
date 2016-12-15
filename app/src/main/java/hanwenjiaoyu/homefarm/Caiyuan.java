@@ -80,9 +80,12 @@ public class Caiyuan extends FragmentActivity
         //取消tab下面的长横线
         tabStrip.setDrawFullUnderline(false);
         //设置当前tab页签的下划线颜色
-        tabStrip.setTabIndicatorColor(255255255);
-        tabStrip.setTextColor(0xdd000000);
+        tabStrip.setTabIndicatorColor(0xccffffff);
+        //文字颜色
+        tabStrip.setTextColor(0xddffffff);
         tabStrip.setTextSpacing(200);
+        //背景色
+        tabStrip.setBackgroundColor(0x00000000);
 
         mFragments.add(new Mycaiyuan());
         mFragments.add(new Mycaiyuan());

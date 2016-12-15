@@ -11,13 +11,15 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="80dp"
             android:id="@+id/tiele2_image"
             android:layout_weight="1"
             android:adjustViewBounds="false"
             android:cropToPadding="false"
             android:src="@mipmap/shishui"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:layout_width="50dp"
+            android:layout_marginLeft="10dp"/>
 
         <TextView
             android:text="施水"
@@ -26,8 +28,10 @@
             android:layout_weight="1"
             android:layout_height="50dp"
             android:gravity="center"
-            android:textSize="40dp"
-            android:textColor="#03BB9C"/>
+            android:textSize="25dp"
+            android:textColor="#03BB9C"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:id="@+id/window_layout"
+              android:weightSum="5"
     >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:weightSum="2"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:srcCompat="@mipmap/wendu"
+            android:scaleType="fitCenter"/>
+
+        <ImageView
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:srcCompat="@mipmap/shishui"
+            android:scaleType="fitCenter"
+            android:layout_width="30dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginRight="20dp">
@@ -30,7 +55,8 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="3"
         android:layout_height="wrap_content">
 
         <TextView
