@@ -1,41 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@mipmap/beijing1">
+              android:background="@mipmap/beijing5"
+              android:orientation="vertical"
+              android:weightSum="1"
+              android:gravity="center_vertical">
+
+    <Button
+        android:text="登录"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/denglu"/>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/login_layout">
+        android:layout_height="wrap_content"
+        android:id="@+id/login_layout"
+        android:paddingTop="10dp"
+        android:weightSum="1"
+        android:gravity="center">
 
-        <Button
-            android:text="辅助设备联网"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/wifi_button"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="100dp">
 
-        <Button
-            android:text="扫描二维码"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/login_button"/>
+            <Button
+                android:layout_width="100dp"
+                android:id="@+id/wifi_button"
+                android:background="@mipmap/lianwang"
+                android:layout_height="100dp"/>
 
-        <Button
-            android:text="登录"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/denglu"/>
+            <TextView
+                android:text="辅助设备联网"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView12"
+                android:layout_marginTop="10dp"
+                android:textColor="#FFFFFF"
+                android:gravity="center_horizontal"/>
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:visibility="invisible"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="80dp"
+                android:id="@+id/login_button"
+                android:background="@mipmap/saomiao"
+                android:layout_height="75dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:text="扫描二位码"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView13"
+                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
+                android:textColor="#FFFFFF"/>
+        </LinearLayout>
 
     </LinearLayout>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:visibility="invisible"
+        android:layout_weight="0.03"/>
 
 </LinearLayout>

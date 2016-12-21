@@ -6,7 +6,7 @@
 	android:layout_height="fill_parent"
 	android:orientation="vertical"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:background="@mipmap/beijing3"
+	android:background="@mipmap/beijing5"
 	>
 
 	<LinearLayout

@@ -19,10 +19,6 @@ import android.view.View;
 public class ColorAnimationView
         extends View
         implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
-    private static final int RED = 0xffFF8080;
-    private static final int BLUE = 0xff8080FF;
-    private static final int WHITE = 0xffffffff;
-    private static final int GREEN = 0xff80ff80;
     private static final int DURATION = 3000;
     ValueAnimator colorAnim = null;
 
@@ -102,7 +98,7 @@ public class ColorAnimationView
     //设置颜色
     private void createDefaultAnimation() {
         colorAnim = ObjectAnimator.ofInt(this,
-                                         "backgroundColor", 0xff89a6b0,0xff62a7d1, BLUE, 0xFF67C294, 0xFFf2A444);
+                                         "backgroundColor", 0x22EECC00,0x2262a7d1, 0x228080FF, 0x2267C294, 0x22f2A444);
         colorAnim.setEvaluator(new ArgbEvaluator());
         colorAnim.setDuration(DURATION);
         colorAnim.addUpdateListener(this);
