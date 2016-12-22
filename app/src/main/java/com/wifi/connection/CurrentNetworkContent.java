@@ -82,14 +82,14 @@ public class CurrentNetworkContent extends BaseContent {
 
 	@Override
 	public int getButtonCount() {
-		// No Modify button for open network.
+		// No Modify button_nor for open network.
 		return mIsOpenNetwork ? 2 : 3;
 	}
 
 	@Override
 	public OnClickListener getButtonOnClickListener(int index) {
 		if(mIsOpenNetwork && index == 1) {
-			// No Modify button for open network.
+			// No Modify button_nor for open network.
 			// index 1 is Cancel(index 2).
 			return mOnClickListeners[2];
 		}
@@ -103,7 +103,7 @@ public class CurrentNetworkContent extends BaseContent {
 			return mFloating.getString(R.string.forget_network);
 		case 1:
 			if(mIsOpenNetwork) {
-				// No Modify button for open network.
+				// No Modify button_nor for open network.
 				// index 1 is Cancel.
 				return getCancelString();
 			}

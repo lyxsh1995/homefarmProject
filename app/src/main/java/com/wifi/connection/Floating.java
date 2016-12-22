@@ -94,7 +94,7 @@ public class Floating extends Activity {
 
 		final int btnCount = mContent.getButtonCount();
 		if(btnCount > BUTTONS.length) {
-			throw new RuntimeException(String.format("%d exceeds maximum button count: %d!", btnCount, BUTTONS.length));
+			throw new RuntimeException(String.format("%d exceeds maximum button_nor count: %d!", btnCount, BUTTONS.length));
 		}
 		findViewById(R.id.buttons_view).setVisibility(btnCount > 0 ? View.VISIBLE : View.GONE);
 		for(int buttonId:BUTTONS) {

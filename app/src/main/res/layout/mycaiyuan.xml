@@ -3,29 +3,54 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#44000000">
+              android:background="#44000000"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp">
 
     <TextView
-        android:text="TextView"
+        android:text="品种名称"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/mingcheng"/>
+        android:id="@+id/mingcheng"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="30dp"/>
 
     <TextView
-        android:text="TextView"
+        android:text="品种介绍品种介绍品种介绍品种介绍品种介绍品种介绍品种介绍品种介绍品种介绍\n品种介绍品种介绍品种介绍品种介绍品种介绍"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/jianjie"/>
+        android:id="@+id/jianjie"
+        android:layout_marginTop="20dp"
+        android:textColor="#FFFFFF"/>
 
-    <Button
-        android:text="导入方案"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/daoru"/>
+        android:layout_height="match_parent"
+        android:gravity="center">
 
-    <Button
-        android:text="确定"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/quedingdaoru"/>
+        <Button
+            android:text="确定"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/quedingdaoru"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="100dp"/>
+
+        <Button
+            android:text="导入方案"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/daoru"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="100dp"/>
+    </LinearLayout>
+
 </LinearLayout>

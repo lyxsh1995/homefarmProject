@@ -445,15 +445,15 @@ public class MainActivity extends AppCompatActivity
                         startActivity(intent);
                         break;
                     case 4:
-                        //关于
-                        break;
-                    case 5:
                         //退出登录
                         getApplication().deleteDatabase("homefarm");
                         intent = new Intent(getApplicationContext(), FloatWindowService.class);
                         stopService(intent);
                         finish();
                         System.exit(0);
+                        break;
+                    case 5:
+                        //关于
                         break;
                 }
             }
@@ -995,11 +995,11 @@ public class MainActivity extends AppCompatActivity
         bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
         addFr.setBitmap(bitmap);
 
-        //图片太小不缩放
-        MenuObject addFav = new MenuObject("关    于");
-        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.guanyu));
-//        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
-        addFav.setBitmap(bitmap);
+//        //图片太小不缩放
+//        MenuObject addFav = new MenuObject("关    于");
+//        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.guanyu));
+////        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+//        addFav.setBitmap(bitmap);
 
         MenuObject block = new MenuObject("退出登录");
         bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.tuichu));
@@ -1010,7 +1010,7 @@ public class MainActivity extends AppCompatActivity
         menuObjects.add(send);
         menuObjects.add(like);
         menuObjects.add(addFr);
-        menuObjects.add(addFav);
+//        menuObjects.add(addFav);
         menuObjects.add(block);
         return menuObjects;
     }
