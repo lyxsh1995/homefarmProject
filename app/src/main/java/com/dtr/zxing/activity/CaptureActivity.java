@@ -43,6 +43,7 @@ import com.dtr.zxing.utils.BeepManager;
 import com.dtr.zxing.utils.CaptureActivityHandler;
 import com.dtr.zxing.utils.InactivityTimer;
 import com.google.zxing.Result;
+import com.rtk.simpleconfig_wizard.MainActivity;
 
 /**
  * This activity opens the camera and does the actual scanning on a background
@@ -241,6 +242,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
 			@Override
 			public void onCancel(DialogInterface dialog) {
+				Intent intent = new Intent(CaptureActivity.this, MainActivity.class);
+				startActivity(intent);
 				finish();
 			}
 		});

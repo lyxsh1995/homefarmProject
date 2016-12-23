@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:weightSum="1"
               android:gravity="center_horizontal"
-              android:layout_height="32dp"
+              android:layout_height="wrap_content"
               android:layout_marginTop="40dp">
 
     <Button
@@ -11,24 +11,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/kaishi"
-        android:background="#ff3300"
-        android:layout_marginRight="30dp"/>
+        android:background="@drawable/button"
+        android:layout_marginRight="30dp"
+        android:layout_weight="0.18"
+        android:textColor="#FFFFFF"/>
 
     <Button
         android:text="停止"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tingzhi"
-        android:background="#ff3300"
+        android:background="@drawable/button"
         android:elevation="0dp"
-        android:layout_marginRight="30dp"/>
+        android:layout_marginRight="30dp"
+        android:layout_weight="0.22"
+        android:textColor="#FFFFFF"/>
 
     <Button
         android:text="返回"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/fanhui"
-        android:background="#ff3300"
+        android:background="@drawable/button"
         android:elevation="0dp"
-        />
+        android:layout_weight="0.18"
+        android:textColor="#FFFFFF"/>
 </LinearLayout>

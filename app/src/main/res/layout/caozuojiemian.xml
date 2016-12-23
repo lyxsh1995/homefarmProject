@@ -9,7 +9,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffCCCCCC"
+        android:background="#ffFF6633"
         android:paddingTop="10dp">
 
         <include layout="@layout/title"/>

@@ -94,7 +94,8 @@ public class ResultActivity extends Activity {
 			mresult = extras.getString("result");
 			try
 			{
-				eqid = mresult.substring(0, mresult.indexOf("|"));
+                int start = mresult.indexOf("?");
+				eqid = mresult.substring(start+1, mresult.indexOf("|"));
 				eqidmd5 = mresult.substring(mresult.indexOf("|")+1);
 				mResultText.setText("设备ID:"+ eqid);
 			}catch (Exception e)

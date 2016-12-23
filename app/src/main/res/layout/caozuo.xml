@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -29,7 +30,7 @@
                 android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
                 android:text="种植第一层"
-                android:textColor="#000000"
+                android:textColor="#FF6922"
                 android:textSize="18sp"/>
 
             <CheckBox
@@ -45,7 +46,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
-                android:background="@mipmap/xuanze"/>
+                android:background="@drawable/biankuangbutton"
+                android:text="选择"
+                android:textColor="#FF6922"/>
         </LinearLayout>
 
         <LinearLayout
@@ -63,7 +66,7 @@
                 android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
                 android:text="种植第二层"
-                android:textColor="#000000"
+                android:textColor="#FF6922"
                 android:textSize="18sp"/>
 
             <CheckBox
@@ -79,7 +82,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
-                android:background="@mipmap/xuanze"/>
+                android:background="@drawable/biankuangbutton"
+                android:text="选择"
+                android:textColor="#FF6922"/>
         </LinearLayout>
 
         <LinearLayout
@@ -96,7 +101,7 @@
                 android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
                 android:text="种植第三层"
-                android:textColor="#000000"
+                android:textColor="#FF6922"
                 android:textSize="18sp"/>
 
             <CheckBox
@@ -112,7 +117,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
-                android:background="@mipmap/xuanze"/>
+                android:background="@drawable/biankuangbutton"
+                android:text="选择"
+                android:textColor="#FF6922"/>
         </LinearLayout>
 
         <LinearLayout
@@ -129,7 +136,7 @@
                 android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
                 android:text="豆    芽    机"
-                android:textColor="#000000"
+                android:textColor="#FF6922"
                 android:textSize="18sp"/>
 
             <CheckBox
@@ -145,7 +152,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
-                android:background="@mipmap/xuanze"/>
+                android:background="@drawable/biankuangbutton"
+                android:text="选择"
+                android:textColor="#FF6922"
+                style="che"/>
         </LinearLayout>
 
         <LinearLayout
@@ -163,7 +173,7 @@
                 android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
                 android:text="蘑    菇    箱"
-                android:textColor="#000000"
+                android:textColor="#FF6922"
                 android:textSize="18sp"/>
 
             <CheckBox
@@ -179,7 +189,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
-                android:background="@mipmap/xuanze"/>
+                android:background="@drawable/biankuangbutton"
+                android:text="选择"
+                android:textColor="#FF6922"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -198,7 +210,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center_vertical"
             android:text="时间"
-            android:textColor="#000000"
+            android:textColor="#FF6922"
             android:textSize="18sp"/>
 
         <EditText
@@ -219,7 +231,7 @@
             android:layout_weight="0.00"
             android:gravity="center_vertical"
             android:text="分钟"
-            android:textColor="#000000"
+            android:textColor="#FF6922"
             android:textSize="18sp"/>
     </LinearLayout>
 </LinearLayout>

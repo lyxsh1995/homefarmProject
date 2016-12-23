@@ -13,6 +13,6 @@
         android:endColor="@color/orange_normal"
         android:useLevel="true" />
     -->
-    <solid android:color="#EE4422"/>
+    <solid android:color="#CC4422"/>
 
 </shape>
