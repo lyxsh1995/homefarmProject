@@ -420,7 +420,7 @@ public class MainActivity extends Activity {
 			show_discoverDevice();
 		}else{
 			Toast toast = Toast.makeText(MainActivity.this,
-					"Please connect the home AP"
+					"请连接wifi"
 					,Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 100);
 			LinearLayout toastLayout = (LinearLayout) toast.getView();
@@ -669,8 +669,8 @@ public class MainActivity extends Activity {
 												public void run() {
 													AlertDialog.Builder errorAlert=new AlertDialog.Builder(MainActivity.this);
 
-													errorAlert.setTitle("Connect the AP Fail");
-													errorAlert.setMessage("Please check the password or other problem.\nYou can go to System Settings/Wi-Fi, select the Wi-Fi network!");
+													errorAlert.setTitle("连接wifi失败");
+													errorAlert.setMessage("请检查密码是否正确\n" + "您可以去系统设置里,选择wifi");
 													errorAlert.setPositiveButton("确定",new DialogInterface.OnClickListener() {
 
 														@Override
@@ -741,8 +741,8 @@ public class MainActivity extends Activity {
 	    								AP_password = edittxt_apPassword.getText().toString();
 	    							}else{
 	    								AlertDialog.Builder msgAlert=new AlertDialog.Builder(MainActivity.this);
-	    								msgAlert.setTitle("Error");
-	    								msgAlert.setMessage("Please check the password!\n");
+	    								msgAlert.setTitle("错误");
+	    								msgAlert.setMessage("请检查密码是否正确\n");
 	    								msgAlert.setPositiveButton("确定", null);
 	    								msgAlert.show();
 	    								return;
@@ -794,8 +794,8 @@ public class MainActivity extends Activity {
 																public void run() {
 																	AlertDialog.Builder errorAlert=new AlertDialog.Builder(MainActivity.this);
 
-																	errorAlert.setTitle("Connect the AP Fail");
-																	errorAlert.setMessage("Please check the password or other problem.\nYou can go to System Settings/Wi-Fi, select the Wi-Fi network!");
+																	errorAlert.setTitle("连接wifi失败");
+																	errorAlert.setMessage("请检查密码是否正确\n您可以去系统设置里,选择wifi");
 																	errorAlert.setPositiveButton("确定",new DialogInterface.OnClickListener() {
 
 																		@Override
@@ -877,7 +877,7 @@ public class MainActivity extends Activity {
 		});
 
 	 	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	 	builder.setTitle("Add new network:")
+	 	builder.setTitle("添加新的网络:")
 	 	.setIcon(R.drawable.ic_dialog_icon)
 	 	.setView(addNetworkView)
 	 	.setNegativeButton("确定", new DialogInterface.OnClickListener() {
@@ -1412,7 +1412,6 @@ public class MainActivity extends Activity {
 	//<func>
 	public void startToConfigure()
 	{
-
 		ConfigureAPProFlag = true;
 
 		pd = new ProgressDialog(MainActivity.this);
@@ -1864,7 +1863,7 @@ public class MainActivity extends Activity {
 			connect_count--;
 		}
 		if(wifiIP == 0){
-    	    Toast.makeText(MainActivity.this, "Allocating IP, please wait a moment", Toast.LENGTH_SHORT).show();
+    	    Toast.makeText(MainActivity.this, "分配IP,请稍后", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
@@ -2046,7 +2045,7 @@ public class MainActivity extends Activity {
 					AlertDialog.Builder alert_timeout=new AlertDialog.Builder(MainActivity.this);
 					alert_timeout.setCancelable(false);
 					//switch password input type
-					alert_timeout.setTitle("Configure Timeout");
+					alert_timeout.setTitle("配置超时");
 					alert_timeout.setCancelable(false);
 					alert_timeout.setPositiveButton("确定",null);
 					alert_timeout.show();
@@ -2361,7 +2360,7 @@ public class MainActivity extends Activity {
 
 													AlertDialog.Builder alert=new AlertDialog.Builder(MainActivity.this);
 													alert.setCancelable(false);
-													alert.setTitle("Rename Device Failed");
+													alert.setTitle("设备重命名失败");
 												    alert.setCancelable(false);
 												    alert.setPositiveButton("确定",null);
 												    /*alert.setPositiveButton("确定",new DialogInterface.OnClickListener() {
@@ -2435,7 +2434,7 @@ public class MainActivity extends Activity {
 
 
 						}else{
-							Toast.makeText(MainActivity.this, "Warning: The device name is empty!", Toast.LENGTH_LONG).show();
+							Toast.makeText(MainActivity.this, "警告：设备名称为空！", Toast.LENGTH_LONG).show();
 						}
 					}
 
@@ -2446,7 +2445,7 @@ public class MainActivity extends Activity {
 	public void remove_OnClick()
 	{
 		pd = new ProgressDialog(MainActivity.this);
-		pd.setTitle("Device Removing ");
+		pd.setTitle("清除设备中 ");
 		pd.setMessage("请稍后");
 		pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		pd.setIndeterminate(true);
@@ -2541,7 +2540,7 @@ public class MainActivity extends Activity {
 				 					AlertDialog.Builder alert=new AlertDialog.Builder(MainActivity.this);
 									alert.setCancelable(false);
 									//switch password input type
-										alert.setTitle("Remove Device Failed");
+										alert.setTitle("清除设备失败");
 									    alert.setCancelable(false);
 									    alert.setPositiveButton("确定",null);
 									    /*alert.setPositiveButton("确定",new DialogInterface.OnClickListener() {
@@ -3063,7 +3062,7 @@ public class MainActivity extends Activity {
 		try {
 			activity.startActivity(openWifiItemIntent);
 		} catch(ActivityNotFoundException e) {
-			Toast.makeText(activity, "Wifi Connecter is not installed.", Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, "wifi模块没有安装", Toast.LENGTH_LONG).show();
 	        Log.e(TAG, "Wifi Connecter is not installed.");
 		}
 	}
