@@ -141,7 +141,7 @@ public class FloatView extends LinearLayout
         wendu_shuju = (TextView) view.findViewById(R.id.wendu_shuju);
         shidu_shuju = (TextView) view.findViewById(R.id.shidu_shuju);
 
-        String sqlstr = "SELECT d_name,d_liang FROM device where d_type = 'cl' and EQID = '" + FloatWindowService.floatWindowServicethis.EQID + "' and EQIDMD5 = '" + FloatWindowService.floatWindowServicethis.EQIDMD5 + "' and d_name like 'turangshidu%' or d_name like 'turangwendu%'";
+        String sqlstr = "SELECT d_name,d_liang FROM device where d_type = 'cl' and EQID = '" + FloatWindowService.floatWindowServicethis.EQID + "' and d_name like 'turangshidu%' or d_name like 'turangwendu%'";
         requestBody = new FormBody.Builder()
                 .add("fangfa", "chaxun")
                 .add("EQID", FloatWindowService.floatWindowServicethis.EQID)

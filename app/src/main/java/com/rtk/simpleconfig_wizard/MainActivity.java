@@ -2969,6 +2969,7 @@ public class MainActivity extends Activity {
     			while(count<6) {
     				try {
 						Thread.sleep(1);
+						//发送数据包
 						SCLib.rtk_sc_send_control_packet(buf, ip);
 						//Log.d("control packet","flag: " + String.valueOf(flag));
 					} catch (InterruptedException e) {
@@ -3077,7 +3078,8 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
+		if (resultCode == RESULT_OK)
+		{
 			Bundle bundle = data.getExtras();
 			QRCodeScanResult = bundle.getString("result");
 			Log.d(TAG, "QRCodeScanResult: " + QRCodeScanResult);

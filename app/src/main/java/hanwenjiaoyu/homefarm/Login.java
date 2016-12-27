@@ -165,9 +165,9 @@ public class Login extends Activity
             public void onClick(View v)
             {
                 Intent intent = new Intent(Login.this,MainActivity.class);
-                intent.putExtra("EQID", "1111111111");
-                intent.putExtra("EQIDMD5", "737207bfff986b451956db85a7c8d380");
-                Login.loginthis.db.execSQL("update xinxi set EQID = '1111111111', EQIDMD5 = '737207bfff986b451956db85a7c8d380' where _id =1");
+                intent.putExtra("EQID", "d8b04cb116dc");
+                intent.putExtra("EQIDMD5", "1451506714515067");
+                Login.loginthis.db.execSQL("update xinxi set EQID = 'd8b04cb116dc', EQIDMD5 = '1451506714515067' where _id =1");
                 startActivity(intent);
                 finish();
             }

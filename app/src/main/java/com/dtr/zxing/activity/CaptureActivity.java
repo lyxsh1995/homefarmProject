@@ -231,19 +231,17 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 		builder.setTitle(getString(R.string.app_name));
 		builder.setMessage("相机打开出错，请稍后重试");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(CaptureActivity.this, hanwenjiaoyu.homefarm.MainActivity.class);
+				startActivity(intent);
 				finish();
 			}
 
 		});
 		builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-
 			@Override
 			public void onCancel(DialogInterface dialog) {
-				Intent intent = new Intent(CaptureActivity.this, MainActivity.class);
-				startActivity(intent);
 				finish();
 			}
 		});

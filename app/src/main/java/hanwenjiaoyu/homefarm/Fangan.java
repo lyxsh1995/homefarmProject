@@ -107,6 +107,8 @@ public class Fangan extends Activity
         String sqlstr = "SELECT * FROM fangan";
         requestBody = new FormBody.Builder()
                 .add("fangfa","chaxun")
+                .add("EQID",MainActivity.mainActivitythis.EQID)
+                .add("EQIDMD5",MainActivity.mainActivitythis.EQIDMD5)
                 .add("sqlstr",sqlstr)
                 .build();
         request = new Request.Builder()

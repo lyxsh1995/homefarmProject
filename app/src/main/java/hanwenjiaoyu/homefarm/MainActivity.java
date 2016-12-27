@@ -631,7 +631,7 @@ public class MainActivity extends AppCompatActivity
         wendu_shuju = (TextView) findViewById(R.id.wendu_shuju);
         shidu_shuju = (TextView) findViewById(R.id.shidu_shuju);
 
-        String sqlstr = "SELECT d_name,d_liang FROM device where d_type = 'cl' and EQID = '" + EQID + "' and EQIDMD5 = '" + EQIDMD5 + "' and d_name like 'turangshidu%' or d_name like 'turangwendu%'";
+        String sqlstr = "SELECT d_name,d_liang FROM device where d_type = 'cl' and EQID = '" + EQID + "' and (d_name like 'turangshidu%' or d_name like 'turangwendu%')";
         requestBody = new FormBody.Builder()
                 .add("fangfa", "chaxun")
                 .add("EQID", EQID)
