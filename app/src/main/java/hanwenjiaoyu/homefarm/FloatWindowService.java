@@ -31,6 +31,7 @@ import java.util.TimerTask;
 
 import bean.Cdjson;
 import bean.Cljson;
+import bean.MD5;
 import bean.Sqlite;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -74,7 +75,7 @@ public class FloatWindowService extends Service
         {
             cursor.move(1);
             EQID = cursor.getString(1);
-            EQIDMD5 = cursor.getString(2);
+            EQIDMD5 = MD5.jiami(EQID);
         }
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);

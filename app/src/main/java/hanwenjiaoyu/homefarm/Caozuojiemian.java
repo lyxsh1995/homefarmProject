@@ -30,6 +30,7 @@ import java.util.TimerTask;
 
 import bean.Fwjson;
 import bean.Lastjson;
+import bean.MD5;
 import bean.Mybutton;
 import bean.Myjson;
 import okhttp3.Call;
@@ -114,7 +115,8 @@ public class Caozuojiemian extends Activity
                     break;
                 //接收服务器返回的操作成功或失败
                 case 1:
-                    if(msg.obj.toString().substring(0,2).equals("ok"))
+                    try
+                    {if(msg.obj.toString().substring(0,2).equals("ok"))
                     {
                         //更新Mainactivity图片
                         fBillNo = msg.obj.toString().substring(2);
@@ -131,7 +133,9 @@ public class Caozuojiemian extends Activity
                     {
                         Toast.makeText(getApplicationContext(),"提交到服务器失败",Toast.LENGTH_SHORT).show();
                     }
-                    break;
+                        break;
+                    }catch (Exception e){}
+
                 //该指令返回后的操作
                 case 2:
                     Toast.makeText(getApplicationContext(),msg.obj.toString(),Toast.LENGTH_SHORT).show();
@@ -410,7 +414,7 @@ public class Caozuojiemian extends Activity
         String t1 = format.format(d1);
         json.FExcTime = t1;
         json.EQID = MainActivity.mainActivitythis.EQID;
-        json.EQIDMD5 = MainActivity.mainActivitythis.EQIDMD5;
+        json.EQIDMD5 = MD5.jiami(json.EQID);
 
         requestBody = new FormBody.Builder()
                 .add("fangfa","charu")
@@ -424,7 +428,7 @@ public class Caozuojiemian extends Activity
                 .add("FContinuePM",json.FContinuePM)
                 .add("FExcTime",json.FExcTime)
                 .add("EQID",json.EQID)
-                .add("EQIDMD5",json.EQIDMD5)
+                .add("EQIDMD5",MD5.jiami(json.EQID))
                 .build();
         request = new Request.Builder()
                 .url(MainActivity.mainActivitythis.url)
@@ -473,7 +477,7 @@ public class Caozuojiemian extends Activity
                 requestBody = new FormBody.Builder()
                         .add("fangfa", "fbillno")
                         .add("EQID", MainActivity.mainActivitythis.EQID)
-                        .add("EQIDMD5", MainActivity.mainActivitythis.EQIDMD5)
+                        .add("EQIDMD5", MD5.jiami(MainActivity.mainActivitythis.EQID))
                         .add("FBillNo",fBillNo)
                         .build();
                 request = new Request.Builder()

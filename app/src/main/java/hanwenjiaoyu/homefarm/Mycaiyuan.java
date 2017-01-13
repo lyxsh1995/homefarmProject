@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.io.IOException;
 
+import bean.MD5;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -72,7 +73,7 @@ public class Mycaiyuan extends Fragment
                 requestBody = new FormBody.Builder()
                         .add("fangfa", "fangan")
                         .add("EQID", MainActivity.mainActivitythis.EQID)
-                        .add("EQIDMD5",MainActivity.mainActivitythis.EQIDMD5)
+                        .add("EQIDMD5", MD5.jiami( MainActivity.mainActivitythis.EQID))
                         .add("fanganid", Fangan.fanganthis.fanganid)
                         .add("cengshu",Caiyuan.caiyuanthis.pagerposition+"")
                         .build();}catch (Exception e)

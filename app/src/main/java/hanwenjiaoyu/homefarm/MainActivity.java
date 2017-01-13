@@ -3,12 +3,15 @@ package hanwenjiaoyu.homefarm;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -62,6 +65,7 @@ import bean.BaseUiListener;
 import bean.Cdjson;
 import bean.Cljson;
 import bean.Lastjson;
+import bean.MD5;
 import bean.Mybutton;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity
 
     private TextView wendu_shuju;
     private TextView shidu_shuju;
+    private ContextMenuDialogFragment mMenuDialogFragment;
 
     public String url = Login.loginthis.url;
 
@@ -92,7 +97,6 @@ public class MainActivity extends AppCompatActivity
 
     public TimerTask task;
     public Timer timer;
-
 
     public String EQID;
     public String EQIDMD5;
@@ -224,7 +228,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
     };
-    private ContextMenuDialogFragment mMenuDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -238,9 +241,9 @@ public class MainActivity extends AppCompatActivity
 
         mTencent = Tencent.createInstance("1105607320", getApplicationContext());
 
-        final Intent intent = getIntent();
+        final Intent intent =  getIntent();
         EQID = intent.getStringExtra("EQID");
-        EQIDMD5 = intent.getStringExtra("EQIDMD5");
+        EQIDMD5 = MD5.jiami(EQID);
 
         //悬浮窗
         kaiguan = (Switch) findViewById(R.id.kaiguan);
@@ -259,19 +262,18 @@ public class MainActivity extends AppCompatActivity
                         {
                             Intent intent = new Intent(getApplicationContext(), FloatWindowService.class);
                             intent.putExtra("EQID", EQID);
-                            intent.putExtra("EQIDMD5", EQIDMD5);
                             startService(intent);
                         } else
                         {
                             //打开系统悬浮窗设置页面
                             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                             startActivity(intent);
+                            kaiguan.setChecked(false);
                         }
                     } else
                     {
                         Intent intent = new Intent(getApplicationContext(), FloatWindowService.class);
                         intent.putExtra("EQID", EQID);
-                        intent.putExtra("EQIDMD5", EQIDMD5);
                         startService(intent);
                     }
                 } else
@@ -389,6 +391,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 Toast.makeText(getApplicationContext(), "点击关闭", Toast.LENGTH_SHORT).show();
+                recreate();
             }
         });
 
@@ -585,7 +588,7 @@ public class MainActivity extends AppCompatActivity
         requestBody = new FormBody.Builder()
                 .add("fangfa", "termparam")
                 .add("EQID", EQID)
-                .add("EQIDMD5", EQIDMD5)
+                .add("EQIDMD5", MD5.jiami(EQID))
                 .add("p_type", "cd")
                 .build();
         request = new Request.Builder()
@@ -620,7 +623,7 @@ public class MainActivity extends AppCompatActivity
                         handler.sendMessage(msg);
                     }
                 }
-                catch (IOException e)
+                catch (Exception e)
                 {
                     e.printStackTrace();
                 }
@@ -635,7 +638,7 @@ public class MainActivity extends AppCompatActivity
         requestBody = new FormBody.Builder()
                 .add("fangfa", "chaxun")
                 .add("EQID", EQID)
-                .add("EQIDMD5", EQIDMD5)
+                .add("EQIDMD5", MD5.jiami(EQID))
                 .add("sqlstr", sqlstr)
                 .build();
         request = new Request.Builder()
@@ -671,7 +674,7 @@ public class MainActivity extends AppCompatActivity
                         handler.sendMessage(msg);
                     }
                 }
-                catch (IOException e)
+                catch (Exception e)
                 {
                     e.printStackTrace();
                 }
@@ -697,6 +700,7 @@ public class MainActivity extends AppCompatActivity
                 exitTime = System.currentTimeMillis();
             } else
             {
+//                unregisterReceiver(guangbo);
                 finish();
 //                System.exit(0);
             }
@@ -851,7 +855,7 @@ public class MainActivity extends AppCompatActivity
                 requestBody = new FormBody.Builder()
                         .add("fangfa", "yunxing")
                         .add("EQID", EQID)
-                        .add("EQIDMD5", EQIDMD5)
+                        .add("EQIDMD5", MD5.jiami(EQID))
                         .build();
                 request = new Request.Builder()
                         .url(url)
@@ -886,7 +890,7 @@ public class MainActivity extends AppCompatActivity
                                 handler.sendMessage(msg);
                             }
                         }
-                        catch (IOException e)
+                        catch (Exception e)
                         {
                             e.printStackTrace();
                         }

@@ -6,10 +6,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,6 +20,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -30,6 +34,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import bean.MD5;
 import bean.Sqlite;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -46,9 +51,11 @@ public class Login extends Activity
     //版本号
     int banben = 1;
     //服务器地址
-    public String url = "http://192.168.1.100:80/app/";
+    public String url = "http://192.168.0.104:80/app/";
 
     public static Login loginthis;
+
+    private long exitTime = 0;
 
     public Sqlite sqlite;
     public SQLiteDatabase db;
@@ -57,7 +64,12 @@ public class Login extends Activity
     public String EQID,EQIDMD5;
     private LinearLayout login_layout;
 
+    private IntentFilter filter;
+    private NetworkConnectChangedReceiver guangbo;
+
     private Message msg;
+    boolean showflag = true;//更新窗口是否显示,防止多次显示
+
     Handler handler = new Handler() {
 
         @Override
@@ -99,7 +111,15 @@ public class Login extends Activity
                     //如果自动登录到MainActivity就会报错,所以拦截
                     try
                     {
-                        builder.create().show();
+                        if (showflag)
+                        {
+                            builder.create().show();
+                            showflag = false;
+                            try
+                            {
+                                unregisterReceiver(guangbo);
+                            }catch (Exception e) {}
+                        }
                     }catch (Exception e) {}
                     break;
                 //下载进度更新
@@ -119,6 +139,20 @@ public class Login extends Activity
                     break;
                 case 3:
                     Toast.makeText(getApplicationContext(),"更新文件下载失败",Toast.LENGTH_SHORT).show();
+                    break;
+                //连接不到服务器是时给提示
+                case 4:
+                    Toast.makeText(getApplicationContext(),"连接服务器失败,请检查网络",Toast.LENGTH_SHORT).show();
+                    //注册广播
+                    if (EQID == null) //如果EQID有值就不在Login界面
+                    {
+                        guangbo = new NetworkConnectChangedReceiver();
+                        filter = new IntentFilter();
+                        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+                        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+                        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+                        registerReceiver(guangbo, filter);
+                    }
                     break;
             }
             super.handleMessage(msg);
@@ -145,13 +179,12 @@ public class Login extends Activity
         {
             cursor.move(1);
             EQID = cursor.getString(1);
-            EQIDMD5 = cursor.getString(2);
+            EQIDMD5 = MD5.jiami(EQID);
         }
         if (EQID != null)
         {
             Intent intent = new Intent(Login.this,MainActivity.class);
             intent.putExtra("EQID", EQID);
-            intent.putExtra("EQIDMD5", EQIDMD5);
             startActivity(intent);
             finish();
         }
@@ -166,8 +199,8 @@ public class Login extends Activity
             {
                 Intent intent = new Intent(Login.this,MainActivity.class);
                 intent.putExtra("EQID", "d8b04cb116dc");
-                intent.putExtra("EQIDMD5", "1451506714515067");
-                Login.loginthis.db.execSQL("update xinxi set EQID = 'd8b04cb116dc', EQIDMD5 = '1451506714515067' where _id =1");
+                intent.putExtra("EQIDMD5", MD5.jiami("d8b04cb116dc"));
+                Login.loginthis.db.execSQL("update xinxi set EQID = 'd8b04cb116dc' where _id =1");
                 startActivity(intent);
                 finish();
             }
@@ -243,6 +276,9 @@ public class Login extends Activity
             public void onFailure(Call call, IOException e)
             {
                 Log.d("h_bl", "检查更新失败");
+                msg = Message.obtain();
+                msg.what = 4;
+                handler.sendMessage(msg);
             }
 
             @Override
@@ -323,5 +359,39 @@ public class Login extends Activity
                 }
             }
         });
+    }
+
+    //双击退出
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN)
+        {
+            if ((System.currentTimeMillis() - exitTime) > 2000)
+            {
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else
+            {
+//                unregisterReceiver(guangbo);
+                finish();
+                //在登录界面退出完全杀掉线程
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    protected void onDestroy()
+    {
+        try
+        {
+            unregisterReceiver(guangbo);
+        }catch (Exception e) {}
+        Toast.makeText(getApplicationContext(),"已经销毁",Toast.LENGTH_SHORT).show();
+        super.onDestroy();
     }
 }

@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import bean.MD5;
 import hanwenjiaoyu.homefarm.Login;
 import hanwenjiaoyu.homefarm.MainActivity;
 import hanwenjiaoyu.homefarm.R;
@@ -30,6 +32,7 @@ import okhttp3.Response;
 import com.dtr.zxing.decode.DecodeThread;
 
 import java.io.IOException;
+import java.util.Date;
 
 public class ResultActivity extends Activity {
     String url = Login.loginthis.url;
@@ -56,9 +59,8 @@ public class ResultActivity extends Activity {
                 //登陆成功
                 case 0:
                     Intent intent = new Intent(ResultActivity.this, MainActivity.class);
-                    Login.loginthis.db.execSQL("update xinxi set EQID = '"+eqid+"', EQIDMD5 = '"+eqidmd5+"' where _id =1");
+                    Login.loginthis.db.execSQL("update xinxi set EQID = '"+eqid+"' where _id =1");
                     intent.putExtra("EQID", eqid);
-                    intent.putExtra("EQIDMD5", eqidmd5);
                     startActivity(intent);
                     finish();
                     break;
@@ -96,8 +98,8 @@ public class ResultActivity extends Activity {
 			{
                 int start = mresult.indexOf("?");
 				eqid = mresult.substring(start+1, mresult.indexOf("|"));
-				eqidmd5 = mresult.substring(mresult.indexOf("|")+1);
-				mResultText.setText("设备ID:"+ eqid);
+				eqidmd5 = MD5.jiami(eqid);
+                mResultText.setText("设备ID:"+ eqid);
 			}catch (Exception e)
 			{
 				Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
