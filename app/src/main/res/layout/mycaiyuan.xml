@@ -8,13 +8,40 @@
               android:paddingRight="10dp">
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/zhixingzhuangtai"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="30dp"
+        android:text="未执行方案"/>
+
+    <TextView
         android:text="品种名称"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mingcheng"
         android:textSize="20dp"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:text="已生长20天"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/shengzhangshijian"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:text="预计收获时间    2017-1-17 10:49:28"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/shouhuoshijian"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:text="品种介绍品种介绍品种介绍品种介绍品种介绍品种介绍品种介绍品种介绍品种介绍\n品种介绍品种介绍品种介绍品种介绍品种介绍"
@@ -39,7 +66,7 @@
             android:background="@drawable/button"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="100dp"/>
+            android:layout_marginTop="50dp"/>
 
         <Button
             android:text="导入方案"
@@ -50,7 +77,7 @@
             android:background="@drawable/button"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="100dp"/>
+            android:layout_marginTop="50dp"/>
     </LinearLayout>
 
 </LinearLayout>

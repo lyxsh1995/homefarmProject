@@ -23,6 +23,7 @@ import java.util.List;
 
 import bean.Fajson;
 import bean.Fwjson;
+import bean.MD5;
 import bean.Myadapter;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -108,7 +109,7 @@ public class Fangan extends Activity
         requestBody = new FormBody.Builder()
                 .add("fangfa","chaxun")
                 .add("EQID",MainActivity.mainActivitythis.EQID)
-                .add("EQIDMD5",MainActivity.mainActivitythis.EQIDMD5)
+                .add("EQIDMD5", MD5.jiami(MainActivity.mainActivitythis.EQID))
                 .add("sqlstr",sqlstr)
                 .build();
         request = new Request.Builder()
@@ -140,7 +141,7 @@ public class Fangan extends Activity
                         handler.sendMessage(msg);
                     }
                 }
-                catch (IOException e)
+                catch (Exception e)
                 {
                     e.printStackTrace();
                 }

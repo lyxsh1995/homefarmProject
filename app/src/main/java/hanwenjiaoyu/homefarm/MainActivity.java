@@ -1,17 +1,13 @@
 package hanwenjiaoyu.homefarm;
 
 import android.app.ActivityManager;
-import android.app.Dialog;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,11 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -65,6 +57,7 @@ import bean.BaseUiListener;
 import bean.Cdjson;
 import bean.Cljson;
 import bean.Lastjson;
+import bean.Termparamjson;
 import bean.MD5;
 import bean.Mybutton;
 import okhttp3.Call;
@@ -95,6 +88,8 @@ public class MainActivity extends AppCompatActivity
     private Request request;
     private RequestBody requestBody;
 
+    public boolean dakaiguanbi = false;//当前状态,真为打开,假为关闭
+
     public TimerTask task;
     public Timer timer;
 
@@ -105,6 +100,7 @@ public class MainActivity extends AppCompatActivity
     Cdjson cdjson = new Cdjson();
     private List<Cljson> rs;
     private List<Lastjson> rslist;
+    private List<Termparamjson> termparamjsonrs;
 
     private long exitTime = 0;
     private LinearLayout window_layout;
@@ -123,108 +119,149 @@ public class MainActivity extends AppCompatActivity
         public void handleMessage(Message msg)
         {
             super.handleMessage(msg);
-            switch (msg.what)
+            try
             {
-                //判断施水施肥等模块是否可用
-                case 0:
-                    if (cdjson.buguang.equals("dis"))
-                    {
-                        buguang_button.setVisibility(View.GONE);
-                    }
-                    if (cdjson.penshui.equals("dis"))
-                    {
-                        wendu_button.setVisibility(View.GONE);
-                    }
-                    if (cdjson.shifei.equals("dis"))
-                    {
-                        shifei_button.setVisibility(View.GONE);
-                    }
-                    if (cdjson.shishui.equals("dis"))
-                    {
-                        shishui_button.setVisibility(View.GONE);
-                    }
-                    break;
-                //更新本地悬浮窗数据
-                case 1:
-                    //计算平均值
-                    java.text.DecimalFormat df = new java.text.DecimalFormat("#.00");
-                    float a = 0;
-                    float b = 0;
-                    int c = 0;
-                    int d = 0;
-                    for (int i = 0; i < rs.size(); i++)
-                    {
-                        if (rs.get(i).d_liang != 0)
+                switch (msg.what)
+                {
+                    //判断施水施肥等模块是否可用
+                    case 0:
+                        if (cdjson.buguang.equals("dis"))
                         {
-                            switch (rs.get(i).d_name.substring(6, 7))
+                            buguang_button.setVisibility(View.GONE);
+                        }
+                        if (cdjson.penshui.equals("dis"))
+                        {
+                            wendu_button.setVisibility(View.GONE);
+                        }
+                        if (cdjson.shifei.equals("dis"))
+                        {
+                            shifei_button.setVisibility(View.GONE);
+                        }
+                        if (cdjson.shishui.equals("dis"))
+                        {
+                            shishui_button.setVisibility(View.GONE);
+                        }
+                        break;
+                    //更新本地悬浮窗数据
+                    case 1:
+                        //计算平均值
+                        java.text.DecimalFormat df = new java.text.DecimalFormat("#.00");
+                        float a = 0;
+                        float b = 0;
+                        int c = 0;
+                        int d = 0;
+                        for (int i = 0; i < rs.size(); i++)
+                        {
+                            if (rs.get(i).d_liang != 0)
                             {
-                                //温度
-                                case "w":
-                                    a += rs.get(i).d_liang;
-                                    c++;
+                                switch (rs.get(i).d_name.substring(6, 7))
+                                {
+                                    //温度
+                                    case "w":
+                                        a += rs.get(i).d_liang;
+                                        c++;
+                                        break;
+                                    //湿度
+                                    case "s":
+                                        b += rs.get(i).d_liang;
+                                        d++;
+                                        break;
+                                }
+                            }
+                        }
+                        a /= c;
+                        b /= d;
+
+                        //更新UI
+                        wendu_shuju.setText(df.format(a));
+                        shidu_shuju.setText(df.format(b));
+
+                        if (20 <= a && a <= 40)
+                        {
+                            wendu_shuju.setText(wendu_shuju.getText() + "   良好");
+                        } else
+                        {
+                            wendu_shuju.setText(wendu_shuju.getText() + "   恶劣");
+                        }
+                        if (20 <= b && b <= 40)
+                        {
+                            shidu_shuju.setText(shidu_shuju.getText() + "   良好");
+                        } else
+                        {
+                            shidu_shuju.setText(shidu_shuju.getText() + "   恶劣");
+                        }
+                        break;
+                    case 2:
+                        String zhuangtai = "";
+                        for (int i = 0; i < rslist.size(); i++)
+                        {
+                            switch (rslist.get(i).FTypeId)
+                            {
+                                case "1":
+                                    //温度
+                                case "7":
+                                    //蘑菇喷水
+                                    wendu_button.setBackgroundResource(R.mipmap.wendu_button_pro);
+//                                zhuangtai += "正在喷水\n";
                                     break;
-                                //湿度
-                                case "s":
-                                    b += rs.get(i).d_liang;
-                                    d++;
+                                case "2":
+                                    //施肥
+                                    shifei_button.setBackgroundResource(R.mipmap.shifei_button_pro);
+                                    break;
+                                case "3":
+                                    //施水
+                                    shishui_button.setBackgroundResource(R.mipmap.shishui_button_pro);
+                                    break;
+                                case "4":
+                                    //补光:
+                                    buguang_button.setBackgroundResource(R.mipmap.buguang_button_pro);
+                                    break;
+                                case "6":
+                                    //通风
+                                    tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button_pro);
                                     break;
                             }
                         }
-                    }
-                    a /= c;
-                    b /= d;
-
-                    //更新UI
-                    wendu_shuju.setText(df.format(a));
-                    shidu_shuju.setText(df.format(b));
-
-                    if (20 <= a && a <= 40)
-                    {
-                        wendu_shuju.setText(wendu_shuju.getText() + "   良好");
-                    } else
-                    {
-                        wendu_shuju.setText(wendu_shuju.getText() + "   恶劣");
-                    }
-                    if (20 <= b && b <= 40)
-                    {
-                        shidu_shuju.setText(shidu_shuju.getText() + "   良好");
-                    } else
-                    {
-                        shidu_shuju.setText(shidu_shuju.getText() + "   恶劣");
-                    }
-                    break;
-                case 2:
-                    String zhuangtai = "";
-                    for (int i = 0; i < rslist.size(); i++)
-                    {
-                        switch (rslist.get(i).FTypeId)
+                        break;
+                    case 3:
+                        //查询设备是否关闭
+                        if (termparamjsonrs.get(0).getP_value1().equals("dis") && termparamjsonrs.get(0).getP_value2().equals("dis") && termparamjsonrs.get(0).getP_value3().equals("dis"))
                         {
-                            case "1":
-                                //温度
-                            case "7":
-                                //蘑菇喷水
-                                wendu_button.setBackgroundResource(R.mipmap.wendu_button_pro);
-//                                zhuangtai += "正在喷水\n";
-                                break;
-                            case "2":
-                                //施肥
-                                shifei_button.setBackgroundResource(R.mipmap.shifei_button_pro);
-                                break;
-                            case "3":
-                                //施水
-                                shishui_button.setBackgroundResource(R.mipmap.shishui_button_pro);
-                                break;
-                            case "4":
-                                //补光:
-                                buguang_button.setBackgroundResource(R.mipmap.buguang_button_pro);
-                                break;
-                            case "6":
-                                //通风
-                                tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button_pro);
-                                break;
+                            //设备关闭状态
+                            stop_button.setBackgroundResource(R.mipmap.start_button);
+                            dakaiguanbi = false;
                         }
-                    }
-                    break;
+                        else if (termparamjsonrs.get(0).getP_value1().equals("en") || termparamjsonrs.get(0).getP_value2().equals("en") || termparamjsonrs.get(0).getP_value3().equals("en"))
+                        {
+                            //设备打开状态
+                            stop_button.setBackgroundResource(R.mipmap.stop_button);
+                            dakaiguanbi = true;
+                        }
+                        break;
+                    case 4:
+                        //设备打开关闭
+                        String shebeiyunxing = (String) msg.obj;
+                        if (shebeiyunxing.equals("ok"))
+                        {
+                            if (dakaiguanbi)
+                            {
+                                stop_button.setBackgroundResource(R.mipmap.start_button);
+                                dakaiguanbi = false;
+                            }else
+                            {
+                                stop_button.setBackgroundResource(R.mipmap.stop_button);
+                                dakaiguanbi = true;
+                            }
+                        }else
+                        {
+                            Toast.makeText(getApplicationContext(),"设备打开关闭失败",Toast.LENGTH_SHORT).show();
+                        }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(getApplicationContext(), "数据异常:" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -390,8 +427,52 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getApplicationContext(), "点击关闭", Toast.LENGTH_SHORT).show();
-                recreate();
+                String cz;
+                cz =(dakaiguanbi)? "dakai":"guanbi";
+                requestBody = new FormBody.Builder()
+                        .add("fangfa", "kaiguan")
+                        .add("EQID", EQID)
+                        .add("EQIDMD5", MD5.jiami(EQID))
+                        .add("caozuo",cz)
+                        .build();
+                request = new Request.Builder()
+                        .url(url)
+                        .post(requestBody)
+                        .build();
+
+                response = null;
+
+                mOkHttpClient.newCall(request).enqueue(new Callback()
+                {
+                    @Override
+                    public void onFailure(Call call, IOException e)
+                    {
+                        Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
+                    }
+
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException
+                    {
+                        try
+                        {
+                            if (response.isSuccessful())
+                            {
+                                String resstr = response.body().string();
+                                Log.i("jieshou", resstr);
+
+                                msg = Message.obtain();
+                                msg.obj = resstr;
+                                msg.what = 4;
+                                handler.sendMessage(msg);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
 
@@ -432,22 +513,22 @@ public class MainActivity extends AppCompatActivity
             {
                 switch (position)
                 {
+//                    case 1:
+//                        //详细状态
+//                        Intent intent = new Intent(MainActivity.this, Zhuangtai.class);
+//                        startActivity(intent);
+//                        break;
                     case 1:
-                        //详细状态
-                        Intent intent = new Intent(MainActivity.this, Zhuangtai.class);
+                        //我的菜园
+                        Intent intent = new Intent(MainActivity.this, Caiyuan.class);
                         startActivity(intent);
                         break;
                     case 2:
-                        //我的菜园
-                        intent = new Intent(MainActivity.this, Caiyuan.class);
-                        startActivity(intent);
-                        break;
-                    case 3:
                         //辅助设备联网
                         intent = new Intent(MainActivity.this, com.rtk.simpleconfig_wizard.MainActivity.class);
                         startActivity(intent);
                         break;
-                    case 4:
+                    case 3:
                         //退出登录
                         getApplication().deleteDatabase("homefarm");
                         intent = new Intent(getApplicationContext(), FloatWindowService.class);
@@ -686,6 +767,54 @@ public class MainActivity extends AppCompatActivity
         timer = new Timer(true);
         //一分钟刷新一次
         timer.schedule(task, 0, 60 * 1000);
+
+        //查询设备是否关闭
+        sqlstr = "SELECT p_value1,p_value2,p_value3 FROM termparam where p_name = 'yunxingfangshi' and EQID = '"+EQID+"'";
+        requestBody = new FormBody.Builder()
+                .add("fangfa", "chaxun")
+                .add("EQID", EQID)
+                .add("EQIDMD5", MD5.jiami(EQID))
+                .add("sqlstr", sqlstr)
+                .build();
+        request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        response = null;
+
+        mOkHttpClient.newCall(request).enqueue(new Callback()
+        {
+            @Override
+            public void onFailure(Call call, IOException e)
+            {
+                Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
+            }
+
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException
+            {
+                try
+                {
+                    if (response.isSuccessful())
+                    {
+                        String resstr = response.body().string();
+                        Log.i("jieshou", resstr);
+                        termparamjsonrs = new ArrayList<Termparamjson>();
+                        Type type = new TypeToken<List<Termparamjson>>() {}.getType();
+                        termparamjsonrs = gson.fromJson(resstr, type);
+                        msg = Message.obtain();
+                        msg.what = 3;
+                        handler.sendMessage(msg);
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     //双击退出
@@ -981,12 +1110,12 @@ public class MainActivity extends AppCompatActivity
         MenuObject close = new MenuObject();
         close.setResource(R.drawable.icn_close);
 
-        MenuObject send = new MenuObject("详细状态");
-        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.nongye));
-        //设置缩放比例
-        matrix.postScale(70f/bitmap.getWidth(),70f/bitmap.getHeight());
-        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
-        send.setBitmap(bitmap);
+//        MenuObject send = new MenuObject("详细状态");
+//        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.nongye));
+//        //设置缩放比例
+//        matrix.postScale(70f/bitmap.getWidth(),70f/bitmap.getHeight());
+//        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+//        send.setBitmap(bitmap);
 
         MenuObject like = new MenuObject("我的菜园");
         bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.nongtian));
@@ -1011,7 +1140,7 @@ public class MainActivity extends AppCompatActivity
         block.setBitmap(bitmap);
 
         menuObjects.add(close);
-        menuObjects.add(send);
+//        menuObjects.add(send);
         menuObjects.add(like);
         menuObjects.add(addFr);
 //        menuObjects.add(addFav);

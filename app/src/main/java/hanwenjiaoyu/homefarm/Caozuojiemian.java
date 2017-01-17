@@ -277,7 +277,7 @@ public class Caozuojiemian extends Activity
         requestBody = new FormBody.Builder()
                 .add("fangfa","termparam")
                 .add("EQID", MainActivity.mainActivitythis.EQID)
-                .add("EQIDMD5",MainActivity.mainActivitythis.EQIDMD5)
+                .add("EQIDMD5",MD5.jiami(MainActivity.mainActivitythis.EQID))
                 .add("p_type","fw")
                 .build();
         request = new Request.Builder()
@@ -308,7 +308,7 @@ public class Caozuojiemian extends Activity
                         handler.sendMessage(msg);
                     }
                 }
-                catch (IOException e)
+                catch (Exception e)
                 {
                     e.printStackTrace();
                 }
@@ -459,7 +459,7 @@ public class Caozuojiemian extends Activity
                         handler.sendMessage(msg);
                     }
                 }
-                catch (IOException e)
+                catch (Exception e)
                 {
                     e.printStackTrace();
                 }
@@ -509,7 +509,7 @@ public class Caozuojiemian extends Activity
                                 handler.sendMessage(msg);
                             }
                         }
-                        catch (IOException e)
+                        catch (Exception e)
                         {
                             e.printStackTrace();
                         }

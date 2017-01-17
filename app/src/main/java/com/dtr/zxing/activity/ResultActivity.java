@@ -119,7 +119,7 @@ public class ResultActivity extends Activity {
             RequestBody requestBody = new FormBody.Builder()
                     .add("fangfa", "denglu")
                     .add("EQID", eqid)
-                    .add("EQIDMD5",eqidmd5)
+                    .add("EQIDMD5",MD5.jiami(eqid))
                     .build();
             request = new Request.Builder()
                     .url(url)
@@ -157,7 +157,7 @@ public class ResultActivity extends Activity {
                             }
                         }
                     }
-                    catch (IOException e)
+                    catch (Exception e)
                     {
                         e.printStackTrace();
                     }

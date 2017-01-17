@@ -53,6 +53,8 @@ public class Mycaiyuan extends Fragment
         mingcheng = (TextView) view.findViewById(R.id.mingcheng);
         jianjie = (TextView) view.findViewById(R.id.jianjie);
 
+
+
         Button daoru = (Button) view.findViewById(R.id.daoru);
         daoru.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +78,9 @@ public class Mycaiyuan extends Fragment
                         .add("EQIDMD5", MD5.jiami( MainActivity.mainActivitythis.EQID))
                         .add("fanganid", Fangan.fanganthis.fanganid)
                         .add("cengshu",Caiyuan.caiyuanthis.pagerposition+"")
-                        .build();}catch (Exception e)
+                        .build();
+                }
+                catch (Exception e)
                 {
                     Toast.makeText(getContext(),"请先选择方案",Toast.LENGTH_SHORT).show();
                     return;
@@ -108,7 +112,7 @@ public class Mycaiyuan extends Fragment
                                 Log.i("jieshou", resstr);
                             }
                         }
-                        catch (IOException e)
+                        catch (Exception e)
                         {
                             e.printStackTrace();
                         }

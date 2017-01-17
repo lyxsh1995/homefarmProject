@@ -243,7 +243,7 @@ public class FileOps {
 //		Log.d(TAG, "setstr: " + setstr);
 		try {
 			rf.seek(0); //re-write all info
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e(TAG, "Re-Seek Error");
     		return;
@@ -448,7 +448,7 @@ public class FileOps {
 //		Log.d(TAG, "setstr: " + setstr);
 		try {
 			rf.seek(0); //re-write all info
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e(TAG, "Re-Seek Error");
     		return;

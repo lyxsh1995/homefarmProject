@@ -23,6 +23,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import bean.Cljson;
+import bean.MD5;
 import bean.Sqlite;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -145,7 +146,7 @@ public class FloatView extends LinearLayout
         requestBody = new FormBody.Builder()
                 .add("fangfa", "chaxun")
                 .add("EQID", FloatWindowService.floatWindowServicethis.EQID)
-                .add("EQIDMD5", FloatWindowService.floatWindowServicethis.EQIDMD5)
+                .add("EQIDMD5", MD5.jiami(FloatWindowService.floatWindowServicethis.EQIDMD5))
                 .add("sqlstr", sqlstr)
                 .build();
         request = new Request.Builder()
@@ -185,7 +186,7 @@ public class FloatView extends LinearLayout
                                 handler.sendMessage(msg);
                             }
                         }
-                        catch (IOException e)
+                        catch (Exception e)
                         {
                             e.printStackTrace();
                         }

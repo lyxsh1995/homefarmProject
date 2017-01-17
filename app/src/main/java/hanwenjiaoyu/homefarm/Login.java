@@ -349,12 +349,12 @@ public class Login extends Activity
                     try {
                         if (is != null)
                             is.close();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                     }
                     try {
                         if (fos != null)
                             fos.close();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                     }
                 }
             }
@@ -391,7 +391,6 @@ public class Login extends Activity
         {
             unregisterReceiver(guangbo);
         }catch (Exception e) {}
-        Toast.makeText(getApplicationContext(),"已经销毁",Toast.LENGTH_SHORT).show();
         super.onDestroy();
     }
 }
