@@ -161,7 +161,7 @@
         <LinearLayout
             android:id="@+id/moguxiang"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -192,12 +192,44 @@
                 android:background="@drawable/biankuangbutton"
                 android:text="选择"
                 android:textColor="#FF6922"/>
+
         </LinearLayout>
+
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:id="@+id/wendu">
+
+            <RadioButton
+                android:text="升温"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/shengwen"
+                android:textColor="#FF6922"
+                android:textSize="18sp"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:text="降温"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/jiangwen"
+                android:textColor="#FF6922"
+                android:textSize="18sp"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="1"/>
+
+        </RadioGroup>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="15dp"
         android:background="#ffffff"
         android:gravity="center">

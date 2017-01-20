@@ -198,9 +198,9 @@ public class Login extends Activity
             public void onClick(View v)
             {
                 Intent intent = new Intent(Login.this,MainActivity.class);
-                intent.putExtra("EQID", "d8b04cb116dc");
-                intent.putExtra("EQIDMD5", MD5.jiami("d8b04cb116dc"));
-                Login.loginthis.db.execSQL("update xinxi set EQID = 'd8b04cb116dc' where _id =1");
+                intent.putExtra("EQID", "d8b04cb5c260");
+                intent.putExtra("EQIDMD5", MD5.jiami("d8b04cb5c260"));
+                Login.loginthis.db.execSQL("update xinxi set EQID = 'd8b04cb5c260' where _id =1");
                 startActivity(intent);
                 finish();
             }
@@ -318,14 +318,23 @@ public class Login extends Activity
                 byte[] buf = new byte[2048];
                 int len = 0;
                 FileOutputStream fos = null;
-                sdPath = Environment.getExternalStorageDirectory() + "/homefarm/";
+
+                if (android.os.Environment.getExternalStorageState().equals( android.os.Environment.MEDIA_MOUNTED))
+                {
+                    sdPath = Environment.getExternalStorageDirectory() + "/homefarm/";
+                } else
+                {
+                    sdPath = getFilesDir().getPath() + "/homefarm/";
+                }
+
                 try {
                     is = response.body().byteStream();
                     long total = response.body().contentLength();
                     File file = new File(sdPath, "homefarm.apk");
                     fos = new FileOutputStream(file);
                     long sum = 0;
-                    while ((len = is.read(buf)) != -1) {
+                    while ((len = is.read(buf)) != -1)
+                    {
                         fos.write(buf, 0, len);
                         sum += len;
                         int progress = (int) (sum * 1.0f / total * 100);

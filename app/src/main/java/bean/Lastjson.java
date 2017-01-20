@@ -18,7 +18,7 @@ public class Lastjson
 
     public String FShuiXiang;
 
-    public String FTypeId;
+    public String FTypeID;
 
     public String FExcTime;
 
@@ -94,12 +94,12 @@ public class Lastjson
 
     public String getFTypeId()
     {
-        return FTypeId;
+        return FTypeID;
     }
 
     public void setFTypeId(String FTypeId)
     {
-        this.FTypeId = FTypeId;
+        this.FTypeID = FTypeId;
     }
 
     public String getFExcTime()

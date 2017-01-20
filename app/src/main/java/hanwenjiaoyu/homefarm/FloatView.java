@@ -195,7 +195,7 @@ public class FloatView extends LinearLayout
             }
         };
         timer = new Timer(true);
-        timer.schedule(task, 0, 1000);
+        timer.schedule(task, 0, 10*1000);
     }
 
 

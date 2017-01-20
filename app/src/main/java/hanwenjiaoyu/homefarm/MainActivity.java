@@ -113,6 +113,13 @@ public class MainActivity extends AppCompatActivity
     private Mybutton tongfeng_button;
     private Mybutton buguang_button;
 
+    //按钮状态 0白色 1绿色 2黄色
+    public int wenduzhuangtai = 0;
+    public int shishuizhuangtai = 0;
+    public int shifeizhuangtai = 0;
+    public int tongfengzhuangtai = 0;
+    public int buguangzhuangtai = 0;
+
     Handler handler = new Handler()
     {
         @Override
@@ -193,32 +200,47 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case 2:
                         String zhuangtai = "";
+                        if (wenduzhuangtai != 2)
+                            wendu_button.setBackgroundResource(R.mipmap.wendu_button);
+                        if (shifeizhuangtai != 2)
+                        shifei_button.setBackgroundResource(R.mipmap.shifei_button);
+                        if (shishuizhuangtai != 2)
+                        shishui_button.setBackgroundResource(R.mipmap.shishui_button);
+                        if (buguangzhuangtai != 2)
+                        buguang_button.setBackgroundResource(R.mipmap.buguang_button);
+                        if (tongfengzhuangtai != 2)
+                        tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button);
                         for (int i = 0; i < rslist.size(); i++)
                         {
-                            switch (rslist.get(i).FTypeId)
+                            switch (rslist.get(i).FTypeID)
                             {
                                 case "1":
-                                    //温度
-                                case "7":
-                                    //蘑菇喷水
+                                    //降温
+                                case "5":
+                                    //升温
                                     wendu_button.setBackgroundResource(R.mipmap.wendu_button_pro);
+                                    wenduzhuangtai = 0;
 //                                zhuangtai += "正在喷水\n";
                                     break;
                                 case "2":
                                     //施肥
                                     shifei_button.setBackgroundResource(R.mipmap.shifei_button_pro);
+                                    shifeizhuangtai = 0;
                                     break;
                                 case "3":
                                     //施水
                                     shishui_button.setBackgroundResource(R.mipmap.shishui_button_pro);
+                                    shishuizhuangtai = 0;
                                     break;
                                 case "4":
                                     //补光:
                                     buguang_button.setBackgroundResource(R.mipmap.buguang_button_pro);
+                                    buguangzhuangtai = 0;
                                     break;
-                                case "6":
+                                case "7":
                                     //通风
                                     tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button_pro);
+                                    tongfengzhuangtai = 0;
                                     break;
                             }
                         }
@@ -767,54 +789,6 @@ public class MainActivity extends AppCompatActivity
         timer = new Timer(true);
         //一分钟刷新一次
         timer.schedule(task, 0, 60 * 1000);
-
-        //查询设备是否关闭
-        sqlstr = "SELECT p_value1,p_value2,p_value3 FROM termparam where p_name = 'yunxingfangshi' and EQID = '"+EQID+"'";
-        requestBody = new FormBody.Builder()
-                .add("fangfa", "chaxun")
-                .add("EQID", EQID)
-                .add("EQIDMD5", MD5.jiami(EQID))
-                .add("sqlstr", sqlstr)
-                .build();
-        request = new Request.Builder()
-                .url(url)
-                .post(requestBody)
-                .build();
-
-        response = null;
-
-        mOkHttpClient.newCall(request).enqueue(new Callback()
-        {
-            @Override
-            public void onFailure(Call call, IOException e)
-            {
-                Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
-            }
-
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException
-            {
-                try
-                {
-                    if (response.isSuccessful())
-                    {
-                        String resstr = response.body().string();
-                        Log.i("jieshou", resstr);
-                        termparamjsonrs = new ArrayList<Termparamjson>();
-                        Type type = new TypeToken<List<Termparamjson>>() {}.getType();
-                        termparamjsonrs = gson.fromJson(resstr, type);
-                        msg = Message.obtain();
-                        msg.what = 3;
-                        handler.sendMessage(msg);
-                    }
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     //双击退出
@@ -827,7 +801,8 @@ public class MainActivity extends AppCompatActivity
             {
                 Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
-            } else
+            }
+            else
             {
 //                unregisterReceiver(guangbo);
                 finish();
@@ -981,52 +956,106 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run()
             {
-                requestBody = new FormBody.Builder()
-                        .add("fangfa", "yunxing")
-                        .add("EQID", EQID)
-                        .add("EQIDMD5", MD5.jiami(EQID))
-                        .build();
-                request = new Request.Builder()
-                        .url(url)
-                        .post(requestBody)
-                        .build();
-
-                response = null;
-
-                mOkHttpClient.newCall(request).enqueue(new Callback()
-                {
-                    @Override
-                    public void onFailure(Call call, IOException e)
-                    {
-                        Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
-                    }
-
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException
-                    {
-                        try
-                        {
-                            if (response.isSuccessful())
-                            {
-                                String resstr = response.body().string();
-                                Log.i("jieshou", resstr);
-                                rslist = new ArrayList<Lastjson>();
-                                java.lang.reflect.Type type = new TypeToken<List<Lastjson>>() {}.getType();
-                                rslist = gson.fromJson(resstr, type);
-                                msg = Message.obtain();
-                                msg.what = 2;
-                                handler.sendMessage(msg);
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+                zhuanpan();
             }
         };
+    }
+
+    //刷新转盘
+    public void zhuanpan()
+    {
+        requestBody = new FormBody.Builder()
+                .add("fangfa", "yunxing")
+                .add("EQID", EQID)
+                .add("EQIDMD5", MD5.jiami(EQID))
+                .build();
+        request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        response = null;
+
+        mOkHttpClient.newCall(request).enqueue(new Callback()
+        {
+            @Override
+            public void onFailure(Call call, IOException e)
+            {
+                Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
+            }
+
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException
+            {
+                try
+                {
+                    if (response.isSuccessful())
+                    {
+                        String resstr = response.body().string();
+                        Log.i("zuoyeshixu", resstr);
+                        rslist = new ArrayList<Lastjson>();
+                        java.lang.reflect.Type type = new TypeToken<List<Lastjson>>() {}.getType();
+                        rslist = gson.fromJson(resstr, type);
+                        msg = Message.obtain();
+                        msg.what = 2;
+                        handler.sendMessage(msg);
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        //查询设备是否关闭
+        String sqlstr = "SELECT p_value1,p_value2,p_value3 FROM termparam where p_name = 'yunxingfangshi' and EQID = '"+EQID+"'";
+        requestBody = new FormBody.Builder()
+                .add("fangfa", "chaxun")
+                .add("EQID", EQID)
+                .add("EQIDMD5", MD5.jiami(EQID))
+                .add("sqlstr", sqlstr)
+                .build();
+        request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        response = null;
+
+        mOkHttpClient.newCall(request).enqueue(new Callback()
+        {
+            @Override
+            public void onFailure(Call call, IOException e)
+            {
+                Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
+            }
+
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException
+            {
+                try
+                {
+                    if (response.isSuccessful())
+                    {
+                        String resstr = response.body().string();
+                        Log.i("chaxun", resstr);
+                        termparamjsonrs = new ArrayList<Termparamjson>();
+                        Type type = new TypeToken<List<Termparamjson>>() {}.getType();
+                        termparamjsonrs = gson.fromJson(resstr, type);
+                        msg = Message.obtain();
+                        msg.what = 3;
+                        handler.sendMessage(msg);
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     //回调监听
@@ -1159,5 +1188,77 @@ public class MainActivity extends AppCompatActivity
         }
         cursor.close();
         return res;
+    }
+
+
+    //取消等待 caozuojiemian
+    public void quxiaodengdai(final String title2)
+    {
+        switch (title2)
+        {
+            case "施水":
+                shishuizhuangtai = 2;
+                break;
+            case "施肥":
+                shifeizhuangtai = 2;
+                break;
+            case "补光":
+                buguangzhuangtai = 2;
+                break;
+            case "通风":
+                tongfengzhuangtai = 2;
+                break;
+            case "温度":
+                wenduzhuangtai = 2;
+                break;
+        }
+        xiaoshuaxin();
+        final TimerTask task = new TimerTask() {
+            @Override
+            public void run()
+            {
+                switch (title2)
+                {
+                    case "施水":
+                        shishuizhuangtai = 0;
+                        break;
+                    case "施肥":
+                        shifeizhuangtai = 0;
+                        break;
+                    case "补光":
+                        buguangzhuangtai = 0;
+                        break;
+                    case "通风":
+                        tongfengzhuangtai = 0;
+                        break;
+                    case "温度":
+                        wenduzhuangtai = 0;
+                        break;
+                }
+            }
+        };
+        Timer timer = new Timer(true);
+        timer.schedule(task,15000);
+    }
+
+    //小刷新
+    int xiaoshuaxinjishu = 0;
+    public void xiaoshuaxin()
+    {
+        final Timer xiaotimer = new Timer(true);
+        final TimerTask xiaoshuaxinxunhuan = new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                if (xiaoshuaxinjishu > 3)
+                {
+                    xiaoshuaxinjishu = 0;
+                    xiaotimer.cancel();
+                }
+                zhuanpan();
+            }
+        };
+        xiaotimer.schedule(xiaoshuaxinxunhuan,0,5000);
     }
 }

@@ -12,6 +12,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,17 +21,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import bean.Fwjson;
-import bean.Lastjson;
 import bean.MD5;
 import bean.Mybutton;
 import bean.Myjson;
@@ -53,15 +50,17 @@ public class Caozuojiemian extends Activity
     private Button checkButton3;
     private Button checkButton4;
     private Button checkButton5;
+    private RadioButton shengwen;
     private CheckBox checkBox1;
     private CheckBox checkBox2;
     private CheckBox checkBox3;
     private CheckBox checkBox4;
     private CheckBox checkBox5;
+    private RadioButton jiangwen;
     private EditText time;
     private int buttonid;
 
-
+    private int zhuangtai;
 
     String Json = "";
     private OkHttpClient mOkHttpClient;
@@ -77,10 +76,13 @@ public class Caozuojiemian extends Activity
     private LinearLayout disanceng;
     private LinearLayout douyaji;
     private LinearLayout moguxiang;
+    private RadioGroup wenduradio;
 
     private TextView title2_text;
     private ImageView title2_image;
     public String fBillNo;
+
+    Myjson json = new Myjson();
 
     Handler handler = new Handler()
     {
@@ -124,8 +126,10 @@ public class Caozuojiemian extends Activity
                         button.setBackgroundResource(respro);
                         Toast.makeText(getApplicationContext(),"已提交到服务器,等待执行",Toast.LENGTH_SHORT).show();
 
-                        chaxunfbillno();
+//                        chaxunfbillno();
 
+                        //15秒后取消黄色状态
+                        MainActivity.mainActivitythis.quxiaodengdai(title2_text.getText().toString());
                         finish();
 
                         //开始读取刚刚操作是否被硬件执行
@@ -168,16 +172,21 @@ public class Caozuojiemian extends Activity
         disanceng = (LinearLayout) findViewById(R.id.disanceng);
         douyaji = (LinearLayout) findViewById(R.id.douyaji);
         moguxiang = (LinearLayout) findViewById(R.id.moguxiang);
+        wenduradio = (RadioGroup) findViewById(R.id.wendu);
         checkButton1 = (Button) findViewById(R.id.checkButton1);
         checkButton2 = (Button) findViewById(R.id.checkButton2);
         checkButton3 = (Button) findViewById(R.id.checkButton3);
         checkButton4 = (Button) findViewById(R.id.checkButton4);
         checkButton5 = (Button) findViewById(R.id.checkButton5);
+        shengwen = (RadioButton) findViewById(R.id.shengwen);
+
         checkBox1 = (CheckBox) findViewById(R.id.checkBox1);
         checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
         checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
         checkBox4 = (CheckBox) findViewById(R.id.checkBox4);
         checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
+        jiangwen = (RadioButton) findViewById(R.id.jiangwen);
+        jiangwen.setChecked(true);
 
         switch (title2_text.getText().toString())
         {
@@ -194,9 +203,27 @@ public class Caozuojiemian extends Activity
             case "温度":
                 douyaji.setVisibility(View.GONE);
                 break;
-
-
         }
+        if(title2_text.getText().toString().equals("温度"))
+        {
+            wenduradio.setVisibility(View.VISIBLE);
+        }
+
+        shengwen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                json.FTypeID = "1";
+            }
+        });
+
+        jiangwen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                json.FTypeID = "5";
+            }
+        });
 
         checkButton1.setOnClickListener(new View.OnClickListener()
         {
@@ -366,26 +393,25 @@ public class Caozuojiemian extends Activity
 
     public void  caozuo()
     {
-        Myjson json = new Myjson();
         if (checkBox1.isChecked())
         {
             json.FFloorOne = "1";
         }
         if (checkBox2.isChecked())
         {
-            json.FFloorOne = "1";
+            json.FFloorTwo = "1";
         }
         if (checkBox3.isChecked())
         {
-            json.FFloorOne = "1";
+            json.FFloorThree = "1";
         }
         if (checkBox4.isChecked())
         {
-            json.FFloorOne = "1";
+            json.FDouyaji = "1";
         }
         if (checkBox5.isChecked())
         {
-            json.FFloorOne = "1";
+            json.FMG = "1";
         }
         switch (title2_text.getText().toString())
         {
@@ -397,7 +423,7 @@ public class Caozuojiemian extends Activity
                 json.FTypeID = "2";
                 break;
             case "通风":
-                json.FTypeID = "6";
+                json.FTypeID = "7";
                 break;
             case "温度":
                 json.FTypeID = "1";
