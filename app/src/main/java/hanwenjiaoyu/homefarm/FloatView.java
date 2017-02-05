@@ -84,18 +84,18 @@ public class FloatView extends LinearLayout
                     int d = 0;
                     for (int i = 0; i < rs.size(); i++)
                     {
-                        if (rs.get(i).d_liang != 0)
+                        if (rs.get(i).d_lastvalue != 0)
                         {
                             switch (rs.get(i).d_name.substring(6, 7))
                             {
                                 //温度
                                 case "w":
-                                    a += rs.get(i).d_liang;
+                                    a += rs.get(i).d_lastvalue;
                                     c++;
                                     break;
                                 //湿度
                                 case "s":
-                                    b += rs.get(i).d_liang;
+                                    b += rs.get(i).d_lastvalue;
                                     d++;
                                     break;
                             }
@@ -142,11 +142,11 @@ public class FloatView extends LinearLayout
         wendu_shuju = (TextView) view.findViewById(R.id.wendu_shuju);
         shidu_shuju = (TextView) view.findViewById(R.id.shidu_shuju);
 
-        String sqlstr = "SELECT d_name,d_liang FROM device where d_type = 'cl' and EQID = '" + FloatWindowService.floatWindowServicethis.EQID + "' and d_name like 'turangshidu%' or d_name like 'turangwendu%'";
+        String sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl' and EQID = '" + FloatWindowService.floatWindowServicethis.EQID + "' and d_name like 'turangshidu%' or d_name like 'turangwendu%'";
         requestBody = new FormBody.Builder()
                 .add("fangfa", "chaxun")
                 .add("EQID", FloatWindowService.floatWindowServicethis.EQID)
-                .add("EQIDMD5", MD5.jiami(FloatWindowService.floatWindowServicethis.EQIDMD5))
+                .add("EQIDMD5", MD5.jiami(FloatWindowService.floatWindowServicethis.EQID))
                 .add("sqlstr", sqlstr)
                 .build();
         request = new Request.Builder()

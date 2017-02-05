@@ -159,18 +159,18 @@ public class MainActivity extends AppCompatActivity
                         int d = 0;
                         for (int i = 0; i < rs.size(); i++)
                         {
-                            if (rs.get(i).d_liang != 0)
+                            if (rs.get(i).d_lastvalue != 0)
                             {
                                 switch (rs.get(i).d_name.substring(6, 7))
                                 {
                                     //温度
                                     case "w":
-                                        a += rs.get(i).d_liang;
+                                        a += rs.get(i).d_lastvalue;
                                         c++;
                                         break;
                                     //湿度
                                     case "s":
-                                        b += rs.get(i).d_liang;
+                                        b += rs.get(i).d_lastvalue;
                                         d++;
                                         break;
                                 }
@@ -737,7 +737,7 @@ public class MainActivity extends AppCompatActivity
         wendu_shuju = (TextView) findViewById(R.id.wendu_shuju);
         shidu_shuju = (TextView) findViewById(R.id.shidu_shuju);
 
-        String sqlstr = "SELECT d_name,d_liang FROM device where d_type = 'cl' and EQID = '" + EQID + "' and (d_name like 'turangshidu%' or d_name like 'turangwendu%')";
+        String sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl' and EQID = '" + EQID + "' and (d_name like 'turangshidu%' or d_name like 'turangwendu%')";
         requestBody = new FormBody.Builder()
                 .add("fangfa", "chaxun")
                 .add("EQID", EQID)
@@ -997,15 +997,15 @@ public class MainActivity extends AppCompatActivity
                         rslist = new ArrayList<Lastjson>();
                         java.lang.reflect.Type type = new TypeToken<List<Lastjson>>() {}.getType();
                         rslist = gson.fromJson(resstr, type);
-                        msg = Message.obtain();
-                        msg.what = 2;
-                        handler.sendMessage(msg);
                     }
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
                 }
+                msg = Message.obtain();
+                msg.what = 2;
+                handler.sendMessage(msg);
             }
         });
 
@@ -1237,8 +1237,8 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         };
-        Timer timer = new Timer(true);
-        timer.schedule(task,15000);
+        Timer timer2 = new Timer(true);
+        timer2.schedule(task,15000);
     }
 
     //小刷新
@@ -1256,6 +1256,7 @@ public class MainActivity extends AppCompatActivity
                     xiaoshuaxinjishu = 0;
                     xiaotimer.cancel();
                 }
+                xiaoshuaxinjishu++;
                 zhuanpan();
             }
         };

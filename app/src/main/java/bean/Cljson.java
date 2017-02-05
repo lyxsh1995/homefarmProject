@@ -9,4 +9,6 @@ public class Cljson
     public String d_name;
 
     public int d_liang;
+
+    public int d_lastvalue;
 }
