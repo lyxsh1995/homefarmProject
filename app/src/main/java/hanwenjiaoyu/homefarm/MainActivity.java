@@ -20,6 +20,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -104,6 +107,7 @@ public class MainActivity extends AppCompatActivity
 
     private long exitTime = 0;
     private LinearLayout window_layout;
+    private LinearLayout zhuanpanlayout;
     public Switch kaiguan;
     private Mybutton wendu_button;
     private Mybutton zhuanpan;
@@ -304,6 +308,12 @@ public class MainActivity extends AppCompatActivity
         EQID = intent.getStringExtra("EQID");
         EQIDMD5 = MD5.jiami(EQID);
 
+        //设备管理对象
+        WindowManager wm = this.getWindowManager();
+        //转盘layout
+        zhuanpanlayout = (LinearLayout) findViewById(R.id.zhuanpanlayout);
+        //把转盘高设为屏幕最大宽度
+        zhuanpanlayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, wm.getDefaultDisplay().getWidth()));
         //悬浮窗
         kaiguan = (Switch) findViewById(R.id.kaiguan);
         kaiguan.setOnClickListener(new View.OnClickListener()

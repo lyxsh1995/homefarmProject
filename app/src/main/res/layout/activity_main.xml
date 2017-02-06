@@ -76,10 +76,10 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#22FFFFFF">
+        android:background="#22FFFFFF"
+        android:id="@+id/zhuanpanlayout">
 
-        <include layout="@layout/main"
-                 android:layout_weight="1"/>
+        <include layout="@layout/main"/>
     </LinearLayout>
 
     <LinearLayout
