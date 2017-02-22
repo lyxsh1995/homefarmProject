@@ -100,6 +100,8 @@ public class Fangan extends Activity
                 Mycaiyuan mycaiyuan = (Mycaiyuan) f.instantiateItem(Caiyuan.caiyuanthis.pager,Caiyuan.caiyuanthis.pagerposition);
                 mycaiyuan.mingcheng.setText(rs.get(positions).pingzhong);
                 mycaiyuan.jianjie.setText(rs.get(positions).jianjie);
+                mycaiyuan.shouhuoshijian.setText((rs.get(positions).zhouqi));
+                mycaiyuan.quedingdaoru.setVisibility(View.VISIBLE);
                 finish();
             }
         });

@@ -32,7 +32,8 @@
         android:id="@+id/shengzhangshijian"
         android:textSize="20dp"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:visibility="gone"/>
 
     <TextView
         android:text="预计收获时间    2017-1-17 10:49:28"
@@ -55,7 +56,8 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:gravity="center"
+        android:id="@+id/daorualayout">
 
         <Button
             android:text="确定"
@@ -66,13 +68,36 @@
             android:background="@drawable/button"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="50dp"/>
+            android:layout_marginTop="50dp"
+            android:visibility="gone"/>
 
         <Button
             android:text="导入方案"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/daoru"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="50dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:id="@+id/shanchulayout">
+
+        <Button
+            android:text="删除方案"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/shanchufangan"
             android:layout_weight="1"
             android:background="@drawable/button"
             android:layout_marginLeft="15dp"

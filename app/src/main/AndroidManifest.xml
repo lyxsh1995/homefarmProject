@@ -22,6 +22,7 @@
         <activity android:name=".Zhuangtai"/>
         <activity android:name=".Caiyuan"/>
         <activity android:name=".Fangan"/>
+        <activity android:name=".Zhilian"/>
 
         //悬浮窗
         <service
