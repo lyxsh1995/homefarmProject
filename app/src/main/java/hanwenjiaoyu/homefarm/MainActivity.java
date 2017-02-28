@@ -1,7 +1,10 @@
 package hanwenjiaoyu.homefarm;
 
+import android.Manifest;
 import android.app.ActivityManager;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -9,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -19,7 +23,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -105,7 +111,7 @@ public class MainActivity extends AppCompatActivity
     private Request request;
     private RequestBody requestBody;
 
-    public boolean dakaiguanbi = false;//当前状态,真为打开,假为关闭
+    public boolean dakaiguanbi = true;//当前状态,真为打开,假为关闭
 
     public TimerTask task;
     public Timer timer;
@@ -142,6 +148,7 @@ public class MainActivity extends AppCompatActivity
 
     //UDP变量
     private DatagramSocket datagramSocket;
+    private DatagramSocket datagramSocket2;//发送命令端口
     private DatagramPacket datagramPacket;
     private String wifiad = "255.255.255.255";
     private String myip;
@@ -150,11 +157,14 @@ public class MainActivity extends AppCompatActivity
     Integer port = 8899;
     Boolean tongxingmod = false;
 
+    private WifiManager wifiManager;
+
     Handler handler = new Handler()
     {
         @Override
         public void handleMessage(Message msg)
-        {super.handleMessage(msg);
+        {
+            super.handleMessage(msg);
             try
             {
                 switch (msg.what)
@@ -230,15 +240,15 @@ public class MainActivity extends AppCompatActivity
                     case 2:
                         String zhuangtai = "";
                         if (wenduzhuangtai != 2)
-                            wendu_button.setBackgroundResource(R.mipmap.wendu_button);
+                        { wendu_button.setBackgroundResource(R.mipmap.wendu_button); }
                         if (shifeizhuangtai != 2)
-                        shifei_button.setBackgroundResource(R.mipmap.shifei_button);
+                        { shifei_button.setBackgroundResource(R.mipmap.shifei_button); }
                         if (shishuizhuangtai != 2)
-                        shishui_button.setBackgroundResource(R.mipmap.shishui_button);
+                        { shishui_button.setBackgroundResource(R.mipmap.shishui_button); }
                         if (buguangzhuangtai != 2)
-                        buguang_button.setBackgroundResource(R.mipmap.buguang_button);
+                        { buguang_button.setBackgroundResource(R.mipmap.buguang_button); }
                         if (tongfengzhuangtai != 2)
-                        tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button);
+                        { tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button); }
                         for (int i = 0; i < rslist.size(); i++)
                         {
                             switch (rslist.get(i).FTypeID)
@@ -281,8 +291,7 @@ public class MainActivity extends AppCompatActivity
                             //设备关闭状态
                             stop_button.setBackgroundResource(R.mipmap.start_button);
                             dakaiguanbi = false;
-                        }
-                        else if (termparamjsonrs.get(0).getP_value1().equals("en") || termparamjsonrs.get(0).getP_value2().equals("en") || termparamjsonrs.get(0).getP_value3().equals("en"))
+                        } else if (termparamjsonrs.get(0).getP_value1().equals("en") || termparamjsonrs.get(0).getP_value2().equals("en") || termparamjsonrs.get(0).getP_value3().equals("en"))
                         {
                             //设备打开状态
                             stop_button.setBackgroundResource(R.mipmap.stop_button);
@@ -298,20 +307,20 @@ public class MainActivity extends AppCompatActivity
                             {
                                 stop_button.setBackgroundResource(R.mipmap.start_button);
                                 dakaiguanbi = false;
-                            }else
+                            } else
                             {
                                 stop_button.setBackgroundResource(R.mipmap.stop_button);
                                 dakaiguanbi = true;
                             }
-                        }else
+                        } else
                         {
-                            Toast.makeText(getApplicationContext(),"设备打开关闭失败",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "设备打开关闭失败", Toast.LENGTH_SHORT).show();
                         }
                 }
             }
             catch (Exception e)
             {
-                Log.e("handlr ERROR","数据异常:" + e.getMessage());
+                Log.e("handlr ERROR", "数据异常:" + e.getMessage());
             }
         }
     };
@@ -333,7 +342,7 @@ public class MainActivity extends AppCompatActivity
         EQIDMD5 = MD5.jiami(EQID);
 
         //读取本地IP
-        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         final int ipAddress = wifiInfo.getIpAddress();
         myip = (ipAddress & 0xff) + "." + (ipAddress >> 8 & 0xff) + "." + (ipAddress >> 16 & 0xff) + "." + (ipAddress >> 24 & 0xff);
@@ -343,7 +352,9 @@ public class MainActivity extends AppCompatActivity
         try
         {
             datagramSocket = new DatagramSocket(port);
+            datagramSocket2 = new DatagramSocket(port - 1);
             datagramSocket.setSoTimeout(6000);
+            datagramSocket2.setSoTimeout(1000);
             datagramPacket = new DatagramPacket(message, message.length);
         }
         catch (SocketException e1)
@@ -402,8 +413,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        //判断悬浮窗service是否已经启动
+        wendu_shuju = (TextView) findViewById(R.id.wendu_shuju);
+        shidu_shuju = (TextView) findViewById(R.id.shidu_shuju);
 
+        //判断悬浮窗service是否已经启动
         ActivityManager myManager = (ActivityManager) getApplication().getSystemService(getApplication().ACTIVITY_SERVICE);
         ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList<ActivityManager.RunningServiceInfo>) myManager.getRunningServices(30);
         for (int i = 0; i < runningService.size(); i++)
@@ -417,13 +430,14 @@ public class MainActivity extends AppCompatActivity
         //离线模式
         lixiankaiguan = (Switch) findViewById(R.id.lixiankaiguan);
         lixiantext = (TextView) findViewById(R.id.lixiantext);
-        lixiankaiguan.setOnClickListener(new View.OnClickListener() {
+        lixiankaiguan.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
                 lixiantext.setText("正在切换模式");
                 lixiankaiguan.setClickable(false);
-                if(lixiankaiguan.isChecked())
+                if (lixiankaiguan.isChecked())
                 {
                     //开始进入离线模式
                     new AsyncTask<String, Void, Boolean>()
@@ -431,26 +445,35 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         protected Boolean doInBackground(String... params)
                         {
-                            UDPsend(params[0],false);
-                            String receivedata = UDPreceive(false);
+                            String receivedata = "";
+                            for (int i = 0; i < 10; i++)
+                            {
+                                try
+                                {
+                                    UDPsend(params[0], false);
+                                    receivedata = UDPreceive(false);
+                                    wifiad = receivedata.substring(0, receivedata.indexOf(","));
+                                    break;
+                                }
+                                catch (Exception e) {}
+                            }
                             try
                             {
-                                wifiad = receivedata.substring(0, receivedata.indexOf(","));
-                                UDPsend(params[1],false);
+                                UDPsend(params[1], false);
                                 if (UDPreceive(false).contains("+ok"))
                                 {
-                                    UDPsend(params[2],false);
-                                    if(UDPreceive(false).contains("+ok"))
+                                    UDPsend(params[2], false);
+                                    if (UDPreceive(false).contains("+ok"))
                                     {
-                                        UDPsend(params[3],false);
+                                        UDPsend(params[3], false);
                                         //让设备第一次启动UDP()
-                                        UDPsend("UDP:F",true);
-                                        int i = 0;
+                                        UDPsend("UDP:F", true);
+                                        int ii = 0;
                                         while (!UDPreceive(true).contains("ok"))
                                         {
-                                            UDPsend("UDP:F",true);
-                                            i++;
-                                            if (i>=3)
+                                            UDPsend("UDP:F", true);
+                                            ii++;
+                                            if (ii >= 3)
                                             {
                                                 return false;
                                             }
@@ -458,7 +481,8 @@ public class MainActivity extends AppCompatActivity
                                         return true;
                                     }
                                 }
-                            }catch (Exception e){}//第一条指令出错 局域网广播
+                            }
+                            catch (Exception e) {}
                             return false;
                         }
 
@@ -467,19 +491,19 @@ public class MainActivity extends AppCompatActivity
                         {
                             if (b)
                             {
-                                Toast.makeText(getApplicationContext(),"进入离线模式成功",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "进入离线模式成功", Toast.LENGTH_SHORT).show();
                                 lixiantext.setText("离线模式");
                                 lixiankaiguan.setClickable(true);
                                 tongxingmod = true;
-                            }else
+                            } else
                             {
                                 lixiankaiguan.setChecked(false);
-                                Toast.makeText(getApplicationContext(),"进入离线模式失败",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "进入离线模式失败", Toast.LENGTH_SHORT).show();
                                 lixiantext.setText("离线模式");
                                 lixiankaiguan.setClickable(true);
                             }
                         }
-                    }.execute("csncat@yzr", "AT+NETP=UDP,SERVER," + port + "," + myip + "\r","AT+TMODE=throughput\r","AT+Z\r");
+                    }.execute("csncat@yzr", "AT+NETP=UDP,SERVER," + port + "," + myip + "\r", "AT+TMODE=throughput\r", "AT+Z\r");
                 } else
                 {
                     //取消离线模式
@@ -488,19 +512,19 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         protected Boolean doInBackground(String... params)
                         {
-                            UDPsend(params[0],true);
-                            if(UDPreceive(true).contains("ok"))
+                            UDPsend(params[0], true);
+                            if (UDPreceive(true).contains("ok"))
                             {
-                                UDPsend("csncat@yzr",false);
+                                UDPsend("csncat@yzr", false);
                                 UDPreceive(false);
                                 UDPsend(params[1], false);//进入HTTP模式
                                 if (UDPreceive(false).contains("+ok"))
                                 {
-                                    UDPsend(params[2].substring(0, 3), false);//进入HTTP模式
+                                    UDPsend(params[2], false);//重启
                                     return true;
                                 }
                             }
-                            return  false;
+                            return false;
                         }
 
                         @Override
@@ -508,19 +532,19 @@ public class MainActivity extends AppCompatActivity
                         {
                             if (b)
                             {
-                                Toast.makeText(getApplicationContext(),"退出离线模式成功",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "退出离线模式成功", Toast.LENGTH_SHORT).show();
                                 lixiantext.setText("离线模式");
                                 lixiankaiguan.setClickable(true);
                                 tongxingmod = false;
-                            }else
+                            } else
                             {
                                 lixiankaiguan.setChecked(true);
-                                Toast.makeText(getApplicationContext(),"退出离线模式失败",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "退出离线模式失败", Toast.LENGTH_SHORT).show();
                                 lixiantext.setText("离线模式");
                                 lixiankaiguan.setClickable(true);
                             }
                         }
-                    }.execute("UDP:S", "AT+TMODE=htpc\r","AT+Z\r");
+                    }.execute("UDP:W", "AT+TMODE=htpc\r", "AT+Z\r");
                 }
             }
         });
@@ -616,52 +640,71 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                String cz;
-                cz =(dakaiguanbi)? "dakai":"guanbi";
-                requestBody = new FormBody.Builder()
-                        .add("fangfa", "kaiguan")
-                        .add("EQID", EQID)
-                        .add("EQIDMD5", MD5.jiami(EQID))
-                        .add("caozuo",cz)
-                        .build();
-                request = new Request.Builder()
-                        .url(url)
-                        .post(requestBody)
-                        .build();
-
-                response = null;
-
-                mOkHttpClient.newCall(request).enqueue(new Callback()
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("提示:");
+                builder.setMessage(dakaiguanbi ? "确定打开设备?" : "确定关闭设备?");
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
                 {
                     @Override
-                    public void onFailure(Call call, IOException e)
+                    public void onClick(DialogInterface dialog, int which)
                     {
-                        Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
-                    }
-
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException
-                    {
-                        try
-                        {
-                            if (response.isSuccessful())
-                            {
-                                String resstr = response.body().string();
-                                Log.i("jieshou", resstr);
-
-                                msg = Message.obtain();
-                                msg.obj = resstr;
-                                msg.what = 4;
-                                handler.sendMessage(msg);
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            e.printStackTrace();
-                        }
+                        return;
                     }
                 });
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        String cz;
+                        cz = (dakaiguanbi) ? "dakai" : "guanbi";
+                        requestBody = new FormBody.Builder()
+                                .add("fangfa", "kaiguan")
+                                .add("EQID", EQID)
+                                .add("EQIDMD5", MD5.jiami(EQID))
+                                .add("caozuo", cz)
+                                .build();
+                        request = new Request.Builder()
+                                .url(url)
+                                .post(requestBody)
+                                .build();
+
+                        response = null;
+
+                        mOkHttpClient.newCall(request).enqueue(new Callback()
+                        {
+                            @Override
+                            public void onFailure(Call call, IOException e)
+                            {
+                                Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
+                            }
+
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException
+                            {
+                                try
+                                {
+                                    if (response.isSuccessful())
+                                    {
+                                        String resstr = response.body().string();
+                                        Log.i("jieshou", resstr);
+
+                                        msg = Message.obtain();
+                                        msg.obj = resstr;
+                                        msg.what = 4;
+                                        handler.sendMessage(msg);
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                });
+                builder.create().show();
             }
         });
 
@@ -686,7 +729,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 //显示菜单
-                if (fragmentManager.findFragmentByTag(ContextMenuDialogFragment.TAG) == null) {
+                if (fragmentManager.findFragmentByTag(ContextMenuDialogFragment.TAG) == null)
+                {
                     mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
                 }
             }
@@ -719,7 +763,7 @@ public class MainActivity extends AppCompatActivity
                         intent = new Intent(MainActivity.this, com.rtk.simpleconfig_wizard.MainActivity.class);
                         startActivity(intent);
                         break;
-                    case 3:
+                    case 4:
                         //退出登录
                         getApplication().deleteDatabase("homefarm");
                         intent = new Intent(getApplicationContext(), FloatWindowService.class);
@@ -727,8 +771,48 @@ public class MainActivity extends AppCompatActivity
                         finish();
                         System.exit(0);
                         break;
+                    case 3:
+                        //摄像头
+                        ActivityManager activityManager = (ActivityManager) getApplication().getSystemService(getApplication().ACTIVITY_SERVICE);
+                        List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
+                        if (tasksInfo.size() > 0)
+                        {
+                            Intent mainIntent = getPackageManager().getLaunchIntentForPackage("com.xiaomi.smarthome");
+                            startActivity(mainIntent);
+                        }
+                        break;
                     case 5:
-                        //关于
+                        //直连设备
+                        if (!wifiManager.isWifiEnabled()) {
+                            wifiManager.setWifiEnabled(true);
+                        }
+                        WifiConfiguration config = new WifiConfiguration();
+                        config.allowedAuthAlgorithms.clear();
+                        config.allowedGroupCiphers.clear();
+                        config.allowedKeyManagement.clear();
+                        config.allowedPairwiseCiphers.clear();
+                        config.allowedProtocols.clear();
+
+                        config.SSID = "\"csnc-"+EQID+"\"";
+                        config.preSharedKey = "\"csnc@yzr\"";
+                        config.hiddenSSID = true;
+                        config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+                        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+                        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+                        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+//                        config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+                        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+                        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                        config.status = WifiConfiguration.Status.ENABLED;
+
+                        int configID = wifiManager.addNetwork(config);
+                        if(wifiManager.enableNetwork(configID, true))
+                        {
+                            Toast.makeText(getApplicationContext(),"正在连接WIFI",Toast.LENGTH_SHORT).show();
+                        }else
+                        {
+                            Toast.makeText(getApplicationContext(),"连接WIFI失败",Toast.LENGTH_SHORT).show();
+                        }
                         break;
                 }
             }
@@ -754,23 +838,25 @@ public class MainActivity extends AppCompatActivity
         });
 
         //相册
-        ImageButton xiangce = (ImageButton)findViewById(R.id.xiangce);
-        xiangce.setOnClickListener(new View.OnClickListener() {
+        ImageButton xiangce = (ImageButton) findViewById(R.id.xiangce);
+        xiangce.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
                 Intent intent = new Intent(Intent.ACTION_PICK,
-                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                           android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                file = new File(Environment.getExternalStorageDirectory() + "/homefarm/", String.valueOf(System.currentTimeMillis()) + ".jpg");
 //                mUri = Uri.fromFile(file);
 //                Uri data = Uri.parse(Environment.getExternalStorageDirectory() + "/homefarm");
 //                intent.setData(data);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, 1);
             }
         });
 
         shejiaolayout = (FrameLayout) findViewById(R.id.shejiaolayout);
-        shejiaolayout.setOnClickListener(new View.OnClickListener() {
+        shejiaolayout.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
@@ -778,8 +864,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
         //分享
-        ImageButton fenxiang = (ImageButton)findViewById(R.id.fenxiang);
-        fenxiang.setOnClickListener(new View.OnClickListener() {
+        ImageButton fenxiang = (ImageButton) findViewById(R.id.fenxiang);
+        fenxiang.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
@@ -878,11 +965,12 @@ public class MainActivity extends AppCompatActivity
         });
 
         ImageButton zhilian = (ImageButton) findViewById(R.id.zhilian);
-        zhilian.setOnClickListener(new View.OnClickListener() {
+        zhilian.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(MainActivity.this,Zhilian.class);
+                Intent intent = new Intent(MainActivity.this, Zhilian.class);
                 startActivity(intent);
             }
         });
@@ -933,57 +1021,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        //温度湿度数据更新(悬浮窗)
-        wendu_shuju = (TextView) findViewById(R.id.wendu_shuju);
-        shidu_shuju = (TextView) findViewById(R.id.shidu_shuju);
-
-        String sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl' and EQID = '" + EQID + "' and (d_name like 'turangshidu%' or d_name like 'turangwendu%')";
-        requestBody = new FormBody.Builder()
-                .add("fangfa", "chaxun")
-                .add("EQID", EQID)
-                .add("EQIDMD5", MD5.jiami(EQID))
-                .add("sqlstr", sqlstr)
-                .build();
-        request = new Request.Builder()
-                .url(url)
-                .post(requestBody)
-                .build();
-
-        response = null;
-
-        mOkHttpClient.newCall(request).enqueue(new Callback()
-        {
-            @Override
-            public void onFailure(Call call, IOException e)
-            {
-                Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
-            }
-
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException
-            {
-                try
-                {
-                    if (response.isSuccessful())
-                    {
-                        String resstr = response.body().string();
-                        Log.i("jieshou", resstr);
-                        rs = new ArrayList<Cljson>();
-                        Type type = new TypeToken<List<Cljson>>() {}.getType();
-                        rs = gson.fromJson(resstr, type);
-                        msg = Message.obtain();
-                        msg.what = 1;
-                        handler.sendMessage(msg);
-                    }
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
-
         //更新正在运行的操作
         Createtask();
         timer = new Timer(true);
@@ -1001,14 +1038,61 @@ public class MainActivity extends AppCompatActivity
             {
                 Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
-            }
-            else
+            } else
             {
-//                unregisterReceiver(guangbo);
-                finish();
-                if (!kaiguan.isChecked())
+                //退出离线模式
+                if (lixiankaiguan.isChecked())
                 {
-                    System.exit(0);
+                    new AsyncTask<String, Void, Boolean>()
+                    {
+                        @Override
+                        protected Boolean doInBackground(String... params)
+                        {
+                            UDPsend(params[0], true);
+                            if (UDPreceive(true).contains("ok"))
+                            {
+                                UDPsend("csncat@yzr", false);
+                                UDPreceive(false);
+                                UDPsend(params[1], false);//进入HTTP模式
+                                if (UDPreceive(false).contains("+ok"))
+                                {
+                                    UDPsend(params[2], false);//重启
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Boolean b)
+                        {
+                            if (b)
+                            {
+                                Toast.makeText(getApplicationContext(), "退出离线模式成功", Toast.LENGTH_SHORT).show();
+                                lixiantext.setText("离线模式");
+                                lixiankaiguan.setClickable(true);
+                                tongxingmod = false;
+                            } else
+                            {
+                                lixiankaiguan.setChecked(true);
+                                Toast.makeText(getApplicationContext(), "退出离线模式失败", Toast.LENGTH_SHORT).show();
+                                lixiantext.setText("离线模式");
+                                lixiankaiguan.setClickable(true);
+                            }
+                            finish();
+                            if (!kaiguan.isChecked())
+                            {
+                                System.exit(0);
+                            }
+                        }
+                    }.execute("UDP:W", "AT+TMODE=htpc\r", "AT+Z\r");
+                } else
+                {
+                    finish();
+                    if (!kaiguan.isChecked())
+                    {
+                        System.exit(0);
+                    }
                 }
             }
             return true;
@@ -1169,31 +1253,70 @@ public class MainActivity extends AppCompatActivity
     {
         if (tongxingmod)
         {
-            new AsyncTask<String, Void, String>()
+            new AsyncTask<String, Void, String[]>()
             {
                 @Override
-                protected String doInBackground(String... params)
+                protected String[] doInBackground(String... params)
                 {
-                    UDPsend(params[0],true);
-                    return UDPreceive(true);
+                    String[] strings = new String[4];
+                    //设备是否关闭
+                    UDPsend("UDP:QSELECT p_value1,p_value2,p_value3 FROM termparam where p_name = 'yunxingfangshi'", true);
+                    strings[1] = UDPreceive(true);
+                    //悬浮窗
+                    UDPsend("UDP:QSELECT d_name,d_lastvalue FROM device where d_type = 'cl' and d_status = 1 and (d_name like 'turangshidu%' or d_name like 'turangwendu%')", true);
+                    strings[2] = UDPreceive(true);
+                    //转盘
+                    UDPsend("UDP:QSELECT FTypeID FROM zuoyeshixu", true);
+                    strings[3] = UDPreceive(true);
+                    return strings;
                 }
 
                 @Override
-                protected void onPostExecute(String data)
+                protected void onPostExecute(String[] data)
                 {
-                    termparamjsonrs = new ArrayList<Termparamjson>();
-                    Type type = new TypeToken<List<Termparamjson>>() {}.getType();
-                    termparamjsonrs = gson.fromJson(data, type);
+                    try
+                    {
+                        //查询设备是否关闭
+                        termparamjsonrs = new ArrayList<Termparamjson>();
+                        Type type = new TypeToken<List<Termparamjson>>() {}.getType();
+                        termparamjsonrs = gson.fromJson(data[1], type);
+                        msg = Message.obtain();
+                        msg.what = 3;
+                        handler.sendMessage(msg);
+                    }
+                    catch (Exception e) {}
+
+                    try
+                    {
+                        //查询悬浮窗数据
+                        rs = new ArrayList<Cljson>();
+                        Type type = new TypeToken<List<Cljson>>() {}.getType();
+                        rs = gson.fromJson(data[2], type);
+                        msg = Message.obtain();
+                        msg.what = 1;
+                        handler.sendMessage(msg);
+                    }
+                    catch (Exception e) {}
+
+                    try
+                    {
+                        rslist = new ArrayList<Lastjson>();
+                        Type type = new TypeToken<List<Lastjson>>() {}.getType();
+                        rslist = gson.fromJson(data[3], type);
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                     msg = Message.obtain();
-                    msg.what = 3;
+                    msg.what = 2;
                     handler.sendMessage(msg);
                 }
-            }.execute("UDP:SELECT p_value1,p_value2,p_value3 FROM termparam where p_name = 'yunxingfangshi'");
-        }
-        else
+            }.execute();
+        } else
         {
             //查询设备是否关闭
-            String sqlstr = "SELECT p_value1,p_value2,p_value3 FROM termparam where p_name = 'yunxingfangshi' and EQID = '"+EQID+"'";
+            String sqlstr = "SELECT p_value1,p_value2,p_value3 FROM termparam where p_name = 'yunxingfangshi' and EQID = '" + EQID + "'";
             requestBody = new FormBody.Builder()
                     .add("fangfa", "chaxun")
                     .add("EQID", EQID)
@@ -1214,6 +1337,7 @@ public class MainActivity extends AppCompatActivity
                 {
                     Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
                 }
+
                 @Override
                 public void onResponse(Call call, Response response) throws IOException
                 {
@@ -1222,7 +1346,7 @@ public class MainActivity extends AppCompatActivity
                         if (response.isSuccessful())
                         {
                             String resstr = response.body().string();
-                            Log.i("chaxun", resstr);
+                            Log.i("设备是否关闭", resstr);
                             termparamjsonrs = new ArrayList<Termparamjson>();
                             Type type = new TypeToken<List<Termparamjson>>() {}.getType();
                             termparamjsonrs = gson.fromJson(resstr, type);
@@ -1238,10 +1362,13 @@ public class MainActivity extends AppCompatActivity
                 }
             });
 
+            //刷新转盘
+            sqlstr = "SELECT FTypeID FROM zuoyeshixu where EQID = '" + EQID + "'";
             requestBody = new FormBody.Builder()
-                    .add("fangfa", "yunxing")
+                    .add("fangfa", "chaxun")
                     .add("EQID", EQID)
                     .add("EQIDMD5", MD5.jiami(EQID))
+                    .add("sqlstr", sqlstr)
                     .build();
             request = new Request.Builder()
                     .url(url)
@@ -1280,6 +1407,54 @@ public class MainActivity extends AppCompatActivity
                     msg = Message.obtain();
                     msg.what = 2;
                     handler.sendMessage(msg);
+                }
+            });
+
+            //温度湿度数据更新(悬浮窗)
+            sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl' and d_status = 1 and EQID = '" + EQID + "' and (d_name like 'turangshidu%' or d_name like 'turangwendu%')";
+            requestBody = new FormBody.Builder()
+                    .add("fangfa", "chaxun")
+                    .add("EQID", EQID)
+                    .add("EQIDMD5", MD5.jiami(EQID))
+                    .add("sqlstr", sqlstr)
+                    .build();
+            request = new Request.Builder()
+                    .url(url)
+                    .post(requestBody)
+                    .build();
+
+            response = null;
+
+            mOkHttpClient.newCall(request).enqueue(new Callback()
+            {
+                @Override
+                public void onFailure(Call call, IOException e)
+                {
+                    Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
+                }
+
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException
+                {
+                    try
+                    {
+                        if (response.isSuccessful())
+                        {
+                            String resstr = response.body().string();
+                            Log.i("jieshou", resstr);
+                            rs = new ArrayList<Cljson>();
+                            Type type = new TypeToken<List<Cljson>>() {}.getType();
+                            rs = gson.fromJson(resstr, type);
+                            msg = Message.obtain();
+                            msg.what = 1;
+                            handler.sendMessage(msg);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
             });
         }
@@ -1366,29 +1541,29 @@ public class MainActivity extends AppCompatActivity
         MenuObject close = new MenuObject();
         close.setResource(R.drawable.icn_close);
 
-//        MenuObject send = new MenuObject("详细状态");
-//        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.nongye));
-//        //设置缩放比例
-//        matrix.postScale(70f/bitmap.getWidth(),70f/bitmap.getHeight());
-//        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
-//        send.setBitmap(bitmap);
+        MenuObject send = new MenuObject("直连设备");
+        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.nongye));
+        //设置缩放比例
+        matrix.postScale(70f / bitmap.getWidth(), 70f / bitmap.getHeight());
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        send.setBitmap(bitmap);
 
         MenuObject like = new MenuObject("我的菜园");
         bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.nongtian));
-        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         like.setBitmap(bitmap);
 
 
         MenuObject addFr = new MenuObject("辅助设备联网");
         bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.wifi));
-        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         addFr.setBitmap(bitmap);
 
-//        //图片太小不缩放
-//        MenuObject addFav = new MenuObject("关    于");
-//        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.guanyu));
-////        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
-//        addFav.setBitmap(bitmap);
+        //图片太小不缩放
+        MenuObject addFav = new MenuObject("摄像头");
+        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.guanyu));
+//        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        addFav.setBitmap(bitmap);
 
         MenuObject block = new MenuObject("退出登录");
         bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.tuichu));
@@ -1396,11 +1571,11 @@ public class MainActivity extends AppCompatActivity
         block.setBitmap(bitmap);
 
         menuObjects.add(close);
-//        menuObjects.add(send);
         menuObjects.add(like);
         menuObjects.add(addFr);
-//        menuObjects.add(addFav);
+        menuObjects.add(addFav);
         menuObjects.add(block);
+        menuObjects.add(send);
         return menuObjects;
     }
 
@@ -1408,9 +1583,10 @@ public class MainActivity extends AppCompatActivity
     public String getRealPathFromURI(Uri contentUri)
     {
         String res = null;
-        String[] proj = { MediaStore.Images.Media.DATA };
+        String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst())
+        {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);
         }
@@ -1441,7 +1617,8 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
         xiaoshuaxin();
-        final TimerTask task = new TimerTask() {
+        final TimerTask task = new TimerTask()
+        {
             @Override
             public void run()
             {
@@ -1466,11 +1643,12 @@ public class MainActivity extends AppCompatActivity
             }
         };
         Timer timer2 = new Timer(true);
-        timer2.schedule(task,15000);
+        timer2.schedule(task, 15000);
     }
 
     //小刷新
     int xiaoshuaxinjishu = 0;
+
     public void xiaoshuaxin()
     {
         final Timer xiaotimer = new Timer(true);
@@ -1488,13 +1666,14 @@ public class MainActivity extends AppCompatActivity
                 zhuanpan();
             }
         };
-        xiaotimer.schedule(xiaoshuaxinxunhuan,0,5000);
+        xiaotimer.schedule(xiaoshuaxinxunhuan, 0, 5000);
     }
 
     //UDP监听  head
 
     /**
      * 监听UDP接收,需要在子线程里进行
+     *
      * @param head 为真时要求内容前4个字符为 "UDP:"
      * @return 返回接收到的内容
      */
@@ -1506,14 +1685,18 @@ public class MainActivity extends AppCompatActivity
             // 准备接收数据
             message = new byte[1024];
             datagramPacket = new DatagramPacket(message, message.length);
-            datagramSocket.receive(datagramPacket);
-            rdata = new String(datagramPacket.getData());
             if (head)
             {
+                datagramSocket.receive(datagramPacket);
+                rdata = new String(datagramPacket.getData());
                 if (!rdata.contains("UDP:"))
                 {
                     return "";
                 }
+            } else
+            {
+                datagramSocket2.receive(datagramPacket);
+                rdata = new String(datagramPacket.getData());
             }
             Log.d("UDP Demo", rdata);
         }
@@ -1526,8 +1709,9 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * UDP发送数据
+     *
      * @param senddata 需要发送的数据
-     * @param leixing false为发送命令到48899端口
+     * @param leixing  false为发送命令到48899端口
      *                 ture为发送数据到8899端口
      */
     public void UDPsend(final String senddata, final Boolean leixing)
@@ -1544,23 +1728,29 @@ public class MainActivity extends AppCompatActivity
                 try
                 {
                     // 换成服务器端IP
-                     local = InetAddress.getByName(wifiad);
+                    local = InetAddress.getByName(wifiad);
                 }
                 catch (UnknownHostException e)
                 {
                     e.printStackTrace();
                 }
-                if(leixing)
+                if (leixing)
                 {
                     //添加包头包尾
-                    data = "^"+senddata+"|";
+                    data = "^" + senddata + "|";
                 }
                 int msg_length = data.length();
                 byte[] messagemessageByte = data.getBytes();
-                DatagramPacket p = new DatagramPacket(messagemessageByte, msg_length, local, leixing?port:server_port);
+                DatagramPacket p = new DatagramPacket(messagemessageByte, msg_length, local, leixing ? port : server_port);
                 try
                 {
-                    datagramSocket.send(p);
+                    if (leixing)
+                    {
+                        datagramSocket.send(p);
+                    } else
+                    {
+                        datagramSocket2.send(p);
+                    }
                 }
                 catch (IOException e)
                 {

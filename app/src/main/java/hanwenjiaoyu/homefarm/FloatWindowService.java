@@ -3,6 +3,7 @@ package hanwenjiaoyu.homefarm;
 
 import android.app.ActivityManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -47,6 +48,7 @@ import okhttp3.Response;
 public class FloatWindowService extends Service
 {
     public static FloatWindowService floatWindowServicethis;
+    private Context context;
     public String EQID, EQIDMD5;
 
     public Sqlite sqlite;

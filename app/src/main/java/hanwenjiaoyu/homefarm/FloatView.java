@@ -131,6 +131,7 @@ public class FloatView extends LinearLayout
     {
         super(context);
         this.context = context;
+        final boolean tongxingmod = MainActivity.mainActivitythis.tongxingmod;
         //获取浮动窗口视图所在布局
         View view = LayoutInflater.from(context).inflate(
                 R.layout.xuanfuchuang, null);
@@ -142,7 +143,7 @@ public class FloatView extends LinearLayout
         wendu_shuju = (TextView) view.findViewById(R.id.wendu_shuju);
         shidu_shuju = (TextView) view.findViewById(R.id.shidu_shuju);
 
-        String sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl' and EQID = '" + FloatWindowService.floatWindowServicethis.EQID + "' and d_name like 'turangshidu%' or d_name like 'turangwendu%'";
+        String sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl'  and d_status = 1 and EQID = '" + FloatWindowService.floatWindowServicethis.EQID + "' and d_name like 'turangshidu%' or d_name like 'turangwendu%'";
         requestBody = new FormBody.Builder()
                 .add("fangfa", "chaxun")
                 .add("EQID", FloatWindowService.floatWindowServicethis.EQID)
@@ -160,38 +161,41 @@ public class FloatView extends LinearLayout
         {
             public void run()
             {
-                mOkHttpClient.newCall(request).enqueue(new Callback()
+                if(!tongxingmod)
                 {
-                    @Override
-                    public void onFailure(Call call, IOException e)
+                    mOkHttpClient.newCall(request).enqueue(new Callback()
                     {
-                        Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
-                    }
-
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException
-                    {
-                        try
+                        @Override
+                        public void onFailure(Call call, IOException e)
                         {
-                            if (response.isSuccessful())
+                            Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
+                        }
+
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException
+                        {
+                            try
                             {
-                                String resstr = response.body().string();
-                                Log.i("jieshou", resstr);
-                                rs = new ArrayList<Cljson>();
-                                java.lang.reflect.Type type = new TypeToken<List<Cljson>>() {}.getType();
-                                rs = gson.fromJson(resstr, type);
-                                msg = Message.obtain();
-                                msg.what = 0;
-                                handler.sendMessage(msg);
+                                if (response.isSuccessful())
+                                {
+                                    String resstr = response.body().string();
+                                    Log.i("jieshou", resstr);
+                                    rs = new ArrayList<Cljson>();
+                                    java.lang.reflect.Type type = new TypeToken<List<Cljson>>() {}.getType();
+                                    rs = gson.fromJson(resstr, type);
+                                    msg = Message.obtain();
+                                    msg.what = 0;
+                                    handler.sendMessage(msg);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
                             }
                         }
-                        catch (Exception e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+                    });
+                }
             }
         };
         timer = new Timer(true);
