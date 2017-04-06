@@ -132,7 +132,7 @@ public class Caozuojiemian extends Activity
 //                        chaxunfbillno();
 
                             //15秒后取消黄色状态
-                            MainActivity.mainActivitythis.quxiaodengdai(title2_text.getText().toString());
+//                            MainActivity.mainActivitythis.quxiaodengdai(title2_text.getText().toString());
                             finish();
 
                             //开始读取刚刚操作是否被硬件执行
@@ -307,46 +307,46 @@ public class Caozuojiemian extends Activity
         });
 
         mOkHttpClient = new OkHttpClient();
-        requestBody = new FormBody.Builder()
-                .add("fangfa", "termparam")
-                .add("EQID", MainActivity.mainActivitythis.EQID)
-                .add("EQIDMD5", MD5.jiami(MainActivity.mainActivitythis.EQID))
-                .add("p_type", "fw")
-                .build();
-        request = new Request.Builder()
-                .url(MainActivity.mainActivitythis.url)
-                .post(requestBody)
-                .build();
-        mOkHttpClient.newCall(request).enqueue(new Callback()
-        {
-            @Override
-            public void onFailure(Call call, IOException e)
-            {
-                Log.e("jieshou", "testHttpPost ... onFailure() e=" + e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException
-            {
-                try
-                {
-                    if (response.isSuccessful())
-                    {
-                        String resstr = response.body().string();
-                        Log.i("jieshou", resstr);
-                        java.lang.reflect.Type type = new TypeToken<Fwjson>() {}.getType();
-                        fwjson = gson.fromJson(resstr, type);
-                        msg = Message.obtain();
-                        msg.what = 0;
-                        handler.sendMessage(msg);
-                    }
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        requestBody = new FormBody.Builder()
+//                .add("fangfa", "termparam")
+//                .add("EQID", MainActivity.mainActivitythis.EQID)
+//                .add("EQIDMD5", MD5.jiami(MainActivity.mainActivitythis.EQID))
+//                .add("p_type", "fw")
+//                .build();
+//        request = new Request.Builder()
+//                .url(MainActivity.mainActivitythis.url)
+//                .post(requestBody)
+//                .build();
+//        mOkHttpClient.newCall(request).enqueue(new Callback()
+//        {
+//            @Override
+//            public void onFailure(Call call, IOException e)
+//            {
+//                Log.e("jieshou", "testHttpPost ... onFailure() e=" + e);
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException
+//            {
+//                try
+//                {
+//                    if (response.isSuccessful())
+//                    {
+//                        String resstr = response.body().string();
+//                        Log.i("jieshou", resstr);
+//                        java.lang.reflect.Type type = new TypeToken<Fwjson>() {}.getType();
+//                        fwjson = gson.fromJson(resstr, type);
+//                        msg = Message.obtain();
+//                        msg.what = 0;
+//                        handler.sendMessage(msg);
+//                    }
+//                }
+//                catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
         Button kaishi = (Button) findViewById(R.id.kaishi);
         kaishi.setOnClickListener(new View.OnClickListener()
@@ -361,7 +361,7 @@ public class Caozuojiemian extends Activity
                 }
                 if (!checkBox1.isChecked() && !checkBox2.isChecked() && !checkBox3.isChecked() && !checkBox4.isChecked() && !checkBox5.isChecked())
                 {
-                    Toast.makeText(getApplicationContext(), "请勾选停止的层数", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "请勾选开始的层数", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (res != 0)
@@ -380,6 +380,12 @@ public class Caozuojiemian extends Activity
             {
                 if (res != 0)
                 {
+                    if (!checkBox1.isChecked() && !checkBox2.isChecked() && !checkBox3.isChecked() && !checkBox4.isChecked() && !checkBox5.isChecked())
+                    {
+                        Toast.makeText(getApplicationContext(), "请勾选停止的层数", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    tingzhi();
                     Mybutton button = (Mybutton) MainActivity.mainActivitythis.findViewById(buttonid);
                     button.setBackgroundResource(res);
                     finish();
@@ -442,14 +448,14 @@ public class Caozuojiemian extends Activity
         }
         json.FContinuePM = time.getText().toString();
         long time = System.currentTimeMillis();//long now = android.os.SystemClock.uptimeMillis();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date d1 = new Date(time);
         String t1 = format.format(d1);
         json.FExcTime = t1;
         json.EQID = MainActivity.mainActivitythis.EQID;
         json.EQIDMD5 = MD5.jiami(json.EQID);
 
-        if (MainActivity.mainActivitythis.tongxingmod)
+        if (MainActivity.mainActivitythis.udp.tongxingmod)
         {
             Toast.makeText(getApplicationContext(), "正在操作,请稍后", Toast.LENGTH_SHORT).show();
             new AsyncTask<String, Void, Boolean>()
@@ -462,8 +468,8 @@ public class Caozuojiemian extends Activity
                             + json.FFloorTwo + "','" + json.FFloorThree + "','" + json.FDouyaji + "','"
                             + json.FMG + "','0','" + json.FTypeID + "','3','" + json.FFreq + "','"
                             + json.FContinuePM + "','0','','','','','','" + json.FExcTime + "','0','0')";
-                    MainActivity.mainActivitythis.UDPsend(strsql, true);
-                    return MainActivity.mainActivitythis.UDPreceive(true).contains("ok");
+                    MainActivity.mainActivitythis.udp.UDPsend(strsql, true);
+                    return MainActivity.mainActivitythis.udp.UDPreceive(true).contains("ok");
                 }
 
                 @Override
@@ -476,7 +482,7 @@ public class Caozuojiemian extends Activity
                         Mybutton button = (Mybutton) MainActivity.mainActivitythis.findViewById(buttonid);
                         button.setBackgroundResource(respro);
                         //15秒后取消黄色状态
-                        MainActivity.mainActivitythis.quxiaodengdai(title2_text.getText().toString());
+//                        MainActivity.mainActivitythis.quxiaodengdai(title2_text.getText().toString());
                         finish();
                     } else
                     {
@@ -537,6 +543,89 @@ public class Caozuojiemian extends Activity
                 }
             });
         }
+    }
+
+    public void tingzhi()
+    {
+        if (checkBox1.isChecked())
+        {
+            json.FFloorOne = "1";
+        }
+        if (checkBox2.isChecked())
+        {
+            json.FFloorTwo = "1";
+        }
+        if (checkBox3.isChecked())
+        {
+            json.FFloorThree = "1";
+        }
+        if (checkBox4.isChecked())
+        {
+            json.FDouyaji = "1";
+        }
+        if (checkBox5.isChecked())
+        {
+            json.FMG = "1";
+        }
+        switch (title2_text.getText().toString())
+        {
+            case "施水":
+                json.FTypeID = "3";
+                json.FFreq = "4";
+                break;
+            case "施肥":
+                json.FTypeID = "2";
+                break;
+            case "通风":
+                json.FTypeID = "7";
+                break;
+            case "温度":
+                json.FTypeID = "1";
+                json.FFreq = "2";
+                break;
+            case "补光":
+                json.FTypeID = "4";
+                break;
+        }
+
+        requestBody = new FormBody.Builder()
+                .add("fangfa", "tingzhi")
+                .add("FFloorOne", json.FFloorOne)
+                .add("FFloorTwo", json.FFloorTwo)
+                .add("FFloorThree", json.FFloorThree)
+                .add("FTypeID", json.FTypeID)
+                .add("EQID", MainActivity.mainActivitythis.EQID)
+                .add("EQIDMD5", MD5.jiami(MainActivity.mainActivitythis.EQID))
+                .build();
+        request = new Request.Builder()
+                .url(MainActivity.mainActivitythis.url)
+                .post(requestBody)
+                .build();
+        mOkHttpClient.newCall(request).enqueue(new Callback()
+        {
+            @Override
+            public void onFailure(Call call, IOException e)
+            {
+                Log.e("jieshou", "testHttpPost ... onFailure() e=" + e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException
+            {
+                try
+                {
+                    if (response.isSuccessful())
+                    {
+                        String resstr = response.body().string();
+                        Log.i("jieshou", resstr);
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     //当前操作指令是否执行

@@ -131,7 +131,7 @@ public class FloatView extends LinearLayout
     {
         super(context);
         this.context = context;
-        final boolean tongxingmod = MainActivity.mainActivitythis.tongxingmod;
+        final boolean tongxingmod = MainActivity.mainActivitythis.udp.tongxingmod;
         //获取浮动窗口视图所在布局
         View view = LayoutInflater.from(context).inflate(
                 R.layout.xuanfuchuang, null);

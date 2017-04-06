@@ -8,4 +8,8 @@
     <string name="ap_connected">connected</string>
     <string name="ap_unconnected"></string>
 
+    <string name="no_ssid">未发现此ssid</string>
+    <string name="error_pasd_length">密码长度不正确</string>
+    <string name="confing_end">发送成功，配置完成，请检查模块的状态</string>
+
 </resources>

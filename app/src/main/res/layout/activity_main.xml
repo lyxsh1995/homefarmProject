@@ -41,36 +41,52 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp">
 
-            <LinearLayout
-                android:layout_width="0dp"
+        <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.55"
                 android:orientation="vertical"
                 android:layout_marginLeft="10dp">
 
                 <include layout="@layout/window"/>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.15"
-                android:gravity="center"
-                android:text="悬浮窗"
-                android:textColor="#FFFFFF"/>
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="悬浮窗"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="30dp"/>
 
-            <Switch
+        <Switch
                 android:id="@+id/kaiguan"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="0.3"
                 android:textColor="#ffffff"
                 android:textOff="off"
                 android:textOn="on"
                 android:layout_marginRight="20dp"/>
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/lixiantext"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="离线模式"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="10dp"/>
+
+        <Switch
+            android:id="@+id/lixiankaiguan"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:textOff="off"
+            android:textOn="on"
+            android:layout_marginRight="20dp"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -88,15 +104,14 @@
         android:visibility="gone"
         android:id="@+id/shejiaolayout">
 
-        <GridLayout
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#aa000000"
-            android:layout_gravity="center_vertical"
             >
 
             <LinearLayout
-                android:layout_width="88dp"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -153,7 +168,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginRight="15dp">
+                >
 
                 <ImageButton
                     android:id="@+id/pengyouquan"
@@ -175,15 +190,14 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="77dp"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="13dp"
-                android:layout_marginEnd="13dp">
+                >
 
                 <ImageButton
                     android:id="@+id/qqkongjian"
@@ -203,7 +217,35 @@
 
             </LinearLayout>
 
-        </GridLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                >
+
+                <ImageButton
+                    android:id="@+id/quxiaofengxiang"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:src="@mipmap/quxiaofengxiang"
+                    android:scaleType="fitCenter"
+                    android:background="#00000000"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="取消分享"
+                    android:textColor="#FFFFFF"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
     </FrameLayout>
 
     <LinearLayout
@@ -215,26 +257,8 @@
         android:paddingTop="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/lixiantext"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="离线模式"
-            android:textColor="#FFFFFF"/>
-
-        <Switch
-            android:id="@+id/lixiankaiguan"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textColor="#ffffff"
-            android:textOff="off"
-            android:textOn="on"
-            android:layout_marginRight="20dp"/>
+        android:layout_marginTop="10dp"
+        android:id="@+id/dibulayout">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -296,7 +320,7 @@
                 android:id="@+id/fenxiang"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:src="@mipmap/xiangce"
+                android:src="@mipmap/fenxiang"
                 android:background="#00000000"
                 android:scaleType="fitCenter"/>
 
@@ -321,7 +345,7 @@
                 android:id="@+id/zhilian"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:src="@mipmap/paizhao"
+                android:src="@mipmap/shexiangtou"
                 android:background="#00000000"
                 android:scaleType="fitCenter"/>
 
@@ -329,7 +353,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="直连"
+                android:text="摄像头"
                 android:textColor="#FFFFFF"/>
 
         </LinearLayout>

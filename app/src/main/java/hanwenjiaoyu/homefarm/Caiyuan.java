@@ -198,7 +198,6 @@ public class Caiyuan extends FragmentActivity
 
     private void addviewpager()
     {
-
         //取消tab下面的长横线
         tabStrip.setDrawFullUnderline(false);
         //设置当前tab页签的下划线颜色
