@@ -7,20 +7,18 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import bean.MD5;
-import hanwenjiaoyu.homefarm.Login;
-import hanwenjiaoyu.homefarm.MainActivity;
-import hanwenjiaoyu.homefarm.R;
+import diyikeji.homefarm.Login;
+import diyikeji.homefarm.MainActivity;
+import diyikeji.homefarm.R;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -32,7 +30,6 @@ import okhttp3.Response;
 import com.dtr.zxing.decode.DecodeThread;
 
 import java.io.IOException;
-import java.util.Date;
 
 public class ResultActivity extends Activity {
     String url = Login.loginthis.url;

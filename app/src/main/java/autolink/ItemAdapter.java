@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import hanwenjiaoyu.homefarm.R;
+import diyikeji.homefarm.R;
 
 public class ItemAdapter extends BaseAdapter
 {

@@ -3,13 +3,10 @@ package bean;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.tencent.connect.UserInfo;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
 
-import org.json.JSONObject;
-
-import hanwenjiaoyu.homefarm.MainActivity;
+import diyikeji.homefarm.MainActivity;
 
 /**
  * Created by Administrator on 2016/11/24.

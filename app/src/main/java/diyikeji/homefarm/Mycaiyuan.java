@@ -1,4 +1,4 @@
-package hanwenjiaoyu.homefarm;
+package diyikeji.homefarm;
 
 import android.content.Intent;
 import android.os.Handler;

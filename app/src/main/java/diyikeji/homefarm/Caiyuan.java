@@ -1,4 +1,4 @@
-package hanwenjiaoyu.homefarm;
+package diyikeji.homefarm;
 
 import android.os.Bundle;
 import android.os.Handler;

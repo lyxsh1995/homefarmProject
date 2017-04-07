@@ -35,7 +35,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import hanwenjiaoyu.homefarm.R;
+import diyikeji.homefarm.R;
 
 import com.dtr.zxing.camera.CameraManager;
 import com.dtr.zxing.decode.DecodeThread;
@@ -43,7 +43,6 @@ import com.dtr.zxing.utils.BeepManager;
 import com.dtr.zxing.utils.CaptureActivityHandler;
 import com.dtr.zxing.utils.InactivityTimer;
 import com.google.zxing.Result;
-import com.rtk.simpleconfig_wizard.MainActivity;
 
 /**
  * This activity opens the camera and does the actual scanning on a background
@@ -233,7 +232,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Intent intent = new Intent(CaptureActivity.this, hanwenjiaoyu.homefarm.MainActivity.class);
+				Intent intent = new Intent(CaptureActivity.this, diyikeji.homefarm.MainActivity.class);
 				startActivity(intent);
 				finish();
 			}

@@ -1,20 +1,13 @@
-package hanwenjiaoyu.homefarm;
+package diyikeji.homefarm;
 
-import android.Manifest;
 import android.app.ActivityManager;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,7 +16,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +24,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -62,17 +53,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -362,6 +344,39 @@ public class MainActivity extends AppCompatActivity
                             shidu_shuju.setText(shidu_shuju.getText() + "   恶劣");
                         }
                         break;
+                    case 8:
+                        switch (msg.obj.toString())
+                        {
+                            case "1":
+                                //降温
+                            case "5":
+                                //升温
+                                wendu_button.setBackgroundResource(R.mipmap.wendu_button_pro);
+                                wenduzhuangtai = 0;
+//                                zhuangtai += "正在喷水\n";
+                                break;
+                            case "2":
+                                //施肥
+                                shifei_button.setBackgroundResource(R.mipmap.shifei_button_pro);
+                                shifeizhuangtai = 0;
+                                break;
+                            case "3":
+                                //施水
+                                shishui_button.setBackgroundResource(R.mipmap.shishui_button_pro);
+                                shishuizhuangtai = 0;
+                                break;
+                            case "4":
+                                //补光:
+                                buguang_button.setBackgroundResource(R.mipmap.buguang_button_pro);
+                                buguangzhuangtai = 0;
+                                break;
+                            case "7":
+                                //通风
+                                tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button_pro);
+                                tongfengzhuangtai = 0;
+                                break;
+                        }
+                        break;
                 }
             }
             catch (Exception e)
@@ -576,22 +591,22 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        shishui_button = (Mybutton) findViewById(R.id.shishui_button);
-        shishui_button.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(MainActivity.this, Caozuojiemian.class);
-                intent.putExtra("title", "施水");
-                intent.putExtra("image", R.mipmap.shishui);
-                intent.putExtra("color", 0xFF00BB9C);
-                intent.putExtra("buttonid", v.getId());
-                intent.putExtra("res", R.mipmap.shishui_button);
-                intent.putExtra("respro", R.mipmap.shishui_button_wating);
-                startActivity(intent);
-            }
-        });
+//        shishui_button = (Mybutton) findViewById(R.id.shishui_button);
+//        shishui_button.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                Intent intent = new Intent(MainActivity.this, Caozuojiemian.class);
+//                intent.putExtra("title", "施水");
+//                intent.putExtra("image", R.mipmap.shishui);
+//                intent.putExtra("color", 0xFF00BB9C);
+//                intent.putExtra("buttonid", v.getId());
+//                intent.putExtra("res", R.mipmap.shishui_button);
+//                intent.putExtra("respro", R.mipmap.shishui_button_wating);
+//                startActivity(intent);
+//            }
+//        });
 
         shifei_button = (Mybutton) findViewById(R.id.shifei_button);
         shifei_button.setOnClickListener(new View.OnClickListener()
@@ -610,39 +625,39 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        tongfeng_button = (Mybutton) findViewById(R.id.tongfeng_button);
-        tongfeng_button.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(MainActivity.this, Caozuojiemian.class);
-                intent.putExtra("title", "通风");
-                intent.putExtra("image", R.mipmap.tongfeng);
-                intent.putExtra("color", 0xFF5AB3F0);
-                intent.putExtra("buttonid", v.getId());
-                intent.putExtra("res", R.mipmap.tongfeng_button);
-                intent.putExtra("respro", R.mipmap.tongfeng_button_wating);
-                startActivity(intent);
-            }
-        });
+//        tongfeng_button = (Mybutton) findViewById(R.id.tongfeng_button);
+//        tongfeng_button.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                Intent intent = new Intent(MainActivity.this, Caozuojiemian.class);
+//                intent.putExtra("title", "通风");
+//                intent.putExtra("image", R.mipmap.tongfeng);
+//                intent.putExtra("color", 0xFF5AB3F0);
+//                intent.putExtra("buttonid", v.getId());
+//                intent.putExtra("res", R.mipmap.tongfeng_button);
+//                intent.putExtra("respro", R.mipmap.tongfeng_button_wating);
+//                startActivity(intent);
+//            }
+//        });
 
-        wendu_button = (Mybutton) findViewById(R.id.wendu_button);
-        wendu_button.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(MainActivity.this, Caozuojiemian.class);
-                intent.putExtra("title", "温度");
-                intent.putExtra("image", R.mipmap.wendu);
-                intent.putExtra("color", 0xFFEB4F38);
-                intent.putExtra("buttonid", v.getId());
-                intent.putExtra("res", R.mipmap.wendu_button);
-                intent.putExtra("respro", R.mipmap.wendu_button_wating);
-                startActivity(intent);
-            }
-        });
+//        wendu_button = (Mybutton) findViewById(R.id.wendu_button);
+//        wendu_button.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                Intent intent = new Intent(MainActivity.this, Caozuojiemian.class);
+//                intent.putExtra("title", "温度");
+//                intent.putExtra("image", R.mipmap.wendu);
+//                intent.putExtra("color", 0xFFEB4F38);
+//                intent.putExtra("buttonid", v.getId());
+//                intent.putExtra("res", R.mipmap.wendu_button);
+//                intent.putExtra("respro", R.mipmap.wendu_button_wating);
+//                startActivity(intent);
+//            }
+//        });
 
         buguang_button = (Mybutton) findViewById(R.id.buguang_button);
         buguang_button.setOnClickListener(new View.OnClickListener()
@@ -780,17 +795,17 @@ public class MainActivity extends AppCompatActivity
 //                        Intent intent = new Intent(MainActivity.this, Zhuangtai.class);
 //                        startActivity(intent);
 //                        break;
+//                    case 1:
+//                        //我的菜园
+//                        Intent intent = new Intent(MainActivity.this, Caiyuan.class);
+//                        startActivity(intent);
+//                        break;
                     case 1:
-                        //我的菜园
-                        Intent intent = new Intent(MainActivity.this, Caiyuan.class);
+                        //辅助设备联网
+                        Intent intent = new Intent(MainActivity.this, com.rtk.simpleconfig_wizard.MainActivity.class);
                         startActivity(intent);
                         break;
                     case 2:
-                        //辅助设备联网
-                        intent = new Intent(MainActivity.this, com.rtk.simpleconfig_wizard.MainActivity.class);
-                        startActivity(intent);
-                        break;
-                    case 4:
                         //退出登录
                         getApplication().deleteDatabase("homefarm");
                         intent = new Intent(getApplicationContext(), FloatWindowService.class);
@@ -798,50 +813,50 @@ public class MainActivity extends AppCompatActivity
                         finish();
                         System.exit(0);
                         break;
-                    case 3:
-                        //摄像头
-                        ActivityManager activityManager = (ActivityManager) getApplication().getSystemService(getApplication().ACTIVITY_SERVICE);
-                        List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
-                        if (tasksInfo.size() > 0)
-                        {
-                            Intent mainIntent = getPackageManager().getLaunchIntentForPackage("com.xiaomi.smarthome");
-                            startActivity(mainIntent);
-                        }
-                        break;
-                    case 5:
-                        //直连设备
-                        if (!udp.wifiManager.isWifiEnabled())
-                        {
-                            udp.wifiManager.setWifiEnabled(true);
-                        }
-                        WifiConfiguration config = new WifiConfiguration();
-                        config.allowedAuthAlgorithms.clear();
-                        config.allowedGroupCiphers.clear();
-                        config.allowedKeyManagement.clear();
-                        config.allowedPairwiseCiphers.clear();
-                        config.allowedProtocols.clear();
-
-                        config.SSID = "\"csnc-" + EQID + "\"";
-                        config.preSharedKey = "\"csnc@yzr\"";
-                        config.hiddenSSID = true;
-                        config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
-                        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-                        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-                        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-//                        config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-                        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-                        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-                        config.status = WifiConfiguration.Status.ENABLED;
-
-                        int configID = udp.wifiManager.addNetwork(config);
-                        if (udp.wifiManager.enableNetwork(configID, true))
-                        {
-                            Toast.makeText(getApplicationContext(), "正在连接WIFI", Toast.LENGTH_SHORT).show();
-                        } else
-                        {
-                            Toast.makeText(getApplicationContext(), "连接WIFI失败", Toast.LENGTH_SHORT).show();
-                        }
-                        break;
+//                    case 3:
+//                        //摄像头
+//                        ActivityManager activityManager = (ActivityManager) getApplication().getSystemService(getApplication().ACTIVITY_SERVICE);
+//                        List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
+//                        if (tasksInfo.size() > 0)
+//                        {
+//                            Intent mainIntent = getPackageManager().getLaunchIntentForPackage("com.xiaomi.smarthome");
+//                            startActivity(mainIntent);
+//                        }
+//                        break;
+//                    case 5:
+//                        //直连设备
+//                        if (!udp.wifiManager.isWifiEnabled())
+//                        {
+//                            udp.wifiManager.setWifiEnabled(true);
+//                        }
+//                        WifiConfiguration config = new WifiConfiguration();
+//                        config.allowedAuthAlgorithms.clear();
+//                        config.allowedGroupCiphers.clear();
+//                        config.allowedKeyManagement.clear();
+//                        config.allowedPairwiseCiphers.clear();
+//                        config.allowedProtocols.clear();
+//
+//                        config.SSID = "\"csnc-" + EQID + "\"";
+//                        config.preSharedKey = "\"csnc@yzr\"";
+//                        config.hiddenSSID = true;
+//                        config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+//                        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+//                        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+//                        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+////                        config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+//                        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+//                        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+//                        config.status = WifiConfiguration.Status.ENABLED;
+//
+//                        int configID = udp.wifiManager.addNetwork(config);
+//                        if (udp.wifiManager.enableNetwork(configID, true))
+//                        {
+//                            Toast.makeText(getApplicationContext(), "正在连接WIFI", Toast.LENGTH_SHORT).show();
+//                        } else
+//                        {
+//                            Toast.makeText(getApplicationContext(), "连接WIFI失败", Toast.LENGTH_SHORT).show();
+//                        }
+//                        break;
                 }
             }
         });
@@ -1121,10 +1136,11 @@ public class MainActivity extends AppCompatActivity
                 } else
                 {
                     finish();
-                    if (!kaiguan.isChecked())
-                    {
-                        System.exit(0);
-                    }
+                    //悬浮窗没打开则关闭所有线程
+//                    if (!kaiguan.isChecked())
+//                    {
+//                        System.exit(0);
+//                    }
                 }
             }
             return true;
@@ -1276,7 +1292,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run()
             {
-//                zhuanpan();
+                zhuanpan();
                 //读取dateexchangeshebei表
                 getshebei();
             }
@@ -1301,7 +1317,7 @@ public class MainActivity extends AppCompatActivity
                     udp.UDPsend("UDP:QSELECT d_name,d_lastvalue FROM device where d_type = 'cl' and d_status = 1 and (d_name like 'turangshidu%' or d_name like 'turangwendu%')", true);
                     strings[2] = udp.UDPreceive(true);
                     //转盘
-                    udp.UDPsend("UDP:QSELECT FTypeID FROM zuoyeshixu", true);
+                    udp.UDPsend("UDP:QSELECT FTypeID FROM zuoyeshixu where FExcFlag = 1 and strftime('%s','now','localtime')+0 < strftime('%s',FExcTime)+FContinuePM", true);
                     strings[3] = udp.UDPreceive(true);
                     return strings;
                 }
@@ -1412,42 +1428,15 @@ public class MainActivity extends AppCompatActivity
 //            });
 //
 //            //刷新转盘
-            sqlstr = "SELECT FTypeID FROM zuoyeshixu";
+            sqlstr = "SELECT FTypeID FROM zuoyeshixu where FExcFlag = 1 and strftime('%s','now','localtime')+0 < strftime('%s',FExcTime)+FContinuePM";
             cursor = Login.loginthis.db.rawQuery(sqlstr, null);
             cursor.move(1);
             while (cursor.moveToNext())
             {
-                switch (cursor.getString(cursor.getColumnIndex("FTypeID")))
-                {
-                    case "1":
-                        //降温
-                    case "5":
-                        //升温
-                        wendu_button.setBackgroundResource(R.mipmap.wendu_button_pro);
-                        wenduzhuangtai = 0;
-//                                zhuangtai += "正在喷水\n";
-                        break;
-                    case "2":
-                        //施肥
-                        shifei_button.setBackgroundResource(R.mipmap.shifei_button_pro);
-                        shifeizhuangtai = 0;
-                        break;
-                    case "3":
-                        //施水
-                        shishui_button.setBackgroundResource(R.mipmap.shishui_button_pro);
-                        shishuizhuangtai = 0;
-                        break;
-                    case "4":
-                        //补光:
-                        buguang_button.setBackgroundResource(R.mipmap.buguang_button_pro);
-                        buguangzhuangtai = 0;
-                        break;
-                    case "7":
-                        //通风
-                        tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button_pro);
-                        tongfengzhuangtai = 0;
-                        break;
-                }
+                msg = Message.obtain();
+                msg.what = 8;
+                msg.obj = cursor.getString(cursor.getColumnIndex("FTypeID"));
+                handler.sendMessage(msg);
             }
 //            requestBody = new FormBody.Builder()
 //                    .add("fangfa", "chaxun")
@@ -1663,11 +1652,11 @@ public class MainActivity extends AppCompatActivity
         block.setBitmap(bitmap);
 
         menuObjects.add(close);
-        menuObjects.add(like);
+//        menuObjects.add(like);
         menuObjects.add(addFr);
-        menuObjects.add(addFav);
+//        menuObjects.add(addFav);
         menuObjects.add(block);
-        menuObjects.add(send);
+//        menuObjects.add(send);
         return menuObjects;
     }
 

@@ -1,18 +1,15 @@
-package hanwenjiaoyu.homefarm;
+package diyikeji.homefarm;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.Fajson;
-import bean.Fwjson;
 import bean.MD5;
 import bean.Myadapter;
 import okhttp3.Call;

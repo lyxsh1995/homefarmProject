@@ -1,4 +1,4 @@
-package hanwenjiaoyu.homefarm;
+package diyikeji.homefarm;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,7 +23,6 @@ import java.util.TimerTask;
 
 import bean.Cljson;
 import bean.MD5;
-import bean.Sqlite;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;

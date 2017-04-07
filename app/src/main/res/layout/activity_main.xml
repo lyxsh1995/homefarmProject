@@ -8,7 +8,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context="hanwenjiaoyu.homefarm.MainActivity"
+        tools:context="diyikeji.homefarm.MainActivity"
 
 
         android:id="@+id/activity_main"
@@ -42,49 +42,52 @@
         android:paddingBottom="8dp">
 
         <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="10dp"
+            android:layout_weight="0.33">
 
                 <include layout="@layout/window"/>
             </LinearLayout>
 
         <TextView
             android:id="@+id/textView8"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="悬浮窗"
             android:textColor="#FFFFFF"
-            android:layout_marginLeft="30dp"/>
+            android:layout_weight="0.16"/>
 
         <Switch
-                android:id="@+id/kaiguan"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textColor="#ffffff"
-                android:textOff="off"
-                android:textOn="on"
-                android:layout_marginRight="20dp"/>
-
-        <TextView
-            android:id="@+id/lixiantext"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="离线模式"
-            android:textColor="#FFFFFF"
-            android:layout_marginLeft="10dp"/>
-
-        <Switch
-            android:id="@+id/lixiankaiguan"
-            android:layout_width="wrap_content"
+            android:id="@+id/kaiguan"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textColor="#ffffff"
             android:textOff="off"
             android:textOn="on"
-            android:layout_marginRight="20dp"/>
+            android:layout_weight="0.13"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:id="@+id/lixiantext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="离线模式"
+            android:textColor="#FFFFFF"
+            android:layout_weight="0.19"/>
+
+        <Switch
+            android:id="@+id/lixiankaiguan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:textOff="off"
+            android:textOn="on"
+            android:layout_weight="0.13"
+            android:layout_marginRight="10dp"/>
 
     </LinearLayout>
 
@@ -252,7 +255,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="6"
+        android:weightSum="5"
         android:background="#22FFFFFF"
         android:paddingTop="5dp"
         android:paddingLeft="10dp"
@@ -354,6 +357,30 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="摄像头"
+                android:textColor="#FFFFFF"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.2"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginRight="15dp">
+
+            <ImageButton
+                android:id="@+id/wangdian"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:src="@drawable/logo_144"
+                android:background="#00000000"
+                android:scaleType="fitCenter"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="农资网店"
                 android:textColor="#FFFFFF"/>
 
         </LinearLayout>

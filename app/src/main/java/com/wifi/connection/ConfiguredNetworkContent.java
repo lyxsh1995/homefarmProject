@@ -25,7 +25,7 @@
 
 package com.wifi.connection;
 
-import hanwenjiaoyu.homefarm.R;
+import diyikeji.homefarm.R;
 
 
 import android.net.wifi.ScanResult;

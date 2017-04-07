@@ -1,9 +1,7 @@
-package hanwenjiaoyu.homefarm;
+package diyikeji.homefarm;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.widget.Toast;
 
 /**
  * Created by Administrator on 2016/11/22.

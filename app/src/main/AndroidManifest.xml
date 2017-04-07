@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="hanwenjiaoyu.homefarm">
+    package="diyikeji.homefarm">
 
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
     <application
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/ImageTranslucentTheme">
 
-        <activity android:name=".Login">
+        <activity android:name="diyikeji.homefarm.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,16 +19,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".Caozuojiemian"/>
-        <activity android:name=".Zhuangtai"/>
-        <activity android:name=".Caiyuan"/>
-        <activity android:name=".Fangan"/>
-        <activity android:name=".Zhilian"/>
+        <activity android:name="diyikeji.homefarm.MainActivity"/>
+        <activity android:name="diyikeji.homefarm.Caozuojiemian"/>
+        <activity android:name="diyikeji.homefarm.Zhuangtai"/>
+        <activity android:name="diyikeji.homefarm.Caiyuan"/>
+        <activity android:name="diyikeji.homefarm.Fangan"/>
+        <activity android:name="diyikeji.homefarm.Zhilian"/>
 
         //悬浮窗
         <service
-            android:name="FloatWindowService"
+            android:name="diyikeji.homefarm.FloatWindowService"
             android:enabled="true" >
         </service>
         //zxing
@@ -76,7 +76,7 @@
 
         //微信
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name="diyikeji.homefarm.wxapi.WXEntryActivity"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent" >
         </activity>

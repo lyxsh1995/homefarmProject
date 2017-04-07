@@ -29,7 +29,7 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import hanwenjiaoyu.homefarm.R;
+import diyikeji.homefarm.R;
 
 import com.dtr.zxing.activity.CaptureActivity;
 

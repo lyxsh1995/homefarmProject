@@ -111,7 +111,6 @@ public class Sqlite extends SQLiteOpenHelper
         db.execSQL("INSERT INTO zuoyeshixu (FInterID, FBillNo, FEntryID, FTypeID, FInStack, FFloorOne, FFloorTwo, FFloorThree, FDouyaji, FMG, FShuiXiang, FSourceType, FSourceInterID, FCorS, FOnOrOff, FExcTime, FContinuePM, FContinueRM, FExcFlag, FDelayNu, FFreq, FStatus) VALUES (11, '100000017', NULL, 2, NULL, 1, 0, 0, 0, 0, 0, 2, 0, 1, 1, '2017-03-15 19:30:00', 40, 0, 4, '', 1, 0)");
         db.execSQL("INSERT INTO zuoyeshixu (FInterID, FBillNo, FEntryID, FTypeID, FInStack, FFloorOne, FFloorTwo, FFloorThree, FDouyaji, FMG, FShuiXiang, FSourceType, FSourceInterID, FCorS, FOnOrOff, FExcTime, FContinuePM, FContinueRM, FExcFlag, FDelayNu, FFreq, FStatus) VALUES (12, '100000018', NULL, 2, NULL, 0, 1, 0, 0, 0, 0, 2, 0, 1, 1, '2017-03-15 19:35:00', 40, 0, 0, NULL, 1, 0)");
         db.execSQL("INSERT INTO zuoyeshixu (FInterID, FBillNo, FEntryID, FTypeID, FInStack, FFloorOne, FFloorTwo, FFloorThree, FDouyaji, FMG, FShuiXiang, FSourceType, FSourceInterID, FCorS, FOnOrOff, FExcTime, FContinuePM, FContinueRM, FExcFlag, FDelayNu, FFreq, FStatus) VALUES (13, '100000019', NULL, 2, NULL, 0, 0, 1, 0, 0, 0, 2, 0, 1, 1, '2017-03-15 19:40:00', 40, 0, 0, NULL, 1, 0)");
-
     }
 
     @Override
