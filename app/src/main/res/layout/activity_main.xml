@@ -42,52 +42,38 @@
         android:paddingBottom="8dp">
 
         <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="10dp"
-            android:layout_weight="0.33">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp">
 
-                <include layout="@layout/window"/>
-            </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="悬浮窗"
-            android:textColor="#FFFFFF"
-            android:layout_weight="0.16"/>
+            <include layout="@layout/window"/>
+        </LinearLayout>
 
         <Switch
             android:id="@+id/kaiguan"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="#ffffff"
-            android:textOff="off"
-            android:textOn="on"
-            android:layout_weight="0.13"
-            android:layout_marginRight="10dp"/>
-
-        <TextView
-            android:id="@+id/lixiantext"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="离线模式"
-            android:textColor="#FFFFFF"
-            android:layout_weight="0.19"/>
+            android:layout_marginRight="10dp"
+            android:text="悬浮窗"
+            android:switchMinWidth="1dip"
+            android:textOn=""
+            android:textOff=""
+            android:layout_weight="0.5"/>
 
         <Switch
             android:id="@+id/lixiankaiguan"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="#ffffff"
-            android:textOff="off"
-            android:textOn="on"
-            android:layout_weight="0.13"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:text="离线模式"
+            android:layout_width="0dp"
+            android:switchMinWidth="1dip"
+            android:textOn=""
+            android:textOff=""
+            android:layout_weight="0.5"/>
 
     </LinearLayout>
 

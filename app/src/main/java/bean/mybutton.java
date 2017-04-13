@@ -43,8 +43,8 @@ public class Mybutton extends FrameLayout {
             width = getWidth();
             height = getHeight();
         }
-        float fx = (float)x*((float)666/width);//按原图比例还原的真实高度
-        float fy = (float)y*((float)666/height);//按原图比例还原的真实宽度
+        float fx = (float)x*((float)666/(float)width);//按原图比例还原的真实高度
+        float fy = (float)y*((float)666/(float)height);//按原图比例还原的真实宽度
 
         if(null == bitmap || fx < 0 || fy < 0 || fx >= width || fy >= height) {
             return false;

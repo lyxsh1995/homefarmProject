@@ -462,11 +462,12 @@ public class Caozuojiemian extends Activity
                 @Override
                 protected Boolean doInBackground(String... params)
                 {
-                    long FBillNo = 3000000001L + new Random().nextInt(1000000000);
-                    String strsql = "UDP:EINSERT INTO shoudong VALUES (null,'" + FBillNo + "','0','" + json.FFloorOne + "','"
-                            + json.FFloorTwo + "','" + json.FFloorThree + "','" + json.FDouyaji + "','"
-                            + json.FMG + "','0','" + json.FTypeID + "','3','" + json.FFreq + "','"
-                            + json.FContinuePM + "','0','','','','','','" + json.FExcTime + "','0','0')";
+//                    long FBillNo = 3000000001L + new Random().nextInt(1000000000);
+//                    String strsql = "UDP:EINSERT INTO shoudong VALUES (null,'" + FBillNo + "','0','" + json.FFloorOne + "','"
+//                            + json.FFloorTwo + "','" + json.FFloorThree + "','" + json.FDouyaji + "','"
+//                            + json.FMG + "','0','" + json.FTypeID + "','3','" + json.FFreq + "','"
+//                            + json.FContinuePM + "','0','','','','','','" + json.FExcTime + "','0','0')";
+                    String strsql = "update zuoyeshixu set FContinuePM = "+json.FContinuePM+ ",FExcTime = datetime(\\'now\\',\\'localtime\\'),FExcFlag = 0 where FFloorOne = " + json.FFloorOne+ " and FFloorTwo = "+ json.FFloorTwo+ " and FFloorThree = "+ json.FFloorThree + " and FTypeID = "+json.FTypeID + " and FSourceType = 1";
                     MainActivity.mainActivitythis.udp.UDPsend(strsql, true);
                     return MainActivity.mainActivitythis.udp.UDPreceive(true).contains("ok");
                 }

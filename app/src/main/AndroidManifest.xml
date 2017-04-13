@@ -31,6 +31,12 @@
             android:name="diyikeji.homefarm.FloatWindowService"
             android:enabled="true" >
         </service>
+        //后台
+        <service
+            android:name="diyikeji.homefarm.HoutaiService"
+            android:enabled="true" >
+        </service>
+
         //zxing
         <activity android:name="com.dtr.zxing.activity.CaptureActivity"/>
         <activity android:name="com.dtr.zxing.activity.ResultActivity"/>

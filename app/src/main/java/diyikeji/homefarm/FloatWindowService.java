@@ -85,7 +85,7 @@ public class FloatWindowService extends Service
                     {
                     } else
                     {
-                        Intent mainIntent = getPackageManager().getLaunchIntentForPackage("hanwenjiaoyu.homefarm");
+                        Intent mainIntent = getPackageManager().getLaunchIntentForPackage("diyikeji.homefarm");
                         startActivity(mainIntent);
                     }
                 }

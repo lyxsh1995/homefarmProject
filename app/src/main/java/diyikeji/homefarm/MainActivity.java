@@ -87,15 +87,14 @@ public class MainActivity extends AppCompatActivity
 
     private TextView wendu_shuju;
     private TextView shidu_shuju;
-    private TextView lixiantext;
     private ContextMenuDialogFragment mMenuDialogFragment;
 
     public String url = Login.loginthis.url;
 
     public Response response;
     public OkHttpClient mOkHttpClient = new OkHttpClient();
-    private Request request;
-    private RequestBody requestBody;
+    public Request request;
+    public RequestBody requestBody;
 
     public boolean dakaiguanbi = true;//当前状态,真为打开,假为关闭
 
@@ -113,7 +112,6 @@ public class MainActivity extends AppCompatActivity
     private List<Cljson> rs;
     private List<Lastjson> rslist;
     private List<Termparamjson> termparamjsonrs;
-    private List<DEjson> delist;
 
     private long exitTime = 0;
     private LinearLayout window_layout;
@@ -200,20 +198,20 @@ public class MainActivity extends AppCompatActivity
                         wendu_shuju.setText(df.format(a));
                         shidu_shuju.setText(df.format(b));
 
-                        if (20 <= a && a <= 40)
-                        {
-                            wendu_shuju.setText(wendu_shuju.getText() + "   良好");
-                        } else
-                        {
-                            wendu_shuju.setText(wendu_shuju.getText() + "   恶劣");
-                        }
-                        if (20 <= b && b <= 40)
-                        {
-                            shidu_shuju.setText(shidu_shuju.getText() + "   良好");
-                        } else
-                        {
-                            shidu_shuju.setText(shidu_shuju.getText() + "   恶劣");
-                        }
+//                        if (20 <= a && a <= 40)
+//                        {
+//                            wendu_shuju.setText(wendu_shuju.getText() + "   良好");
+//                        } else
+//                        {
+//                            wendu_shuju.setText(wendu_shuju.getText() + "   恶劣");
+//                        }
+//                        if (20 <= b && b <= 40)
+//                        {
+//                            shidu_shuju.setText(shidu_shuju.getText() + "   良好");
+//                        } else
+//                        {
+//                            shidu_shuju.setText(shidu_shuju.getText() + "   恶劣");
+//                        }
                         break;
                     case 2:
                         String zhuangtai = "";
@@ -329,52 +327,90 @@ public class MainActivity extends AppCompatActivity
                         wendu_shuju.setText(df.format(a));
                         shidu_shuju.setText(df.format(b));
 
-                        if (20 <= a && a <= 40)
-                        {
-                            wendu_shuju.setText(wendu_shuju.getText() + "   良好");
-                        } else
-                        {
-                            wendu_shuju.setText(wendu_shuju.getText() + "   恶劣");
-                        }
-                        if (20 <= b && b <= 40)
-                        {
-                            shidu_shuju.setText(shidu_shuju.getText() + "   良好");
-                        } else
-                        {
-                            shidu_shuju.setText(shidu_shuju.getText() + "   恶劣");
-                        }
+//                        if (20 <= a && a <= 40)
+//                        {
+//                            wendu_shuju.setText(wendu_shuju.getText() + "   良好");
+//                        } else
+//                        {
+//                            wendu_shuju.setText(wendu_shuju.getText() + "   恶劣");
+//                        }
+//                        if (20 <= b && b <= 40)
+//                        {
+//                            shidu_shuju.setText(shidu_shuju.getText() + "   良好");
+//                        } else
+//                        {
+//                            shidu_shuju.setText(shidu_shuju.getText() + "   恶劣");
+//                        }
                         break;
                     case 8:
-                        switch (msg.obj.toString())
+                        wenduzhuangtai = 1;
+                        shifeizhuangtai = 1;
+                        shishuizhuangtai = 1;
+                        buguangzhuangtai = 1;
+                        tongfengzhuangtai = 1;
+                        ArrayList<String> alist = (ArrayList<String>) msg.obj;
+                        for (String stra:alist)
                         {
-                            case "1":
-                                //降温
-                            case "5":
-                                //升温
-                                wendu_button.setBackgroundResource(R.mipmap.wendu_button_pro);
-                                wenduzhuangtai = 0;
+                            switch (stra)
+                            {
+                                case "1":
+                                    //降温
+                                case "5":
+                                    //升温
+                                    wendu_button.setBackgroundResource(R.mipmap.wendu_button_pro);
+                                    wenduzhuangtai = 0;
 //                                zhuangtai += "正在喷水\n";
-                                break;
-                            case "2":
-                                //施肥
-                                shifei_button.setBackgroundResource(R.mipmap.shifei_button_pro);
-                                shifeizhuangtai = 0;
-                                break;
-                            case "3":
-                                //施水
-                                shishui_button.setBackgroundResource(R.mipmap.shishui_button_pro);
-                                shishuizhuangtai = 0;
-                                break;
-                            case "4":
-                                //补光:
-                                buguang_button.setBackgroundResource(R.mipmap.buguang_button_pro);
-                                buguangzhuangtai = 0;
-                                break;
-                            case "7":
-                                //通风
-                                tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button_pro);
-                                tongfengzhuangtai = 0;
-                                break;
+                                    break;
+                                case "2":
+                                    //施肥
+                                    shifei_button.setBackgroundResource(R.mipmap.shifei_button_pro);
+                                    shifeizhuangtai = 0;
+                                    break;
+                                case "3":
+                                    //施水
+                                    shishui_button.setBackgroundResource(R.mipmap.shishui_button_pro);
+                                    shishuizhuangtai = 0;
+                                    break;
+                                case "4":
+                                    //补光:
+                                    buguang_button.setBackgroundResource(R.mipmap.buguang_button_pro);
+                                    buguangzhuangtai = 0;
+                                    break;
+                                case "7":
+                                    //通风
+                                    tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button_pro);
+                                    tongfengzhuangtai = 0;
+                                    break;
+                            }
+                        }
+                        if (wenduzhuangtai == 1)
+                        {
+                            wendu_button.setBackgroundResource(R.mipmap.wendu_button);
+                        }
+                        if (shifeizhuangtai == 1)
+                        {
+                            shifei_button.setBackgroundResource(R.mipmap.shifei_button);
+                        }
+                        if (shishuizhuangtai == 1)
+                        {
+                            shishui_button.setBackgroundResource(R.mipmap.shishui_button);
+                        }
+                        if (buguangzhuangtai == 1)
+                        {
+                            buguang_button.setBackgroundResource(R.mipmap.buguang_button);
+                        }
+                        if (tongfengzhuangtai == 1)
+                        {
+                            tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button);
+                        }
+                        break;
+                    case 9:
+                        if((Boolean) msg.obj)
+                        {
+                            stop_button.setBackgroundResource(R.mipmap.start_button);
+                        }else
+                        {
+                            stop_button.setBackgroundResource(R.mipmap.stop_button);
                         }
                         break;
                 }
@@ -398,7 +434,7 @@ public class MainActivity extends AppCompatActivity
 
         mTencent = Tencent.createInstance("1105607320", getApplicationContext());
 
-        final Intent intent = getIntent();
+        Intent intent = getIntent();
         EQID = intent.getStringExtra("EQID");
         EQIDMD5 = MD5.jiami(EQID);
 
@@ -410,6 +446,27 @@ public class MainActivity extends AppCompatActivity
         zhuanpanlayout = (LinearLayout) findViewById(R.id.zhuanpanlayout);
         //把转盘高设为屏幕最大宽度
         zhuanpanlayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, wm.getDefaultDisplay().getWidth()));
+
+        //打开轮询线程
+        ActivityManager myManager = (ActivityManager) getApplication().getSystemService(getApplication().ACTIVITY_SERVICE);
+        ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList<ActivityManager.RunningServiceInfo>) myManager.getRunningServices(30);
+        //判断HoutaiService是否已经在运行
+        boolean flag = true;
+        for (int i = 0; i < runningService.size(); i++)
+        {
+            if (runningService.get(i).service.getClassName().toString().equals("diyikeji.homefarm.HoutaiService"))
+            {
+                flag = false;
+            }
+        }
+        if (flag)
+        {
+            intent = new Intent(getApplicationContext(), HoutaiService.class);
+            intent.putExtra("EQID", EQID);
+            intent.putExtra("url",url);
+            startService(intent);
+        }
+
         //悬浮窗
         kaiguan = (Switch) findViewById(R.id.kaiguan);
         kaiguan.setOnClickListener(new View.OnClickListener()
@@ -458,11 +515,9 @@ public class MainActivity extends AppCompatActivity
         shidu_shuju = (TextView) findViewById(R.id.shidu_shuju);
 
         //判断悬浮窗service是否已经启动
-        ActivityManager myManager = (ActivityManager) getApplication().getSystemService(getApplication().ACTIVITY_SERVICE);
-        ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList<ActivityManager.RunningServiceInfo>) myManager.getRunningServices(30);
         for (int i = 0; i < runningService.size(); i++)
         {
-            if (runningService.get(i).service.getClassName().toString().equals("hanwenjiaoyu.homefarm.FloatWindowService"))
+            if (runningService.get(i).service.getClassName().toString().equals("diyikeji.homefarm.FloatWindowService"))
             {
                 kaiguan.setChecked(true);
             }
@@ -470,13 +525,12 @@ public class MainActivity extends AppCompatActivity
 
         //离线模式
         lixiankaiguan = (Switch) findViewById(R.id.lixiankaiguan);
-        lixiantext = (TextView) findViewById(R.id.lixiantext);
         lixiankaiguan.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                lixiantext.setText("正在切换模式");
+                lixiankaiguan.setText("正在切换模式");
                 lixiankaiguan.setClickable(false);
                 if (lixiankaiguan.isChecked())
                 {
@@ -533,14 +587,14 @@ public class MainActivity extends AppCompatActivity
                             if (b)
                             {
                                 Toast.makeText(getApplicationContext(), "进入离线模式成功", Toast.LENGTH_SHORT).show();
-                                lixiantext.setText("离线模式");
+                                lixiankaiguan.setText("离线模式");
                                 lixiankaiguan.setClickable(true);
                                 udp.tongxingmod = true;
                             } else
                             {
                                 lixiankaiguan.setChecked(false);
                                 Toast.makeText(getApplicationContext(), "进入离线模式失败", Toast.LENGTH_SHORT).show();
-                                lixiantext.setText("离线模式");
+                                lixiankaiguan.setText("离线模式");
                                 lixiankaiguan.setClickable(true);
                             }
                         }
@@ -574,7 +628,7 @@ public class MainActivity extends AppCompatActivity
                             if (b)
                             {
                                 Toast.makeText(getApplicationContext(), "退出离线模式成功", Toast.LENGTH_SHORT).show();
-                                lixiantext.setText("离线模式");
+                                lixiankaiguan.setText("离线模式");
                                 lixiankaiguan.setClickable(true);
                                 udp.tongxingmod = false;
                             }
@@ -582,7 +636,7 @@ public class MainActivity extends AppCompatActivity
                             {
                                 lixiankaiguan.setChecked(true);
                                 Toast.makeText(getApplicationContext(), "退出离线模式失败", Toast.LENGTH_SHORT).show();
-                                lixiantext.setText("离线模式");
+                                lixiankaiguan.setText("离线模式");
                                 lixiankaiguan.setClickable(true);
                             }
                         }
@@ -591,7 +645,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-//        shishui_button = (Mybutton) findViewById(R.id.shishui_button);
+        shishui_button = (Mybutton) findViewById(R.id.shishui_button);
 //        shishui_button.setOnClickListener(new View.OnClickListener()
 //        {
 //            @Override
@@ -625,7 +679,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-//        tongfeng_button = (Mybutton) findViewById(R.id.tongfeng_button);
+        tongfeng_button = (Mybutton) findViewById(R.id.tongfeng_button);
 //        tongfeng_button.setOnClickListener(new View.OnClickListener()
 //        {
 //            @Override
@@ -642,7 +696,7 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 
-//        wendu_button = (Mybutton) findViewById(R.id.wendu_button);
+        wendu_button = (Mybutton) findViewById(R.id.wendu_button);
 //        wendu_button.setOnClickListener(new View.OnClickListener()
 //        {
 //            @Override
@@ -809,6 +863,8 @@ public class MainActivity extends AppCompatActivity
                         //退出登录
                         getApplication().deleteDatabase("homefarm");
                         intent = new Intent(getApplicationContext(), FloatWindowService.class);
+                        stopService(intent);
+                        intent = new Intent(getApplicationContext(), HoutaiService.class);
                         stopService(intent);
                         finish();
                         System.exit(0);
@@ -1116,14 +1172,14 @@ public class MainActivity extends AppCompatActivity
                             if (b)
                             {
                                 Toast.makeText(getApplicationContext(), "退出离线模式成功", Toast.LENGTH_SHORT).show();
-                                lixiantext.setText("离线模式");
+                                lixiankaiguan.setText("离线模式");
                                 lixiankaiguan.setClickable(true);
                                 udp.tongxingmod = false;
                             } else
                             {
                                 lixiankaiguan.setChecked(true);
                                 Toast.makeText(getApplicationContext(), "退出离线模式失败", Toast.LENGTH_SHORT).show();
-                                lixiantext.setText("离线模式");
+                                lixiankaiguan.setText("离线模式");
                                 lixiankaiguan.setClickable(true);
                             }
                             finish();
@@ -1293,8 +1349,6 @@ public class MainActivity extends AppCompatActivity
             public void run()
             {
                 zhuanpan();
-                //读取dateexchangeshebei表
-                getshebei();
             }
         };
     }
@@ -1314,7 +1368,7 @@ public class MainActivity extends AppCompatActivity
                     udp.UDPsend("UDP:QSELECT p_value1,p_value2,p_value3 FROM termparam where p_name = 'yunxingfangshi'", true);
                     strings[1] = udp.UDPreceive(true);
                     //悬浮窗
-                    udp.UDPsend("UDP:QSELECT d_name,d_lastvalue FROM device where d_type = 'cl' and d_status = 1 and (d_name like 'turangshidu%' or d_name like 'turangwendu%')", true);
+                    udp.UDPsend("UDP:QSELECT d_name,d_lastvalue FROM device where d_type = 'cl' and (d_name like 'turangshidu%' or d_name like 'turangwendu%')", true);
                     strings[2] = udp.UDPreceive(true);
                     //转盘
                     udp.UDPsend("UDP:QSELECT FTypeID FROM zuoyeshixu where FExcFlag = 1 and strftime('%s','now','localtime')+0 < strftime('%s',FExcTime)+FContinuePM", true);
@@ -1372,15 +1426,17 @@ public class MainActivity extends AppCompatActivity
             if (cursor.getString(0).equals("dis") && cursor.getString(1).equals("dis") && cursor.getString(3).equals("dis"))
             {
                 //设备关闭状态
-                stop_button.setBackgroundResource(R.mipmap.start_button);
                 dakaiguanbi = false;
             }
             else if (cursor.getString(0).equals("en") || cursor.getString(1).equals("en") || cursor.getString(3).equals("en"))
             {
                 //设备打开状态
-                stop_button.setBackgroundResource(R.mipmap.stop_button);
                 dakaiguanbi = true;
             }
+            msg = Message.obtain();
+            msg.what = 9;
+            msg.obj = dakaiguanbi;
+            handler.sendMessage(msg);
 
 //            requestBody = new FormBody.Builder()
 //                    .add("fangfa", "chaxun")
@@ -1428,16 +1484,21 @@ public class MainActivity extends AppCompatActivity
 //            });
 //
 //            //刷新转盘
-            sqlstr = "SELECT FTypeID FROM zuoyeshixu where FExcFlag = 1 and strftime('%s','now','localtime')+0 < strftime('%s',FExcTime)+FContinuePM";
+            sqlstr = "SELECT FTypeID FROM zuoyeshixu where FExcFlag = 1";
             cursor = Login.loginthis.db.rawQuery(sqlstr, null);
-            cursor.move(1);
+            ArrayList<String> prolist = new ArrayList();
             while (cursor.moveToNext())
+            {
+                prolist.add(cursor.getString(cursor.getColumnIndex("FTypeID")));
+            }
+            if (prolist.size()>0)
             {
                 msg = Message.obtain();
                 msg.what = 8;
-                msg.obj = cursor.getString(cursor.getColumnIndex("FTypeID"));
+                msg.obj = prolist;
                 handler.sendMessage(msg);
             }
+
 //            requestBody = new FormBody.Builder()
 //                    .add("fangfa", "chaxun")
 //                    .add("EQID", EQID)
@@ -1485,7 +1546,8 @@ public class MainActivity extends AppCompatActivity
 //            });
 //
 //            //温度湿度数据更新(悬浮窗)
-            sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl' and d_status = 1 and (d_name like 'turangshidu%' or d_name like 'turangwendu%')";
+//            sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl' and d_status = 1 and (d_name like 'turangshidu%' or d_name like 'turangwendu%')";
+            sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl' and (d_name like 'turangshidu%' or d_name like 'turangwendu%')";
             cursor = Login.loginthis.db.rawQuery(sqlstr, null);
             cursor.move(1);
 
@@ -1749,58 +1811,4 @@ public class MainActivity extends AppCompatActivity
 //        };
 //        xiaotimer.schedule(xiaoshuaxinxunhuan, 0, 5000);
 //    }
-
-    public void getshebei()
-    {
-        Cursor cursor = Login.loginthis.db.rawQuery("select TIME from xinxi", null);
-        cursor.move(1);
-        long date = cursor.getLong(0);
-        Log.e("时间", String.valueOf(date));
-        String sqlstr = "SELECT * FROM dataexchangeshebei where EQID = '" + EQID + "' and exchTime>" + date;
-        requestBody = new FormBody.Builder()
-                .add("fangfa", "chaxun")
-                .add("EQID", EQID)
-                .add("EQIDMD5", MD5.jiami(EQID))
-                .add("sqlstr", sqlstr)
-                .build();
-        request = new Request.Builder()
-                .url(url)
-                .post(requestBody)
-                .build();
-
-        mOkHttpClient.newCall(request).enqueue(new Callback()
-        {
-            @Override
-            public void onFailure(Call call, IOException e)
-            {
-                Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException
-            {
-                try
-                {
-                    if (response.isSuccessful())
-                    {
-                        String resstr = response.body().string();
-                        Log.i("getshebei", resstr);
-                        delist = new ArrayList<DEjson>();
-                        Type type = new TypeToken<List<DEjson>>() {}.getType();
-                        delist = gson.fromJson(resstr, type);
-                        //更新时间戳
-                        Login.loginthis.db.execSQL("update xinxi set TIME = " + delist.get(delist.size() - 1).getExchTime() + " where _id = 1");
-                        for (DEjson a : delist)
-                        {
-                            Login.loginthis.db.execSQL(a.getSQLString());
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-//                    e.printStackTrace();
-                }
-            }
-        });
-    }
 }

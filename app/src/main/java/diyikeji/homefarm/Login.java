@@ -120,7 +120,12 @@ public class Login extends Activity
                     if (EQID != null)
                     {//跳转到主界面
                         //先得到构造器
-                        builder = new AlertDialog.Builder(MainActivity.mainActivitythis);
+                        try{
+                            builder = new AlertDialog.Builder(MainActivity.mainActivitythis);
+                        }catch (Exception e)
+                        {
+                            builder = new AlertDialog.Builder(Login.this);
+                        }
                     } else
                     {
                         builder = new AlertDialog.Builder(Login.this);
@@ -155,7 +160,7 @@ public class Login extends Activity
                     Intent intent = new Intent();
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.setAction(android.content.Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/homefarm/", "homefarm.apk")),
+                    intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/homefarm/", "apk.apk")),
                                           "application/vnd.android.package-archive");
                     startActivity(intent);
                     break;
@@ -202,7 +207,13 @@ public class Login extends Activity
                     if (EQID != null)
                     {//跳转到主界面
                         //先得到构造器
-                        builder = new AlertDialog.Builder(MainActivity.mainActivitythis);
+                        try
+                        {
+                            builder = new AlertDialog.Builder(MainActivity.mainActivitythis);
+                        }catch (Exception e)
+                        {
+                            builder = new AlertDialog.Builder(Login.this);
+                        }
                     } else
                     {
                         builder = new AlertDialog.Builder(Login.this);
@@ -537,9 +548,9 @@ public class Login extends Activity
             public void onClick(View v)
             {
                 Intent intent = new Intent(Login.this, MainActivity.class);
-                intent.putExtra("EQID", "d8b04cb5c20e");
-                intent.putExtra("EQIDMD5", MD5.jiami("d8b04cb5c20e"));
-                db.execSQL("update xinxi set EQID = 'd8b04cb5c20e' where _id =1");
+                intent.putExtra("EQID", "d8b04cb5c260");
+                intent.putExtra("EQIDMD5", MD5.jiami("d8b04cb5c260"));
+                db.execSQL("update xinxi set EQID = 'd8b04cb5c260' where _id =1");
                 startActivity(intent);
                 finish();
             }

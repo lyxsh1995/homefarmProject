@@ -1,6 +1,8 @@
 package diyikeji.homefarm;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
@@ -121,6 +123,55 @@ public class FloatView extends LinearLayout
 //                        shidu_shuju.setText(shidu_shuju.getText() + " 恶劣");
                     }
                     break;
+                case 7:
+                    //更新UI
+                    Cursor cursor = (Cursor)msg.obj;
+                    df = new java.text.DecimalFormat("#.00");
+                    a = 0;
+                    b = 0;
+                    c = 0;
+                    d = 0;
+                    while (cursor.moveToNext())
+                    {
+                        if (cursor.getInt(cursor.getColumnIndex("d_lastvalue")) != 0)
+                        {
+                            switch (cursor.getString(cursor.getColumnIndex("d_name")).substring(6, 7))
+                            {
+                                //温度
+                                case "w":
+                                    a += cursor.getInt(cursor.getColumnIndex("d_lastvalue"));
+                                    c++;
+                                    break;
+                                //湿度
+                                case "s":
+                                    b += cursor.getInt(cursor.getColumnIndex("d_lastvalue"));
+                                    d++;
+                                    break;
+                            }
+                        }
+                    }
+                    a /= c;
+                    b /= d;
+
+
+                    wendu_shuju.setText(df.format(a));
+                    shidu_shuju.setText(df.format(b));
+
+//                        if (20 <= a && a <= 40)
+//                        {
+//                            wendu_shuju.setText(wendu_shuju.getText() + "   良好");
+//                        } else
+//                        {
+//                            wendu_shuju.setText(wendu_shuju.getText() + "   恶劣");
+//                        }
+//                        if (20 <= b && b <= 40)
+//                        {
+//                            shidu_shuju.setText(shidu_shuju.getText() + "   良好");
+//                        } else
+//                        {
+//                            shidu_shuju.setText(shidu_shuju.getText() + "   恶劣");
+//                        }
+                    break;
             }
         }
     };
@@ -128,76 +179,91 @@ public class FloatView extends LinearLayout
     public FloatView(Context context)
     {
         super(context);
-        this.context = context;
-        final boolean tongxingmod = MainActivity.mainActivitythis.udp.tongxingmod;
-        //获取浮动窗口视图所在布局
-        View view = LayoutInflater.from(context).inflate(
-                R.layout.xuanfuchuang, null);
-        windowManager = FloatWindowService.floatWindowServicethis.windowManager;
-        // 此windowManagerParams变量为获取的全局变量，用以保存悬浮窗口的属性
-        windowManagerParams = FloatWindowService.floatWindowServicethis.params;
-        this.addView(view);
-
-        wendu_shuju = (TextView) view.findViewById(R.id.wendu_shuju);
-        shidu_shuju = (TextView) view.findViewById(R.id.shidu_shuju);
-
-        String sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl'  and d_status = 1 and EQID = '" + FloatWindowService.floatWindowServicethis.EQID + "' and d_name like 'turangshidu%' or d_name like 'turangwendu%'";
-        requestBody = new FormBody.Builder()
-                .add("fangfa", "chaxun")
-                .add("EQID", FloatWindowService.floatWindowServicethis.EQID)
-                .add("EQIDMD5", MD5.jiami(FloatWindowService.floatWindowServicethis.EQID))
-                .add("sqlstr", sqlstr)
-                .build();
-        request = new Request.Builder()
-                .url(url)
-                .post(requestBody)
-                .build();
-
-        response = null;
-
-        TimerTask task = new TimerTask()
+        try
         {
-            public void run()
+            this.context = context;
+            final boolean tongxingmod = MainActivity.mainActivitythis.udp.tongxingmod;
+            //获取浮动窗口视图所在布局
+            View view = LayoutInflater.from(context).inflate(
+                    R.layout.xuanfuchuang, null);
+            windowManager = FloatWindowService.floatWindowServicethis.windowManager;
+            // 此windowManagerParams变量为获取的全局变量，用以保存悬浮窗口的属性
+            windowManagerParams = FloatWindowService.floatWindowServicethis.params;
+            this.addView(view);
+
+            wendu_shuju = (TextView) view.findViewById(R.id.wendu_shuju);
+            shidu_shuju = (TextView) view.findViewById(R.id.shidu_shuju);
+
+//            String sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl'  and d_status = 1 and EQID = '" + FloatWindowService.floatWindowServicethis.EQID + "' and d_name like 'turangshidu%' or d_name like 'turangwendu%'";
+//            requestBody = new FormBody.Builder()
+//                    .add("fangfa", "chaxun")
+//                    .add("EQID", FloatWindowService.floatWindowServicethis.EQID)
+//                    .add("EQIDMD5", MD5.jiami(FloatWindowService.floatWindowServicethis.EQID))
+//                    .add("sqlstr", sqlstr)
+//                    .build();
+//            request = new Request.Builder()
+//                    .url(url)
+//                    .post(requestBody)
+//                    .build();
+
+//            response = null;
+
+            TimerTask task = new TimerTask()
             {
-                if(!tongxingmod)
+                public void run()
                 {
-                    mOkHttpClient.newCall(request).enqueue(new Callback()
+                    if(!tongxingmod)
                     {
-                        @Override
-                        public void onFailure(Call call, IOException e)
-                        {
-                            Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
-                        }
+//                        mOkHttpClient.newCall(request).enqueue(new Callback()
+//                        {
+//                            @Override
+//                            public void onFailure(Call call, IOException e)
+//                            {
+//                                Log.e("jieshou1", "testHttpPost ... onFailure() e=" + e);
+//                            }
+//
+//
+//                            @Override
+//                            public void onResponse(Call call, Response response) throws IOException
+//                            {
+//                                try
+//                                {
+//                                    if (response.isSuccessful())
+//                                    {
+//                                        String resstr = response.body().string();
+//                                        Log.i("jieshou", resstr);
+//                                        rs = new ArrayList<Cljson>();
+//                                        java.lang.reflect.Type type = new TypeToken<List<Cljson>>() {}.getType();
+//                                        rs = gson.fromJson(resstr, type);
+//                                        msg = Message.obtain();
+//                                        msg.what = 0;
+//                                        handler.sendMessage(msg);
+//                                    }
+//                                }
+//                                catch (Exception e)
+//                                {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        });
+                        String sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl' and (d_name like 'turangshidu%' or d_name like 'turangwendu%')";
+                        Login.loginthis.cursor = Login.loginthis.db.rawQuery(sqlstr, null);
+                        Login.loginthis.cursor.move(1);
 
-
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException
-                        {
-                            try
-                            {
-                                if (response.isSuccessful())
-                                {
-                                    String resstr = response.body().string();
-                                    Log.i("jieshou", resstr);
-                                    rs = new ArrayList<Cljson>();
-                                    java.lang.reflect.Type type = new TypeToken<List<Cljson>>() {}.getType();
-                                    rs = gson.fromJson(resstr, type);
-                                    msg = Message.obtain();
-                                    msg.what = 0;
-                                    handler.sendMessage(msg);
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
+                        msg = Message.obtain();
+                        msg.what = 7;
+                        msg.obj = Login.loginthis.cursor;
+                        handler.sendMessage(msg);
+                    }
                 }
-            }
-        };
-        timer = new Timer(true);
-        timer.schedule(task, 0, 10*1000);
+            };
+            timer = new Timer(true);
+            timer.schedule(task, 0, 10*1000);
+        }catch (Exception e)
+        {
+            Intent intent = new Intent(context, FloatWindowService.class);
+            context.stopService(intent);
+        }
     }
 
 
