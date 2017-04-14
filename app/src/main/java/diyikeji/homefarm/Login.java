@@ -581,7 +581,7 @@ public class Login extends Activity
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(Login.this, com.wifi.connection.MainActivity.class);
+                Intent intent = new Intent(Login.this, com.rtk.simpleconfig_wizard.MainActivity.class);
                 startActivity(intent);
             }
         });

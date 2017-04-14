@@ -61,7 +61,8 @@
             android:switchMinWidth="1dip"
             android:textOn=""
             android:textOff=""
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.35"
+            android:textSize="12sp"/>
 
         <Switch
             android:id="@+id/lixiankaiguan"
@@ -73,7 +74,8 @@
             android:switchMinWidth="1dip"
             android:textOn=""
             android:textOff=""
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.4"
+            android:textSize="12sp"/>
 
     </LinearLayout>
 

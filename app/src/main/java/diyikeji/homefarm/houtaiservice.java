@@ -70,7 +70,8 @@ public class HoutaiService extends Service
             EQID = cursor.getString(1);
         }
 
-        sqls = "select Fnote,Ftime from pushmsg";
+
+        sqls = "select case when (Fnote='ts<17') then '土壤湿度小于17%，请及时补水！' else '您的植物状态不好!' end,Ftime from pushmsg where Ftype='2043'";
         cursor = db.rawQuery(sqls, null);
         int i = 0;
         while (cursor.moveToNext())

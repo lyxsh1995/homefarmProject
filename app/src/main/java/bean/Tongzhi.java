@@ -38,11 +38,11 @@ public class Tongzhi
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
-        mBuilder.setContentTitle("植物状态不好啦")//设置通知栏标题
+        mBuilder.setContentTitle("植物状态不好!")//设置通知栏标题
                 .setContentText(text) //设置通知栏显示内容
                 .setContentIntent(pendingIntent) //设置通知栏点击意图
 //                .setNumber(1) //设置通知集合的数量
-                .setTicker("测试通知来啦") //通知首次出现在通知栏，带上升动画效果的
+                .setTicker("城市农场") //通知首次出现在通知栏，带上升动画效果的
                 .setWhen(date.getTime())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
                 .setPriority(Notification.PRIORITY_DEFAULT) //设置该通知优先级
                 .setAutoCancel(true)//设置这个标志当用户单击面板就可以让通知将自动取消

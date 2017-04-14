@@ -54,12 +54,22 @@ public class UDP
                 if (!rdata.contains("UDP:"))
                 {
                     return "";
+                }else
+                {
+                    rdata = rdata.substring(4);
                 }
             } else
             {
                 datagramSocket2.receive(datagramPacket);
                 rdata = new String(datagramPacket.getData());
             }
+            try
+            {
+                if(rdata.contains("]"))
+                {
+                    rdata = rdata.substring(0,rdata.indexOf("]")+1);
+                }
+            }catch (Exception e){}
             Log.d("UDP Demo", rdata);
         }
         catch (IOException e)
@@ -139,7 +149,7 @@ public class UDP
             datagramSocket = new DatagramSocket(port);
             datagramSocket2 = new DatagramSocket(port - 1);
             datagramSocket.setSoTimeout(6000);
-            datagramSocket2.setSoTimeout(3000);
+            datagramSocket2.setSoTimeout(1000);
             datagramPacket = new DatagramPacket(message, message.length);
         }
         catch (SocketException e1)

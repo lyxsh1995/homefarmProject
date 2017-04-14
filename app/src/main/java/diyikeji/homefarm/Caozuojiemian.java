@@ -196,7 +196,7 @@ public class Caozuojiemian extends Activity
             case "施水":
             case "施肥":
             case "补光":
-                douyaji.setVisibility(View.GONE);
+//                douyaji.setVisibility(View.GONE);
                 moguxiang.setVisibility(View.GONE);
                 break;
             case "通风":
@@ -443,6 +443,10 @@ public class Caozuojiemian extends Activity
                 break;
             case "补光":
                 json.FTypeID = "4";
+                json.FFloorOne = "1";
+                json.FFloorTwo = "1";
+                json.FFloorThree = "1";
+                json.FDouyaji = "1";
                 break;
         }
         json.FContinuePM = time.getText().toString();
@@ -467,7 +471,7 @@ public class Caozuojiemian extends Activity
 //                            + json.FFloorTwo + "','" + json.FFloorThree + "','" + json.FDouyaji + "','"
 //                            + json.FMG + "','0','" + json.FTypeID + "','3','" + json.FFreq + "','"
 //                            + json.FContinuePM + "','0','','','','','','" + json.FExcTime + "','0','0')";
-                    String strsql = "update zuoyeshixu set FContinuePM = "+json.FContinuePM+ ",FExcTime = datetime(\\'now\\',\\'localtime\\'),FExcFlag = 0 where FFloorOne = " + json.FFloorOne+ " and FFloorTwo = "+ json.FFloorTwo+ " and FFloorThree = "+ json.FFloorThree + " and FTypeID = "+json.FTypeID + " and FSourceType = 1";
+                    String strsql = "UDP:Eupdate zuoyeshixu set FContinuePM = "+json.FContinuePM+ ",FExcTime = datetime('now','localtime'),FExcFlag = 0 where FFloorOne = " + json.FFloorOne+ " and FFloorTwo = "+ json.FFloorTwo+ " and FFloorThree = "+ json.FFloorThree + " and FTypeID = "+json.FTypeID + " and FSourceType = 1";
                     MainActivity.mainActivitythis.udp.UDPsend(strsql, true);
                     return MainActivity.mainActivitythis.udp.UDPreceive(true).contains("ok");
                 }
@@ -585,6 +589,10 @@ public class Caozuojiemian extends Activity
                 break;
             case "补光":
                 json.FTypeID = "4";
+                json.FFloorOne = "1";
+                json.FFloorTwo = "1";
+                json.FFloorThree = "1";
+                json.FDouyaji = "1";
                 break;
         }
 
@@ -593,6 +601,7 @@ public class Caozuojiemian extends Activity
                 .add("FFloorOne", json.FFloorOne)
                 .add("FFloorTwo", json.FFloorTwo)
                 .add("FFloorThree", json.FFloorThree)
+                .add("FDouyaji",json.FDouyaji)
                 .add("FTypeID", json.FTypeID)
                 .add("EQID", MainActivity.mainActivitythis.EQID)
                 .add("EQIDMD5", MD5.jiami(MainActivity.mainActivitythis.EQID))

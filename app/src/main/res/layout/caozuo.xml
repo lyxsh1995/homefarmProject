@@ -135,7 +135,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
-                android:text="豆    芽    机"
+                android:text="种植第四层"
                 android:textColor="#FF6922"
                 android:textSize="18sp"/>
 
