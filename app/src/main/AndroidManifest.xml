@@ -21,6 +21,7 @@
 
         <activity android:name="diyikeji.homefarm.MainActivity"/>
         <activity android:name="diyikeji.homefarm.Caozuojiemian"/>
+        <activity android:name="diyikeji.homefarm.Caozuojiemian2"/>
         <activity android:name="diyikeji.homefarm.Zhuangtai"/>
         <activity android:name="diyikeji.homefarm.Caiyuan"/>
         <activity android:name="diyikeji.homefarm.Fangan"/>

@@ -32,7 +32,7 @@ public class Sqlite extends SQLiteOpenHelper
         String sqlstr;
         sqlstr = "CREATE TABLE xinxi (_id INTEGER PRIMARY KEY AUTOINCREMENT,EQID TEXT,EQIDMD5 TEXT,TIME INTEGER);";
         db.execSQL(sqlstr);
-        sqlstr = "insert into xinxi (_id,TIME) values('1','" +  (System.currentTimeMillis()/1000 - 28800000) + "')";
+        sqlstr = "insert into xinxi (_id,TIME) values('1','" +  (System.currentTimeMillis()/1000 - 86400) + "')";
         db.execSQL(sqlstr);
 
         db.execSQL("CREATE TABLE caiji (FInterID INTEGER PRIMARY KEY AUTOINCREMENT,FSensorID varchar(20) NOT NULL DEFAULT '',FSensorName varchar(20) NOT NULL DEFAULT '',FSampleValue int NOT NULL DEFAULT 0,FGatherDatetime varchar(20) NOT NULL DEFAULT '',FNote varchar(200))");

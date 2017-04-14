@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        android:paddingBottom="30dp"
+        android:paddingTop="15dp">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/diyiceng"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:gravity="center_vertical"
+                    android:text="种植第一层"
+                    android:textColor="#FF6922"
+                    android:textSize="18sp"/>
+
+                <RadioButton
+                    android:id="@+id/checkBox1"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="80dp"
+                    android:focusable="false"
+                    />
+
+                <Button
+                    android:id="@+id/checkButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/biankuangbutton"
+                    android:text="选择"
+                    android:textColor="#FF6922"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dierceng"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:gravity="center_vertical"
+                    android:text="种植第二层"
+                    android:textColor="#FF6922"
+                    android:textSize="18sp"/>
+
+                <RadioButton
+                    android:id="@+id/checkBox2"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="80dp"
+                    android:focusable="false"
+                    />
+
+                <Button
+                    android:id="@+id/checkButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/biankuangbutton"
+                    android:text="选择"
+                    android:textColor="#FF6922"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/disanceng"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:gravity="center_vertical"
+                    android:text="种植第三层"
+                    android:textColor="#FF6922"
+                    android:textSize="18sp"/>
+
+                <RadioButton
+                    android:id="@+id/checkBox3"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="80dp"
+                    android:focusable="false"
+                    />
+
+                <Button
+                    android:id="@+id/checkButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/biankuangbutton"
+                    android:text="选择"
+                    android:textColor="#FF6922"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/douyaji"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:gravity="center_vertical"
+                    android:text="种植第四层"
+                    android:textColor="#FF6922"
+                    android:textSize="18sp"/>
+
+                <RadioButton
+                    android:id="@+id/checkBox4"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="80dp"
+                    android:focusable="false"
+                    />
+
+                <Button
+                    android:id="@+id/checkButton4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/biankuangbutton"
+                    android:text="选择"
+                    android:textColor="#FF6922"
+                    style="che"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/moguxiang"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:gravity="center_vertical"
+                    android:text="蘑    菇    箱"
+                    android:textColor="#FF6922"
+                    android:textSize="18sp"/>
+
+                <RadioButton
+                    android:id="@+id/checkBox5"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="80dp"
+                    android:focusable="false"
+                    />
+
+                <Button
+                    android:id="@+id/checkButton5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/biankuangbutton"
+                    android:text="选择"
+                    android:textColor="#FF6922"/>
+
+            </LinearLayout>
+        </RadioGroup>
+
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:id="@+id/wendu">
+
+            <RadioButton
+                android:text="升温"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/shengwen"
+                android:textColor="#FF6922"
+                android:textSize="18sp"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:text="降温"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/jiangwen"
+                android:textColor="#FF6922"
+                android:textSize="18sp"
+                android:layout_marginLeft="40dp"
+                android:layout_weight="1"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:background="#ffffff"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="时间"
+            android:textColor="#FF6922"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="#000000"
+            android:id="@+id/time"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="0.00"
+            android:gravity="center_vertical"
+            android:text="秒"
+            android:textColor="#FF6922"
+            android:textSize="18sp"/>
+    </LinearLayout>
+</LinearLayout>

@@ -23,7 +23,6 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -43,7 +42,7 @@ import okhttp3.Response;
  * Created by Administrator on 2016/11/21.
  */
 
-public class Caozuojiemian extends Activity
+public class Caozuojiemian2 extends Activity
 {
 
     private Button checkButton1;
@@ -52,12 +51,12 @@ public class Caozuojiemian extends Activity
     private Button checkButton4;
     private Button checkButton5;
     private RadioButton shengwen;
-    private CheckBox checkBox1;
-    private CheckBox checkBox2;
-    private CheckBox checkBox3;
-    private CheckBox checkBox4;
-    private CheckBox checkBox5;
     private RadioButton jiangwen;
+    private RadioButton checkBox1;
+    private RadioButton checkBox2;
+    private RadioButton checkBox3;
+    private RadioButton checkBox4;
+    private RadioButton checkBox5;
     private EditText time;
     private int buttonid;
 
@@ -156,7 +155,7 @@ public class Caozuojiemian extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.caozuojiemian);
+        setContentView(R.layout.caozuojiemian2);
 
         title2_text = (TextView) findViewById(R.id.title2_text);
         title2_image = (ImageView) findViewById(R.id.tiele2_image);
@@ -183,11 +182,11 @@ public class Caozuojiemian extends Activity
         checkButton5 = (Button) findViewById(R.id.checkButton5);
         shengwen = (RadioButton) findViewById(R.id.shengwen);
 
-        checkBox1 = (CheckBox) findViewById(R.id.checkBox1);
-        checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
-        checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
-        checkBox4 = (CheckBox) findViewById(R.id.checkBox4);
-        checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
+        checkBox1 = (RadioButton) findViewById(R.id.checkBox1);
+        checkBox2 = (RadioButton) findViewById(R.id.checkBox2);
+        checkBox3 = (RadioButton) findViewById(R.id.checkBox3);
+        checkBox4 = (RadioButton) findViewById(R.id.checkBox4);
+        checkBox5 = (RadioButton) findViewById(R.id.checkBox5);
         jiangwen = (RadioButton) findViewById(R.id.jiangwen);
         jiangwen.setChecked(true);
 
@@ -241,6 +240,9 @@ public class Caozuojiemian extends Activity
                 } else
                 {
                     checkBox1.setChecked(true);
+                    checkBox2.setChecked(false);
+                    checkBox3.setChecked(false);
+                    checkBox4.setChecked(false);
                 }
             }
         });
@@ -256,6 +258,9 @@ public class Caozuojiemian extends Activity
                 } else
                 {
                     checkBox2.setChecked(true);
+                    checkBox1.setChecked(false);
+                    checkBox3.setChecked(false);
+                    checkBox4.setChecked(false);
                 }
             }
         });
@@ -271,6 +276,9 @@ public class Caozuojiemian extends Activity
                 } else
                 {
                     checkBox3.setChecked(true);
+                    checkBox2.setChecked(false);
+                    checkBox1.setChecked(false);
+                    checkBox4.setChecked(false);
                 }
             }
         });
@@ -286,6 +294,9 @@ public class Caozuojiemian extends Activity
                 } else
                 {
                     checkBox4.setChecked(true);
+                    checkBox2.setChecked(false);
+                    checkBox3.setChecked(false);
+                    checkBox1.setChecked(false);
                 }
             }
         });

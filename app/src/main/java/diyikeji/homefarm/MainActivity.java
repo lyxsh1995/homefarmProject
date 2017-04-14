@@ -24,6 +24,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -296,11 +297,11 @@ public class MainActivity extends AppCompatActivity
                         {
                             if (dakaiguanbi)
                             {
-                                stop_button.setBackgroundResource(R.mipmap.start_button);
+                                stop_button.setBackgroundResource(R.mipmap.stop_button);
                                 dakaiguanbi = false;
                             } else
                             {
-                                stop_button.setBackgroundResource(R.mipmap.stop_button);
+                                stop_button.setBackgroundResource(R.mipmap.start_button);
                                 dakaiguanbi = true;
                             }
                         } else
@@ -358,11 +359,16 @@ public class MainActivity extends AppCompatActivity
 //                        }
                         break;
                     case 8:
-                        wenduzhuangtai = 1;
-                        shifeizhuangtai = 1;
-                        shishuizhuangtai = 1;
-                        buguangzhuangtai = 1;
-                        tongfengzhuangtai = 1;
+                        if (wenduzhuangtai != 2)
+                        { wenduzhuangtai = 1; }
+                        if (shifeizhuangtai != 2)
+                        { shifeizhuangtai = 1; }
+                        if (shishuizhuangtai != 2)
+                        { shishuizhuangtai = 1; }
+                        if (buguangzhuangtai != 2)
+                        { buguangzhuangtai = 1; }
+                        if (tongfengzhuangtai != 2)
+                        { tongfengzhuangtai = 1; }
                         ArrayList<String> alist = (ArrayList<String>) msg.obj;
                         for (String stra : alist)
                         {
@@ -423,9 +429,11 @@ public class MainActivity extends AppCompatActivity
                         if ((Boolean) msg.obj)
                         {
                             stop_button.setBackgroundResource(R.mipmap.start_button);
+                            dakaiguanbi = true;
                         } else
                         {
                             stop_button.setBackgroundResource(R.mipmap.stop_button);
+                            dakaiguanbi = false;
                         }
                         break;
                 }
@@ -484,10 +492,10 @@ public class MainActivity extends AppCompatActivity
 
         //悬浮窗
         kaiguan = (Switch) findViewById(R.id.kaiguan);
-        kaiguan.setOnClickListener(new View.OnClickListener()
+        kaiguan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
-            public void onClick(View v)
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if (kaiguan.isChecked())
                 {
@@ -540,89 +548,66 @@ public class MainActivity extends AppCompatActivity
 
         //离线模式
         lixiankaiguan = (Switch) findViewById(R.id.lixiankaiguan);
-        lixiankaiguan.setOnClickListener(new View.OnClickListener()
+        lixiankaiguan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
-            public void onClick(View v)
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("提示:");
-                builder.setMessage(lixiankaiguan.isChecked()?"是否进入离线模式?":"是否退出离线模式?");
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
+                lixiankaiguan.setText("切换模式");
+                lixiankaiguan.setClickable(false);
+                if (lixiankaiguan.isChecked())
                 {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
+                    //开始进入离线模式
+                    new AsyncTask<String, Void, Boolean>()
                     {
-                        if(lixiankaiguan.isChecked())
+                        @Override
+                        protected Boolean doInBackground(String... params)
                         {
-                            lixiankaiguan.setChecked(false);
-                        }else
-                        {
-                            lixiankaiguan.setChecked(true);
-                        }
-                        return;
-                    }
-                });
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        lixiankaiguan.setText("切换模式");
-                        lixiankaiguan.setClickable(false);
-                        if (lixiankaiguan.isChecked())
-                        {
-                            //开始进入离线模式
-                            new AsyncTask<String, Void, Boolean>()
+                            boolean jinru = false;
+                            String receivedata = "";
+                            for (int i = 0; i < 10; i++)
                             {
-                                @Override
-                                protected Boolean doInBackground(String... params)
+                                try
                                 {
-                                    boolean jinru = false;
-                                    String receivedata = "";
-                                    for (int i = 0; i < 10; i++)
+                                    udp.UDPsend(params[0], false);
+                                    receivedata = udp.UDPreceive(false);
+                                    udp.wifiad = receivedata.substring(0, receivedata.indexOf(","));
+                                    jinru = true;
+                                    break;
+                                }
+                                catch (Exception e) {}
+                            }
+                            if (jinru)
+                            {
+                                try
+                                {
+                                    udp.UDPsend(params[1], false);
+                                    if (udp.UDPreceive(false).contains("+ok"))
                                     {
-                                        try
+                                        udp.UDPsend(params[2], false);
+                                        if (udp.UDPreceive(false).contains("+ok"))
                                         {
-                                            udp.UDPsend(params[0], false);
-                                            receivedata = udp.UDPreceive(false);
-                                            udp.wifiad = receivedata.substring(0, receivedata.indexOf(","));
-                                            jinru = true;
-                                            break;
-                                        }
-                                        catch (Exception e) {}
-                                    }
-                                    if (jinru)
-                                    {
-                                        try
-                                        {
-                                            udp.UDPsend(params[1], false);
-                                            if (udp.UDPreceive(false).contains("+ok"))
+                                            udp.UDPsend(params[3], false);
+                                            //让设备第一次启动UDP()
+                                            udp.UDPsend("UDP:F", true);
+                                            int ii = 0;
+                                            while (!udp.UDPreceive(true).contains("ok"))
                                             {
-                                                udp.UDPsend(params[2], false);
-                                                if (udp.UDPreceive(false).contains("+ok"))
+                                                udp.UDPsend("UDP:F", true);
+                                                ii++;
+                                                if (ii >= 3)
                                                 {
-                                                    udp.UDPsend(params[3], false);
-                                                    //让设备第一次启动UDP()
-                                                    udp.UDPsend("UDP:F", true);
-                                                    int ii = 0;
-                                                    while (!udp.UDPreceive(true).contains("ok"))
-                                                    {
-                                                        udp.UDPsend("UDP:F", true);
-                                                        ii++;
-                                                        if (ii >= 3)
-                                                        {
-                                                            return false;
-                                                        }
-                                                    }
-                                                    return true;
+                                                    return false;
                                                 }
                                             }
+                                            return true;
                                         }
-                                        catch (Exception e)
-                                        {
-                                        }
-                                        //                            try
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                }
+                                //                            try
 //                            {
 //                                udp.UDPsend("UDP:W", true);
 //                                Thread.sleep(100);
@@ -636,76 +621,72 @@ public class MainActivity extends AppCompatActivity
 //                            {
 //                                e.printStackTrace();
 //                            }
-                                    }
-                                    return false;
-                                }
-
-                                @Override
-                                protected void onPostExecute(Boolean b)
-                                {
-                                    if (b)
-                                    {
-                                        Toast.makeText(getApplicationContext(), "进入离线模式成功", Toast.LENGTH_SHORT).show();
-                                        lixiankaiguan.setText("离线模式");
-                                        lixiankaiguan.setClickable(true);
-                                        udp.tongxingmod = true;
-                                    } else
-                                    {
-                                        lixiankaiguan.setChecked(false);
-                                        Toast.makeText(getApplicationContext(), "进入离线模式失败", Toast.LENGTH_SHORT).show();
-                                        lixiankaiguan.setText("离线模式");
-                                        lixiankaiguan.setClickable(true);
-                                        udp.tongxingmod = false;
-                                    }
-                                }
-                            }.execute("csncat@yzr", "AT+NETP=UDP,SERVER," + udp.port + "," + udp.myip + "\r", "AT+TMODE=throughput\r", "AT+Z\r");
-                        } else
-                        {
-                            //取消离线模式
-                            new AsyncTask<String, Void, Boolean>()
-                            {
-                                @Override
-                                protected Boolean doInBackground(String... params)
-                                {
-                                    udp.UDPsend(params[0], true);
-                                    if (udp.UDPreceive(true).contains("ok"))
-                                    {
-                                        udp.UDPsend("csncat@yzr", false);
-                                        udp.UDPreceive(false);
-                                        udp.UDPsend(params[1], false);//进入HTTP模式
-                                        if (udp.UDPreceive(false).contains("+ok"))
-                                        {
-                                            udp.UDPsend(params[2], false);//重启
-                                            return true;
-                                        }
-                                    }
-                                    return false;
-                                }
-
-                                @Override
-                                protected void onPostExecute(Boolean b)
-                                {
-                                    if (b)
-                                    {
-                                        Toast.makeText(getApplicationContext(), "退出离线模式成功", Toast.LENGTH_SHORT).show();
-                                        lixiankaiguan.setText("离线模式");
-                                        lixiankaiguan.setClickable(true);
-                                        udp.tongxingmod = false;
-                                    } else
-                                    {
-                                        lixiankaiguan.setChecked(true);
-                                        Toast.makeText(getApplicationContext(), "退出离线模式失败", Toast.LENGTH_SHORT).show();
-                                        lixiankaiguan.setText("离线模式");
-                                        lixiankaiguan.setClickable(true);
-                                        udp.tongxingmod = true;
-                                    }
-                                }
-                            }.execute("UDP:W", "AT+TMODE=htpc\r", "AT+Z\r");
+                            }
+                            return false;
                         }
 
-                    }
-                });
-                builder.create().show();
+                        @Override
+                        protected void onPostExecute(Boolean b)
+                        {
+                            if (b)
+                            {
+                                Toast.makeText(getApplicationContext(), "进入离线模式成功", Toast.LENGTH_SHORT).show();
+                                lixiankaiguan.setText("离线模式");
+                                lixiankaiguan.setClickable(true);
+                                udp.tongxingmod = true;
+                            } else
+                            {
+                                lixiankaiguan.setChecked(false);
+                                Toast.makeText(getApplicationContext(), "进入离线模式失败", Toast.LENGTH_SHORT).show();
+                                lixiankaiguan.setText("离线模式");
+                                lixiankaiguan.setClickable(true);
+                                udp.tongxingmod = false;
+                            }
+                        }
+                    }.execute("csncat@yzr", "AT+NETP=UDP,SERVER," + udp.port + "," + udp.myip + "\r", "AT+TMODE=throughput\r", "AT+Z\r");
+                } else
+                {
+                    //取消离线模式
+                    new AsyncTask<String, Void, Boolean>()
+                    {
+                        @Override
+                        protected Boolean doInBackground(String... params)
+                        {
+                            udp.UDPsend(params[0], true);
+                            if (udp.UDPreceive(true).contains("ok"))
+                            {
+                                udp.UDPsend("csncat@yzr", false);
+                                udp.UDPreceive(false);
+                                udp.UDPsend(params[1], false);//进入HTTP模式
+                                if (udp.UDPreceive(false).contains("+ok"))
+                                {
+                                    udp.UDPsend(params[2], false);//重启
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Boolean b)
+                        {
+                            if (b)
+                            {
+                                Toast.makeText(getApplicationContext(), "退出离线模式成功", Toast.LENGTH_SHORT).show();
+                                lixiankaiguan.setText("离线模式");
+                                lixiankaiguan.setClickable(true);
+                                udp.tongxingmod = false;
+                            } else
+                            {
+                                lixiankaiguan.setChecked(true);
+                                Toast.makeText(getApplicationContext(), "退出离线模式失败", Toast.LENGTH_SHORT).show();
+                                lixiankaiguan.setText("离线模式");
+                                lixiankaiguan.setClickable(true);
+                                udp.tongxingmod = true;
+                            }
+                        }
+                    }.execute("UDP:W", "AT+TMODE=htpc\r", "AT+Z\r");
+                }
             }
         });
 
@@ -732,7 +713,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(MainActivity.this, Caozuojiemian.class);
+                Intent intent = new Intent(MainActivity.this, Caozuojiemian2.class);
                 intent.putExtra("title", "施肥");
                 intent.putExtra("image", R.mipmap.shifei);
                 intent.putExtra("color", 0xFFF4C600);
@@ -802,7 +783,7 @@ public class MainActivity extends AppCompatActivity
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("提示:");
-                builder.setMessage(dakaiguanbi ? "确定打开设备?" : "确定关闭设备?");
+                builder.setMessage(dakaiguanbi ? "确定打开设备?" : "确定打开设备?");
                 builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -817,7 +798,7 @@ public class MainActivity extends AppCompatActivity
                     public void onClick(DialogInterface dialog, int which)
                     {
                         String cz;
-                        cz = (dakaiguanbi) ? "dakai" : "guanbi";
+                        cz = (dakaiguanbi) ? "guanbi" : "dakai";
                         requestBody = new FormBody.Builder()
                                 .add("fangfa", "kaiguan")
                                 .add("EQID", EQID)
@@ -1018,7 +999,8 @@ public class MainActivity extends AppCompatActivity
         });
 
         ImageButton wangdian = (ImageButton) findViewById(R.id.wangdian);
-        wangdian.setOnClickListener(new View.OnClickListener() {
+        wangdian.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
@@ -1501,11 +1483,11 @@ public class MainActivity extends AppCompatActivity
             String sqlstr = "SELECT p_value1,p_value2,p_value3 FROM termparam where p_name = 'yunxingfangshi'";
             Cursor cursor = Login.loginthis.db.rawQuery(sqlstr, null);
             cursor.move(1);
-            if (cursor.getString(0).equals("dis") && cursor.getString(1).equals("dis") && cursor.getString(3).equals("dis"))
+            if (cursor.getString(0).equals("dis") && cursor.getString(1).equals("dis") && cursor.getString(2).equals("dis"))
             {
                 //设备关闭状态
                 dakaiguanbi = false;
-            } else if (cursor.getString(0).equals("en") || cursor.getString(1).equals("en") || cursor.getString(3).equals("en"))
+            } else if (cursor.getString(0).equals("en") || cursor.getString(1).equals("en") || cursor.getString(2).equals("en"))
             {
                 //设备打开状态
                 dakaiguanbi = true;
@@ -1815,56 +1797,56 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-//    //取消等待 caozuojiemian
-//    public void quxiaodengdai(final String title2)
-//    {
-//        switch (title2)
-//        {
-//            case "施水":
-//                shishuizhuangtai = 2;
-//                break;
-//            case "施肥":
-//                shifeizhuangtai = 2;
-//                break;
-//            case "补光":
-//                buguangzhuangtai = 2;
-//                break;
-//            case "通风":
-//                tongfengzhuangtai = 2;
-//                break;
-//            case "温度":
-//                wenduzhuangtai = 2;
-//                break;
-//        }
+    //    //取消等待 caozuojiemian
+    public void quxiaodengdai(final String title2)
+    {
+        switch (title2)
+        {
+            case "施水":
+                shishuizhuangtai = 2;
+                break;
+            case "施肥":
+                shifeizhuangtai = 2;
+                break;
+            case "补光":
+                buguangzhuangtai = 2;
+                break;
+            case "通风":
+                tongfengzhuangtai = 2;
+                break;
+            case "温度":
+                wenduzhuangtai = 2;
+                break;
+        }
 //        xiaoshuaxin();
-//        final TimerTask task = new TimerTask()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                switch (title2)
-//                {
-//                    case "施水":
-//                        shishuizhuangtai = 0;
-//                        break;
-//                    case "施肥":
-//                        shifeizhuangtai = 0;
-//                        break;
-//                    case "补光":
-//                        buguangzhuangtai = 0;
-//                        break;
-//                    case "通风":
-//                        tongfengzhuangtai = 0;
-//                        break;
-//                    case "温度":
-//                        wenduzhuangtai = 0;
-//                        break;
-//                }
-//            }
-//        };
-//        Timer timer2 = new Timer(true);
-//        timer2.schedule(task, 15000);
-//    }
+        final TimerTask task = new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                switch (title2)
+                {
+                    case "施水":
+                        shishuizhuangtai = 0;
+                        break;
+                    case "施肥":
+                        shifeizhuangtai = 0;
+                        break;
+                    case "补光":
+                        buguangzhuangtai = 0;
+                        break;
+                    case "通风":
+                        tongfengzhuangtai = 0;
+                        break;
+                    case "温度":
+                        wenduzhuangtai = 0;
+                        break;
+                }
+            }
+        };
+        Timer timer2 = new Timer(true);
+        timer2.schedule(task, 15000);
+    }
 
 //    //小刷新
 //    int xiaoshuaxinjishu = 0;
