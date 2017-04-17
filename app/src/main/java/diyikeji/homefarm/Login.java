@@ -80,6 +80,7 @@ public class Login extends Activity
 
     private Message msg;
     boolean showflag = true;//更新窗口是否显示,防止多次显示
+    boolean about = false;//是否再关于界面显示
     public UDP udp;
 
     private String sdPath;
@@ -120,9 +121,11 @@ public class Login extends Activity
                     if (EQID != null)
                     {//跳转到主界面
                         //先得到构造器
-                        try{
-                            builder = new AlertDialog.Builder(MainActivity.mainActivitythis);
-                        }catch (Exception e)
+                        try
+                        {
+                                builder = new AlertDialog.Builder(MainActivity.mainActivitythis);
+                        }
+                        catch (Exception e)
                         {
                             builder = new AlertDialog.Builder(Login.this);
                         }
@@ -153,8 +156,11 @@ public class Login extends Activity
                     break;
                 //下载进度更新
                 case 1:
-                    int progress = msg.arg1;
-                    progressBar.setProgress(progress);
+                    if (!about)
+                    {
+                        int progress = msg.arg1;
+                        progressBar.setProgress(progress);
+                    }
                     break;
                 case 2:
                     Intent intent = new Intent();
@@ -548,9 +554,9 @@ public class Login extends Activity
             public void onClick(View v)
             {
                 Intent intent = new Intent(Login.this, MainActivity.class);
-                intent.putExtra("EQID", "d8b04cb5c260");
-                intent.putExtra("EQIDMD5", MD5.jiami("d8b04cb5c260"));
-                db.execSQL("update xinxi set EQID = 'd8b04cb5c260' where _id =1");
+                intent.putExtra("EQID", "d8b04cb116dc");
+                intent.putExtra("EQIDMD5", MD5.jiami("d8b04cb116dc"));
+                db.execSQL("update xinxi set EQID = 'd8b04cb116dc' where _id =1");
                 startActivity(intent);
                 finish();
             }

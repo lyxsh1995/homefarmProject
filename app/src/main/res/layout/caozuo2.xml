@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="80dp"
                     android:focusable="false"
-                    />
+                    android:clickable="false"/>
 
                 <Button
                     android:id="@+id/checkButton1"
@@ -79,7 +79,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="80dp"
                     android:focusable="false"
-                    />
+                    android:clickable="false"/>
 
                 <Button
                     android:id="@+id/checkButton2"
@@ -114,7 +114,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="80dp"
                     android:focusable="false"
-                    />
+                    android:clickable="false"/>
 
                 <Button
                     android:id="@+id/checkButton3"
@@ -149,7 +149,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="80dp"
                     android:focusable="false"
-                    />
+                    android:clickable="false"/>
 
                 <Button
                     android:id="@+id/checkButton4"
@@ -186,7 +186,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="80dp"
                     android:focusable="false"
-                    />
+                    android:clickable="false"/>
 
                 <Button
                     android:id="@+id/checkButton5"

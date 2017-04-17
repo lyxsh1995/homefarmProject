@@ -26,6 +26,7 @@
         <activity android:name="diyikeji.homefarm.Caiyuan"/>
         <activity android:name="diyikeji.homefarm.Fangan"/>
         <activity android:name="diyikeji.homefarm.Zhilian"/>
+        <activity android:name="diyikeji.homefarm.About"/>
 
         //悬浮窗
         <service

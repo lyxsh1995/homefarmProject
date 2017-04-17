@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity
     public TimerTask task;
     public Timer timer;
 
-
     public UDP udp;
 
     public String EQID;
@@ -113,6 +112,7 @@ public class MainActivity extends AppCompatActivity
     private List<Cljson> rs;
     private List<Lastjson> rslist;
     private List<Termparamjson> termparamjsonrs;
+    private List<DEjson> delist;
 
     private long exitTime = 0;
     private LinearLayout window_layout;
@@ -297,12 +297,14 @@ public class MainActivity extends AppCompatActivity
                         {
                             if (dakaiguanbi)
                             {
-                                stop_button.setBackgroundResource(R.mipmap.stop_button);
-                                dakaiguanbi = false;
+//                                stop_button.setBackgroundResource(R.mipmap.stop_button);
+//                                dakaiguanbi = false;
+                                Toast.makeText(getApplicationContext(), "正在关闭设备", Toast.LENGTH_SHORT).show();
                             } else
                             {
-                                stop_button.setBackgroundResource(R.mipmap.start_button);
-                                dakaiguanbi = true;
+//                                stop_button.setBackgroundResource(R.mipmap.start_button);
+//                                dakaiguanbi = true;
+                                Toast.makeText(getApplicationContext(), "正在打开设备", Toast.LENGTH_SHORT).show();
                             }
                         } else
                         {
@@ -472,8 +474,7 @@ public class MainActivity extends AppCompatActivity
 
         //打开轮询线程
         ActivityManager myManager = (ActivityManager) getApplication().getSystemService(getApplication().ACTIVITY_SERVICE);
-        ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList<ActivityManager.RunningServiceInfo>) myManager.getRunningServices(30);
-        //判断HoutaiService是否已经在运行
+        final ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList<ActivityManager.RunningServiceInfo>) myManager.getRunningServices(30);
         boolean flag = true;
         for (int i = 0; i < runningService.size(); i++)
         {
@@ -489,7 +490,6 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("url", url);
             startService(intent);
         }
-
         //悬浮窗
         kaiguan = (Switch) findViewById(R.id.kaiguan);
         kaiguan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
@@ -783,7 +783,7 @@ public class MainActivity extends AppCompatActivity
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("提示:");
-                builder.setMessage(dakaiguanbi ? "确定打开设备?" : "确定打开设备?");
+                builder.setMessage(dakaiguanbi ? "确定关闭设备?" : "确定打开设备?");
                 builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -904,7 +904,7 @@ public class MainActivity extends AppCompatActivity
                         Intent intent = new Intent(MainActivity.this, com.rtk.simpleconfig_wizard.MainActivity.class);
                         startActivity(intent);
                         break;
-                    case 2:
+                    case 3:
                         //退出登录
                         getApplication().deleteDatabase("homefarm");
                         intent = new Intent(getApplicationContext(), FloatWindowService.class);
@@ -914,16 +914,11 @@ public class MainActivity extends AppCompatActivity
                         finish();
                         System.exit(0);
                         break;
-//                    case 3:
-//                        //摄像头
-//                        ActivityManager activityManager = (ActivityManager) getApplication().getSystemService(getApplication().ACTIVITY_SERVICE);
-//                        List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
-//                        if (tasksInfo.size() > 0)
-//                        {
-//                            Intent mainIntent = getPackageManager().getLaunchIntentForPackage("com.xiaomi.smarthome");
-//                            startActivity(mainIntent);
-//                        }
-//                        break;
+                    case 2:
+                        //关于
+                        intent = new Intent(MainActivity.this,About.class);
+                        startActivity(intent);
+                        break;
 //                    case 5:
 //                        //直连设备
 //                        if (!udp.wifiManager.isWifiEnabled())
@@ -1183,7 +1178,6 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 
-        //更新正在运行的操作
         Createtask();
         timer = new Timer(true);
         //一分钟刷新一次
@@ -1762,7 +1756,7 @@ public class MainActivity extends AppCompatActivity
         addFr.setBitmap(bitmap);
 
         //图片太小不缩放
-        MenuObject addFav = new MenuObject("摄像头");
+        MenuObject addFav = new MenuObject("关于");
         bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.guanyu));
 //        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
         addFav.setBitmap(bitmap);
@@ -1775,7 +1769,7 @@ public class MainActivity extends AppCompatActivity
         menuObjects.add(close);
 //        menuObjects.add(like);
         menuObjects.add(addFr);
-//        menuObjects.add(addFav);
+        menuObjects.add(addFav);
         menuObjects.add(block);
 //        menuObjects.add(send);
         return menuObjects;

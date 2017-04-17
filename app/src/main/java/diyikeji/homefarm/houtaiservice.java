@@ -36,6 +36,7 @@ import okhttp3.Response;
 
 public class HoutaiService extends Service
 {
+    static public HoutaiService HoutaiServicethis;
     private List<DEjson> delist;
     Gson gson = new Gson();
 
@@ -58,6 +59,7 @@ public class HoutaiService extends Service
     public void onCreate()
     {
         super.onCreate();
+        HoutaiServicethis = this;
         sqlite = new Sqlite(getApplication(), "homefarm", null, 1);
         db = sqlite.getWritableDatabase();
 
@@ -68,17 +70,6 @@ public class HoutaiService extends Service
         {
             cursor.move(1);
             EQID = cursor.getString(1);
-        }
-
-
-        sqls = "select case when (Fnote='ts<17') then '土壤湿度小于17%，请及时补水！' else '您的植物状态不好!' end,Ftime from pushmsg where Ftype='2043'";
-        cursor = db.rawQuery(sqls, null);
-        int i = 0;
-        while (cursor.moveToNext())
-        {
-            i++;
-            Tongzhi tongzhi = new Tongzhi(getApplicationContext(), i++, cursor.getString(0), cursor.getString(1));
-            db.execSQL("DELETE FROM pushmsg where Ftime = '"+cursor.getString(1)+"'");
         }
 
         task = new TimerTask()
@@ -106,7 +97,7 @@ public class HoutaiService extends Service
         cursor.move(1);
         long date = cursor.getLong(0);
         Log.e("时间", String.valueOf(date));
-        String sqlstr = "SELECT * FROM dataexchangeshebei where EQID = '" + EQID + "' and exchTime>" + date +" limit 5";
+        String sqlstr = "SELECT * FROM dataexchangeshebei where EQID = '" + EQID + "' and exchTime>" + date +" limit 100";
         requestBody = new FormBody.Builder()
                 .add("fangfa", "chaxun")
                 .add("EQID", EQID)
@@ -142,15 +133,32 @@ public class HoutaiService extends Service
                         db.execSQL("update xinxi set TIME = " + delist.get(delist.size() - 1).getExchTime() + " where _id = 1");
                         for (DEjson a : delist)
                         {
-                            db.execSQL(a.getSQLString());
+                            try
+                            {
+                                db.execSQL(a.getSQLString());
+                            }catch (Exception e)
+                            {}
                         }
                     }
                 }
-                catch (Exception e)
+                catch (com.google.gson.JsonSyntaxException e)
                 {
 //                    e.printStackTrace();
                 }
             }
         });
+
+        try
+        {
+            String sqls = "select case when (Fnote='ts<17') then '土壤湿度小于17%，请及时补水！' else '您的植物状态不好!' end,Ftime from pushmsg where Ftype='2043'";
+            cursor = db.rawQuery(sqls, null);
+            int i = 0;
+            while (cursor.moveToNext())
+            {
+                i++;
+                Tongzhi tongzhi = new Tongzhi(getApplicationContext(), i++, cursor.getString(0), cursor.getString(1));
+                db.execSQL("DELETE FROM pushmsg where Ftime = '"+cursor.getString(1)+"'");
+            }
+        }catch (Exception e){}
     }
 }
