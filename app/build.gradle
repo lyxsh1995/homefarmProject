@@ -6,7 +6,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
     defaultConfig {
-        applicationId 'diyikeji.homefarm'
+        applicationId 'com.diyikeji.homefarm'
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
@@ -22,7 +22,7 @@ android {
     productFlavors {
         城市农场 {
             minSdkVersion 15
-            applicationId 'diyikeji.homefarm'
+            applicationId 'com.diyikeji.homefarm'
             targetSdkVersion 22
         }
     }

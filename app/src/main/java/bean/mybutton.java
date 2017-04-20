@@ -43,13 +43,13 @@ public class Mybutton extends FrameLayout {
             width = getWidth();
             height = getHeight();
         }
-        float fx = (float)x*((float)666/(float)width);//按原图比例还原的真实高度
-        float fy = (float)y*((float)666/(float)height);//按原图比例还原的真实宽度
+//        float fx = (float)x*((float)666/(float)width);//按原图比例还原的真实高度
+//        float fy = (float)y*((float)666/(float)height);//按原图比例还原的真实宽度
 
-        if(null == bitmap || fx < 0 || fy < 0 || fx >= width || fy >= height) {
+        if(null == bitmap || x < 0 || y < 0 || x >= width || y >= height) {
             return false;
         }
-        int pixel = bitmap.getPixel( (int)fx, (int)fy);
+        int pixel = bitmap.getPixel( x, y);
         if(Color.TRANSPARENT == pixel)
         {
             return false;

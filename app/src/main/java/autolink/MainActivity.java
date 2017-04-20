@@ -16,7 +16,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-import diyikeji.homefarm.R;
+import com.diyikeji.homefarm.R;
 
 
 /**

@@ -9,7 +9,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import java.util.List;
 
-import diyikeji.homefarm.R;
+import com.diyikeji.homefarm.R;
 
 /**
  * Created by Administrator on 2016/12/5.

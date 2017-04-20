@@ -6,7 +6,7 @@ import android.widget.Toast;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
 
-import diyikeji.homefarm.MainActivity;
+import com.diyikeji.homefarm.MainActivity;
 
 /**
  * Created by Administrator on 2016/11/24.

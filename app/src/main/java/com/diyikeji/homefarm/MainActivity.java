@@ -1,4 +1,4 @@
-package diyikeji.homefarm;
+package com.diyikeji.homefarm;
 
 import android.app.ActivityManager;
 import android.content.DialogInterface;
@@ -8,10 +8,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.net.wifi.WifiConfiguration;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -52,6 +52,7 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -229,51 +230,51 @@ public class MainActivity extends AppCompatActivity
                                     //降温
                                 case "5":
                                     //升温
-                                    wendu_button.setBackgroundResource(R.mipmap.wendu_button_pro);
+                                    wendu_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.wendu_button_pro);
                                     wenduzhuangtai = 0;
 //                                zhuangtai += "正在喷水\n";
                                     break;
                                 case "2":
                                     //施肥
-                                    shifei_button.setBackgroundResource(R.mipmap.shifei_button_pro);
+                                    shifei_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.shifei_button_pro);
                                     shifeizhuangtai = 0;
                                     break;
                                 case "3":
                                     //施水
-                                    shishui_button.setBackgroundResource(R.mipmap.shishui_button_pro);
+                                    shishui_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.shishui_button_pro);
                                     shishuizhuangtai = 0;
                                     break;
                                 case "4":
                                     //补光:
-                                    buguang_button.setBackgroundResource(R.mipmap.buguang_button_pro);
+                                    buguang_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.buguang_button_pro);
                                     buguangzhuangtai = 0;
                                     break;
                                 case "7":
                                     //通风
-                                    tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button_pro);
+                                    tongfeng_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.tongfeng_button_pro);
                                     tongfengzhuangtai = 0;
                                     break;
                             }
                         }
                         if (wenduzhuangtai == 1)
                         {
-                            wendu_button.setBackgroundResource(R.mipmap.wendu_button);
+                            wendu_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.wendu_button);
                         }
                         if (shifeizhuangtai == 1)
                         {
-                            shifei_button.setBackgroundResource(R.mipmap.shifei_button);
+                            shifei_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.shifei_button);
                         }
                         if (shishuizhuangtai == 1)
                         {
-                            shishui_button.setBackgroundResource(R.mipmap.shishui_button);
+                            shishui_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.shishui_button);
                         }
                         if (buguangzhuangtai == 1)
                         {
-                            buguang_button.setBackgroundResource(R.mipmap.buguang_button);
+                            buguang_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.buguang_button);
                         }
                         if (tongfengzhuangtai == 1)
                         {
-                            tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button);
+                            tongfeng_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.tongfeng_button);
                         }
                         break;
                     case 3:
@@ -281,12 +282,12 @@ public class MainActivity extends AppCompatActivity
                         if (termparamjsonrs.get(0).getP_value1().equals("dis") && termparamjsonrs.get(0).getP_value2().equals("dis") && termparamjsonrs.get(0).getP_value3().equals("dis"))
                         {
                             //设备关闭状态
-                            stop_button.setBackgroundResource(R.mipmap.stop_button);
+                            stop_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.stop_button);
                             dakaiguanbi = false;
                         } else if (termparamjsonrs.get(0).getP_value1().equals("en") || termparamjsonrs.get(0).getP_value2().equals("en") || termparamjsonrs.get(0).getP_value3().equals("en"))
                         {
                             //设备打开状态
-                            stop_button.setBackgroundResource(R.mipmap.start_button);
+                            stop_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.start_button);
                             dakaiguanbi = true;
                         }
                         break;
@@ -380,61 +381,61 @@ public class MainActivity extends AppCompatActivity
                                     //降温
                                 case "5":
                                     //升温
-                                    wendu_button.setBackgroundResource(R.mipmap.wendu_button_pro);
+                                    wendu_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.wendu_button_pro);
                                     wenduzhuangtai = 0;
 //                                zhuangtai += "正在喷水\n";
                                     break;
                                 case "2":
                                     //施肥
-                                    shifei_button.setBackgroundResource(R.mipmap.shifei_button_pro);
+                                    shifei_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.shifei_button_pro);
                                     shifeizhuangtai = 0;
                                     break;
                                 case "3":
                                     //施水
-                                    shishui_button.setBackgroundResource(R.mipmap.shishui_button_pro);
+                                    shishui_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.shishui_button_pro);
                                     shishuizhuangtai = 0;
                                     break;
                                 case "4":
                                     //补光:
-                                    buguang_button.setBackgroundResource(R.mipmap.buguang_button_pro);
+                                    buguang_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.buguang_button_pro);
                                     buguangzhuangtai = 0;
                                     break;
                                 case "7":
                                     //通风
-                                    tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button_pro);
+                                    tongfeng_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.tongfeng_button_pro);
                                     tongfengzhuangtai = 0;
                                     break;
                             }
                         }
                         if (wenduzhuangtai == 1)
                         {
-                            wendu_button.setBackgroundResource(R.mipmap.wendu_button);
+                            wendu_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.wendu_button);
                         }
                         if (shifeizhuangtai == 1)
                         {
-                            shifei_button.setBackgroundResource(R.mipmap.shifei_button);
+                            shifei_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.shifei_button);
                         }
                         if (shishuizhuangtai == 1)
                         {
-                            shishui_button.setBackgroundResource(R.mipmap.shishui_button);
+                            shishui_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.shishui_button);
                         }
                         if (buguangzhuangtai == 1)
                         {
-                            buguang_button.setBackgroundResource(R.mipmap.buguang_button);
+                            buguang_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.buguang_button);
                         }
                         if (tongfengzhuangtai == 1)
                         {
-                            tongfeng_button.setBackgroundResource(R.mipmap.tongfeng_button);
+                            tongfeng_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.tongfeng_button);
                         }
                         break;
                     case 9:
                         if ((Boolean) msg.obj)
                         {
-                            stop_button.setBackgroundResource(R.mipmap.start_button);
+                            stop_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.start_button);
                             dakaiguanbi = true;
                         } else
                         {
-                            stop_button.setBackgroundResource(R.mipmap.stop_button);
+                            stop_button.setBackgroundResource(com.diyikeji.homefarm.R.mipmap.stop_button);
                             dakaiguanbi = false;
                         }
                         break;
@@ -446,12 +447,13 @@ public class MainActivity extends AppCompatActivity
             }
         }
     };
+    private String fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(com.diyikeji.homefarm.R.layout.activity_main);
         mainActivitythis = this;
 
         api = WXAPIFactory.createWXAPI(this, "wx6dd2baabb3de7c7b", true);
@@ -468,7 +470,7 @@ public class MainActivity extends AppCompatActivity
         //设备管理对象
         WindowManager wm = this.getWindowManager();
         //转盘layout
-        zhuanpanlayout = (LinearLayout) findViewById(R.id.zhuanpanlayout);
+        zhuanpanlayout = (LinearLayout) findViewById(com.diyikeji.homefarm.R.id.zhuanpanlayout);
         //把转盘高设为屏幕最大宽度
         zhuanpanlayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, wm.getDefaultDisplay().getWidth()));
 
@@ -478,7 +480,7 @@ public class MainActivity extends AppCompatActivity
         boolean flag = true;
         for (int i = 0; i < runningService.size(); i++)
         {
-            if (runningService.get(i).service.getClassName().toString().equals("diyikeji.homefarm.HoutaiService"))
+            if (runningService.get(i).service.getClassName().toString().equals("HoutaiService"))
             {
                 flag = false;
             }
@@ -491,7 +493,7 @@ public class MainActivity extends AppCompatActivity
             startService(intent);
         }
         //悬浮窗
-        kaiguan = (Switch) findViewById(R.id.kaiguan);
+        kaiguan = (Switch) findViewById(com.diyikeji.homefarm.R.id.kaiguan);
         kaiguan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
@@ -534,80 +536,102 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        wendu_shuju = (TextView) findViewById(R.id.wendu_shuju);
-        shidu_shuju = (TextView) findViewById(R.id.shidu_shuju);
+        wendu_shuju = (TextView) findViewById(com.diyikeji.homefarm.R.id.wendu_shuju);
+        shidu_shuju = (TextView) findViewById(com.diyikeji.homefarm.R.id.shidu_shuju);
 
         //判断悬浮窗service是否已经启动
         for (int i = 0; i < runningService.size(); i++)
         {
-            if (runningService.get(i).service.getClassName().toString().equals("diyikeji.homefarm.FloatWindowService"))
+            if (runningService.get(i).service.getClassName().toString().equals("FloatWindowService"))
             {
                 kaiguan.setChecked(true);
             }
         }
 
         //离线模式
-        lixiankaiguan = (Switch) findViewById(R.id.lixiankaiguan);
-        lixiankaiguan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
+        lixiankaiguan = (Switch) findViewById(com.diyikeji.homefarm.R.id.lixiankaiguan);
+        lixiankaiguan.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            public void onClick(View v)
             {
-                lixiankaiguan.setText("切换模式");
-                lixiankaiguan.setClickable(false);
-                if (lixiankaiguan.isChecked())
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("提示:");
+                builder.setMessage(lixiankaiguan.isChecked()?"是否进入离线模式?":"是否退出离线模式?");
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
                 {
-                    //开始进入离线模式
-                    new AsyncTask<String, Void, Boolean>()
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
                     {
-                        @Override
-                        protected Boolean doInBackground(String... params)
+                        if(lixiankaiguan.isChecked())
                         {
-                            boolean jinru = false;
-                            String receivedata = "";
-                            for (int i = 0; i < 10; i++)
+                            lixiankaiguan.setChecked(false);
+                        }else
+                        {
+                            lixiankaiguan.setChecked(true);
+                        }
+                        return;
+                    }
+                });
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        lixiankaiguan.setText("正在切换");
+                        lixiankaiguan.setClickable(false);
+                        if (lixiankaiguan.isChecked())
+                        {
+                            //开始进入离线模式
+                            new AsyncTask<String, Void, Boolean>()
                             {
-                                try
+                                @Override
+                                protected Boolean doInBackground(String... params)
                                 {
-                                    udp.UDPsend(params[0], false);
-                                    receivedata = udp.UDPreceive(false);
-                                    udp.wifiad = receivedata.substring(0, receivedata.indexOf(","));
-                                    jinru = true;
-                                    break;
-                                }
-                                catch (Exception e) {}
-                            }
-                            if (jinru)
-                            {
-                                try
-                                {
-                                    udp.UDPsend(params[1], false);
-                                    if (udp.UDPreceive(false).contains("+ok"))
+                                    boolean jinru = false;
+                                    String receivedata = "";
+                                    for (int i = 0; i < 10; i++)
                                     {
-                                        udp.UDPsend(params[2], false);
-                                        if (udp.UDPreceive(false).contains("+ok"))
+                                        try
                                         {
-                                            udp.UDPsend(params[3], false);
-                                            //让设备第一次启动UDP()
-                                            udp.UDPsend("UDP:F", true);
-                                            int ii = 0;
-                                            while (!udp.UDPreceive(true).contains("ok"))
+                                            udp.UDPsend(params[0], false);
+                                            receivedata = udp.UDPreceive(false);
+                                            udp.wifiad = receivedata.substring(0, receivedata.indexOf(","));
+                                            jinru = true;
+                                            break;
+                                        }
+                                        catch (Exception e) {}
+                                    }
+                                    if (jinru)
+                                    {
+                                        try
+                                        {
+                                            udp.UDPsend(params[1], false);
+                                            if (udp.UDPreceive(false).contains("+ok"))
                                             {
-                                                udp.UDPsend("UDP:F", true);
-                                                ii++;
-                                                if (ii >= 3)
+                                                udp.UDPsend(params[2], false);
+                                                if (udp.UDPreceive(false).contains("+ok"))
                                                 {
-                                                    return false;
+                                                    udp.UDPsend(params[3], false);
+                                                    //让设备第一次启动UDP()
+                                                    udp.UDPsend("UDP:F", true);
+                                                    int ii = 0;
+                                                    while (!udp.UDPreceive(true).contains("ok"))
+                                                    {
+                                                        udp.UDPsend("UDP:F", true);
+                                                        ii++;
+                                                        if (ii >= 3)
+                                                        {
+                                                            return false;
+                                                        }
+                                                    }
+                                                    return true;
                                                 }
                                             }
-                                            return true;
                                         }
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                }
-                                //                            try
+                                        catch (Exception e)
+                                        {
+                                        }
+                                        //                            try
 //                            {
 //                                udp.UDPsend("UDP:W", true);
 //                                Thread.sleep(100);
@@ -667,30 +691,34 @@ public class MainActivity extends AppCompatActivity
                             return false;
                         }
 
-                        @Override
-                        protected void onPostExecute(Boolean b)
-                        {
-                            if (b)
-                            {
-                                Toast.makeText(getApplicationContext(), "退出离线模式成功", Toast.LENGTH_SHORT).show();
-                                lixiankaiguan.setText("离线模式");
-                                lixiankaiguan.setClickable(true);
-                                udp.tongxingmod = false;
-                            } else
-                            {
-                                lixiankaiguan.setChecked(true);
-                                Toast.makeText(getApplicationContext(), "退出离线模式失败", Toast.LENGTH_SHORT).show();
-                                lixiankaiguan.setText("离线模式");
-                                lixiankaiguan.setClickable(true);
-                                udp.tongxingmod = true;
-                            }
+                                @Override
+                                protected void onPostExecute(Boolean b)
+                                {
+                                    if (b)
+                                    {
+                                        Toast.makeText(getApplicationContext(), "退出离线模式成功", Toast.LENGTH_SHORT).show();
+                                        lixiankaiguan.setText("离线模式");
+                                        lixiankaiguan.setClickable(true);
+                                        udp.tongxingmod = false;
+                                    } else
+                                    {
+                                        lixiankaiguan.setChecked(true);
+                                        Toast.makeText(getApplicationContext(), "退出离线模式失败", Toast.LENGTH_SHORT).show();
+                                        lixiankaiguan.setText("离线模式");
+                                        lixiankaiguan.setClickable(true);
+                                        udp.tongxingmod = true;
+                                    }
+                                }
+                            }.execute("UDP:W", "AT+TMODE=htpc\r", "AT+Z\r");
                         }
-                    }.execute("UDP:W", "AT+TMODE=htpc\r", "AT+Z\r");
-                }
+
+                    }
+                });
+                builder.create().show();
             }
         });
 
-        shishui_button = (Mybutton) findViewById(R.id.shishui_button);
+        shishui_button = (Mybutton) findViewById(com.diyikeji.homefarm.R.id.shishui_button);
 //        shishui_button.setOnClickListener(new View.OnClickListener()
 //        {
 //            @Override
@@ -707,7 +735,7 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 
-        shifei_button = (Mybutton) findViewById(R.id.shifei_button);
+        shifei_button = (Mybutton) findViewById(com.diyikeji.homefarm.R.id.shifei_button);
         shifei_button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -715,16 +743,16 @@ public class MainActivity extends AppCompatActivity
             {
                 Intent intent = new Intent(MainActivity.this, Caozuojiemian2.class);
                 intent.putExtra("title", "施肥");
-                intent.putExtra("image", R.mipmap.shifei);
+                intent.putExtra("image", com.diyikeji.homefarm.R.mipmap.shifei);
                 intent.putExtra("color", 0xFFF4C600);
                 intent.putExtra("buttonid", v.getId());
-                intent.putExtra("res", R.mipmap.shifei_button);
-                intent.putExtra("respro", R.mipmap.shifei_button_wating);
+                intent.putExtra("res", com.diyikeji.homefarm.R.mipmap.shifei_button);
+                intent.putExtra("respro", com.diyikeji.homefarm.R.mipmap.shifei_button_wating);
                 startActivity(intent);
             }
         });
 
-        tongfeng_button = (Mybutton) findViewById(R.id.tongfeng_button);
+        tongfeng_button = (Mybutton) findViewById(com.diyikeji.homefarm.R.id.tongfeng_button);
 //        tongfeng_button.setOnClickListener(new View.OnClickListener()
 //        {
 //            @Override
@@ -741,7 +769,7 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 
-        wendu_button = (Mybutton) findViewById(R.id.wendu_button);
+        wendu_button = (Mybutton) findViewById(com.diyikeji.homefarm.R.id.wendu_button);
 //        wendu_button.setOnClickListener(new View.OnClickListener()
 //        {
 //            @Override
@@ -758,7 +786,7 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 
-        buguang_button = (Mybutton) findViewById(R.id.buguang_button);
+        buguang_button = (Mybutton) findViewById(com.diyikeji.homefarm.R.id.buguang_button);
         buguang_button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -766,16 +794,16 @@ public class MainActivity extends AppCompatActivity
             {
                 Intent intent = new Intent(MainActivity.this, Caozuojiemian.class);
                 intent.putExtra("title", "补光");
-                intent.putExtra("image", R.mipmap.buguang);
+                intent.putExtra("image", com.diyikeji.homefarm.R.mipmap.buguang);
                 intent.putExtra("color", 0xFFA65AC3);
                 intent.putExtra("buttonid", v.getId());
-                intent.putExtra("res", R.mipmap.buguang_button);
-                intent.putExtra("respro", R.mipmap.buguang_button_wating);
+                intent.putExtra("res", com.diyikeji.homefarm.R.mipmap.buguang_button);
+                intent.putExtra("respro", com.diyikeji.homefarm.R.mipmap.buguang_button_wating);
                 startActivity(intent);
             }
         });
 
-        stop_button = (Mybutton) findViewById(R.id.stop_button);
+        stop_button = (Mybutton) findViewById(com.diyikeji.homefarm.R.id.stop_button);
         stop_button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -849,7 +877,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        zhuanpan = (Mybutton) findViewById(R.id.zhuanpan);
+        zhuanpan = (Mybutton) findViewById(com.diyikeji.homefarm.R.id.zhuanpan);
 
         zhuanpan.setOnClickListener(new View.OnClickListener()
         {
@@ -863,7 +891,7 @@ public class MainActivity extends AppCompatActivity
         //右上角菜单
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
-        ImageButton menu_button = (ImageButton) findViewById(R.id.menu_button);
+        ImageButton menu_button = (ImageButton) findViewById(com.diyikeji.homefarm.R.id.menu_button);
         menu_button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -904,7 +932,7 @@ public class MainActivity extends AppCompatActivity
                         Intent intent = new Intent(MainActivity.this, com.rtk.simpleconfig_wizard.MainActivity.class);
                         startActivity(intent);
                         break;
-                    case 3:
+                    case 4:
                         //退出登录
                         getApplication().deleteDatabase("homefarm");
                         intent = new Intent(getApplicationContext(), FloatWindowService.class);
@@ -919,53 +947,63 @@ public class MainActivity extends AppCompatActivity
                         intent = new Intent(MainActivity.this,About.class);
                         startActivity(intent);
                         break;
-//                    case 5:
-//                        //直连设备
-//                        if (!udp.wifiManager.isWifiEnabled())
-//                        {
-//                            udp.wifiManager.setWifiEnabled(true);
-//                        }
-//                        WifiConfiguration config = new WifiConfiguration();
-//                        config.allowedAuthAlgorithms.clear();
-//                        config.allowedGroupCiphers.clear();
-//                        config.allowedKeyManagement.clear();
-//                        config.allowedPairwiseCiphers.clear();
-//                        config.allowedProtocols.clear();
-//
-//                        config.SSID = "\"csnc-" + EQID + "\"";
-//                        config.preSharedKey = "\"csnc@yzr\"";
-//                        config.hiddenSSID = true;
-//                        config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
-//                        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-//                        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-//                        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-////                        config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-//                        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-//                        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-//                        config.status = WifiConfiguration.Status.ENABLED;
-//
-//                        int configID = udp.wifiManager.addNetwork(config);
-//                        if (udp.wifiManager.enableNetwork(configID, true))
-//                        {
-//                            Toast.makeText(getApplicationContext(), "正在连接WIFI", Toast.LENGTH_SHORT).show();
-//                        } else
-//                        {
-//                            Toast.makeText(getApplicationContext(), "连接WIFI失败", Toast.LENGTH_SHORT).show();
-//                        }
-//                        break;
+                    case 3:
+                        //直连设备
+                        if (!udp.wifiManager.isWifiEnabled())
+                        {
+                            udp.wifiManager.setWifiEnabled(true);
+                        }
+                        WifiConfiguration config = new WifiConfiguration();
+                        config.allowedAuthAlgorithms.clear();
+                        config.allowedGroupCiphers.clear();
+                        config.allowedKeyManagement.clear();
+                        config.allowedPairwiseCiphers.clear();
+                        config.allowedProtocols.clear();
+
+                        String SSID = "csnc-" + EQID;
+                        try
+                        {
+                            WifiConfiguration tempConfig = IsExsits(SSID);
+                            if(tempConfig != null) {
+                                udp.wifiManager.removeNetwork(tempConfig.networkId);
+                            }
+                        }catch (Exception e){}
+
+                        config.SSID = "\"csnc-" + EQID + "\"";
+                        config.preSharedKey = "\"csnc@yzr\"";
+                        config.hiddenSSID = true;
+                        config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+                        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+                        //WifiConfiguration.KeyMgmt.WPA2_PSK = 4
+                        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+                        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+//                        config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+                        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+                        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                        config.status = WifiConfiguration.Status.ENABLED;
+
+                        int configID = udp.wifiManager.addNetwork(config);
+                        if (udp.wifiManager.enableNetwork(configID, true))
+                        {
+                            Toast.makeText(getApplicationContext(), "正在连接WIFI", Toast.LENGTH_SHORT).show();
+                        } else
+                        {
+                            Toast.makeText(getApplicationContext(), "连接WIFI失败", Toast.LENGTH_SHORT).show();
+                        }
+                        break;
                 }
             }
         });
 
         //拍照
-        ImageButton paizhao = (ImageButton) findViewById(R.id.paizhao);
+        ImageButton paizhao = (ImageButton) findViewById(com.diyikeji.homefarm.R.id.paizhao);
         paizhao.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                File appDir = new File(Environment.getExternalStorageDirectory() + "/homefarm");
+                File appDir = new File(MainActivity.this.getExternalFilesDir(null).getPath());
                 if (!appDir.exists())
                 {
                     appDir.mkdir();
@@ -977,7 +1015,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         //相册
-        ImageButton xiangce = (ImageButton) findViewById(R.id.xiangce);
+        ImageButton xiangce = (ImageButton) findViewById(com.diyikeji.homefarm.R.id.xiangce);
         xiangce.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -993,7 +1031,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        ImageButton wangdian = (ImageButton) findViewById(R.id.wangdian);
+        ImageButton wangdian = (ImageButton) findViewById(com.diyikeji.homefarm.R.id.wangdian);
         wangdian.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -1008,9 +1046,9 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-        dibulayout = (LinearLayout) findViewById(R.id.dibulayout);
-        shejiaolayout = (FrameLayout) findViewById(R.id.shejiaolayout);
-        ImageButton quxiaofengxiang = (ImageButton) findViewById(R.id.quxiaofengxiang);
+        dibulayout = (LinearLayout) findViewById(com.diyikeji.homefarm.R.id.dibulayout);
+        shejiaolayout = (FrameLayout) findViewById(com.diyikeji.homefarm.R.id.shejiaolayout);
+        ImageButton quxiaofengxiang = (ImageButton) findViewById(com.diyikeji.homefarm.R.id.quxiaofengxiang);
         quxiaofengxiang.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -1021,7 +1059,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         //分享
-        ImageButton fenxiang = (ImageButton) findViewById(R.id.fenxiang);
+        ImageButton fenxiang = (ImageButton) findViewById(com.diyikeji.homefarm.R.id.fenxiang);
         fenxiang.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -1032,7 +1070,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        ImageButton weixin = (ImageButton) findViewById(R.id.weixin);
+        ImageButton weixin = (ImageButton) findViewById(com.diyikeji.homefarm.R.id.weixin);
         weixin.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -1042,7 +1080,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        ImageButton pengyouquan = (ImageButton) findViewById(R.id.pengyouquan);
+        ImageButton pengyouquan = (ImageButton) findViewById(com.diyikeji.homefarm.R.id.pengyouquan);
         pengyouquan.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -1052,7 +1090,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        ImageButton qqhaoyou = (ImageButton) findViewById(R.id.qqhaoyou);
+        ImageButton qqhaoyou = (ImageButton) findViewById(com.diyikeji.homefarm.R.id.qqhaoyou);
         qqhaoyou.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -1084,7 +1122,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        ImageButton qqkongjian = (ImageButton) findViewById(R.id.qqkongjian);
+        ImageButton qqkongjian = (ImageButton) findViewById(com.diyikeji.homefarm.R.id.qqkongjian);
         qqkongjian.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -1294,7 +1332,7 @@ public class MainActivity extends AppCompatActivity
 
             msg.title = "城市农场";
             msg.description = "弟一科技城市农场项目微信分享";
-            Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.logo_144);
+            Bitmap thumb = BitmapFactory.decodeResource(getResources(), com.diyikeji.homefarm.R.drawable.logo_144);
             msg.setThumbImage(thumb);
             SendMessageToWX.Req req = new SendMessageToWX.Req();
             req.transaction = String.valueOf(System.currentTimeMillis());
@@ -1665,13 +1703,16 @@ public class MainActivity extends AppCompatActivity
         {
             //摄像头调用之后
             case 3023:
+                saveCameraImage(data);
                 try
                 {
                     //是否拍照并选取了图片
                     if (resultCode == RESULT_OK)
                     {
-                        file = new File(Environment.getExternalStorageDirectory() + "/homefarm/", String.valueOf(System.currentTimeMillis()) + ".jpg");
+                        file = new File(fileName);
                         mUri = Uri.fromFile(file);
+                        shejiaolayout.setVisibility(View.VISIBLE);
+                        dibulayout.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), "请选择需要分享的社交工具", Toast.LENGTH_SHORT).show();
                     } else
                     {
@@ -1735,34 +1776,34 @@ public class MainActivity extends AppCompatActivity
         Bitmap bitmap;
 
         MenuObject close = new MenuObject();
-        close.setResource(R.drawable.icn_close);
+        close.setResource(com.diyikeji.homefarm.R.drawable.icn_close);
 
         MenuObject send = new MenuObject("直连设备");
-        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.nongye));
+        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), com.diyikeji.homefarm.R.mipmap.wifi2));
         //设置缩放比例
         matrix.postScale(70f / bitmap.getWidth(), 70f / bitmap.getHeight());
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         send.setBitmap(bitmap);
 
         MenuObject like = new MenuObject("我的菜园");
-        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.nongtian));
+        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), com.diyikeji.homefarm.R.mipmap.nongtian));
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         like.setBitmap(bitmap);
 
 
         MenuObject addFr = new MenuObject("辅助设备联网");
-        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.wifi));
+        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), com.diyikeji.homefarm.R.mipmap.wifi));
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         addFr.setBitmap(bitmap);
 
         //图片太小不缩放
         MenuObject addFav = new MenuObject("关于");
-        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.guanyu));
+        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), com.diyikeji.homefarm.R.mipmap.guanyu));
 //        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
         addFav.setBitmap(bitmap);
 
         MenuObject block = new MenuObject("退出登录");
-        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.tuichu));
+        bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(getResources(), com.diyikeji.homefarm.R.mipmap.tuichu));
 //        bitmap = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
         block.setBitmap(bitmap);
 
@@ -1770,8 +1811,8 @@ public class MainActivity extends AppCompatActivity
 //        menuObjects.add(like);
         menuObjects.add(addFr);
         menuObjects.add(addFav);
+        menuObjects.add(send);
         menuObjects.add(block);
-//        menuObjects.add(send);
         return menuObjects;
     }
 
@@ -1864,4 +1905,41 @@ public class MainActivity extends AppCompatActivity
 //        };
 //        xiaotimer.schedule(xiaoshuaxinxunhuan, 0, 5000);
 //    }
+
+    //移除以存在的WIFI
+    private WifiConfiguration IsExsits(String SSID)
+    {
+        List<WifiConfiguration> existingConfigs = udp.wifiManager.getConfiguredNetworks();
+        for (WifiConfiguration existingConfig : existingConfigs)
+        {
+            if (existingConfig.SSID.equals("\""+SSID+"\""))
+            {
+                return existingConfig;
+            }
+        }
+        return null;
+    }
+
+    private void saveCameraImage(Intent data) {
+        Bitmap bmp = (Bitmap) data.getExtras().get("data");// 解析返回的图片成bitmap
+
+        // 保存文件
+        FileOutputStream fos = null;
+        fileName = MainActivity.this.getExternalFilesDir(null).getPath() +"/"+ String.valueOf(System.currentTimeMillis()) + ".jpg";
+
+        try {// 写入SD card
+            fos = new FileOutputStream(fileName);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
 }

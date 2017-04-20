@@ -1,4 +1,4 @@
-package diyikeji.homefarm;
+package com.diyikeji.homefarm;
 
 
 import android.app.ActivityManager;
@@ -43,7 +43,7 @@ public class FloatWindowService extends Service
     public void onCreate()
     {
         super.onCreate();
-        view = LayoutInflater.from(this).inflate(R.layout.window, null);
+        view = LayoutInflater.from(this).inflate(com.diyikeji.homefarm.R.layout.window, null);
 
         floatWindowServicethis = this;
 

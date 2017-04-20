@@ -1,4 +1,4 @@
-package diyikeji.homefarm;
+package com.diyikeji.homefarm;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -42,7 +42,7 @@ import okhttp3.Response;
  * Created by Administrator on 2016/11/21.
  */
 
-public class Caozuojiemian2 extends Activity
+public class Caozuojiemian extends Activity
 {
 
     private Button checkButton1;
@@ -51,12 +51,12 @@ public class Caozuojiemian2 extends Activity
     private Button checkButton4;
     private Button checkButton5;
     private RadioButton shengwen;
+    private CheckBox checkBox1;
+    private CheckBox checkBox2;
+    private CheckBox checkBox3;
+    private CheckBox checkBox4;
+    private CheckBox checkBox5;
     private RadioButton jiangwen;
-    private RadioButton checkBox1;
-    private RadioButton checkBox2;
-    private RadioButton checkBox3;
-    private RadioButton checkBox4;
-    private RadioButton checkBox5;
     private EditText time;
     private int buttonid;
 
@@ -155,39 +155,39 @@ public class Caozuojiemian2 extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.caozuojiemian2);
+        setContentView(com.diyikeji.homefarm.R.layout.caozuojiemian);
 
-        title2_text = (TextView) findViewById(R.id.title2_text);
-        title2_image = (ImageView) findViewById(R.id.tiele2_image);
+        title2_text = (TextView) findViewById(com.diyikeji.homefarm.R.id.title2_text);
+        title2_image = (ImageView) findViewById(com.diyikeji.homefarm.R.id.tiele2_image);
 
         Intent intent = getIntent();
         title2_text.setTextColor(intent.getIntExtra("color", 0xFF03BB9C));
         title2_text.setText(intent.getStringExtra("title"));
-        title2_image.setImageDrawable(getResources().getDrawable(intent.getIntExtra("image", R.mipmap.shishui)));
+        title2_image.setImageDrawable(getResources().getDrawable(intent.getIntExtra("image", com.diyikeji.homefarm.R.mipmap.shishui)));
         buttonid = intent.getIntExtra("buttonid", 0);
         res = intent.getIntExtra("res", 0);
         respro = intent.getIntExtra("respro", 0);
 
-        time = (EditText) findViewById(R.id.time);
-        diyiceng = (LinearLayout) findViewById(R.id.diyiceng);
-        dierceng = (LinearLayout) findViewById(R.id.dierceng);
-        disanceng = (LinearLayout) findViewById(R.id.disanceng);
-        douyaji = (LinearLayout) findViewById(R.id.douyaji);
-        moguxiang = (LinearLayout) findViewById(R.id.moguxiang);
-        wenduradio = (RadioGroup) findViewById(R.id.wendu);
-        checkButton1 = (Button) findViewById(R.id.checkButton1);
-        checkButton2 = (Button) findViewById(R.id.checkButton2);
-        checkButton3 = (Button) findViewById(R.id.checkButton3);
-        checkButton4 = (Button) findViewById(R.id.checkButton4);
-        checkButton5 = (Button) findViewById(R.id.checkButton5);
-        shengwen = (RadioButton) findViewById(R.id.shengwen);
+        time = (EditText) findViewById(com.diyikeji.homefarm.R.id.time);
+        diyiceng = (LinearLayout) findViewById(com.diyikeji.homefarm.R.id.diyiceng);
+        dierceng = (LinearLayout) findViewById(com.diyikeji.homefarm.R.id.dierceng);
+        disanceng = (LinearLayout) findViewById(com.diyikeji.homefarm.R.id.disanceng);
+        douyaji = (LinearLayout) findViewById(com.diyikeji.homefarm.R.id.douyaji);
+        moguxiang = (LinearLayout) findViewById(com.diyikeji.homefarm.R.id.moguxiang);
+        wenduradio = (RadioGroup) findViewById(com.diyikeji.homefarm.R.id.wendu);
+        checkButton1 = (Button) findViewById(com.diyikeji.homefarm.R.id.checkButton1);
+        checkButton2 = (Button) findViewById(com.diyikeji.homefarm.R.id.checkButton2);
+        checkButton3 = (Button) findViewById(com.diyikeji.homefarm.R.id.checkButton3);
+        checkButton4 = (Button) findViewById(com.diyikeji.homefarm.R.id.checkButton4);
+        checkButton5 = (Button) findViewById(com.diyikeji.homefarm.R.id.checkButton5);
+        shengwen = (RadioButton) findViewById(com.diyikeji.homefarm.R.id.shengwen);
 
-        checkBox1 = (RadioButton) findViewById(R.id.checkBox1);
-        checkBox2 = (RadioButton) findViewById(R.id.checkBox2);
-        checkBox3 = (RadioButton) findViewById(R.id.checkBox3);
-        checkBox4 = (RadioButton) findViewById(R.id.checkBox4);
-        checkBox5 = (RadioButton) findViewById(R.id.checkBox5);
-        jiangwen = (RadioButton) findViewById(R.id.jiangwen);
+        checkBox1 = (CheckBox) findViewById(com.diyikeji.homefarm.R.id.checkBox1);
+        checkBox2 = (CheckBox) findViewById(com.diyikeji.homefarm.R.id.checkBox2);
+        checkBox3 = (CheckBox) findViewById(com.diyikeji.homefarm.R.id.checkBox3);
+        checkBox4 = (CheckBox) findViewById(com.diyikeji.homefarm.R.id.checkBox4);
+        checkBox5 = (CheckBox) findViewById(com.diyikeji.homefarm.R.id.checkBox5);
+        jiangwen = (RadioButton) findViewById(com.diyikeji.homefarm.R.id.jiangwen);
         jiangwen.setChecked(true);
 
         switch (title2_text.getText().toString())
@@ -240,9 +240,6 @@ public class Caozuojiemian2 extends Activity
                 } else
                 {
                     checkBox1.setChecked(true);
-                    checkBox2.setChecked(false);
-                    checkBox3.setChecked(false);
-                    checkBox4.setChecked(false);
                 }
             }
         });
@@ -258,9 +255,6 @@ public class Caozuojiemian2 extends Activity
                 } else
                 {
                     checkBox2.setChecked(true);
-                    checkBox1.setChecked(false);
-                    checkBox3.setChecked(false);
-                    checkBox4.setChecked(false);
                 }
             }
         });
@@ -276,9 +270,6 @@ public class Caozuojiemian2 extends Activity
                 } else
                 {
                     checkBox3.setChecked(true);
-                    checkBox2.setChecked(false);
-                    checkBox1.setChecked(false);
-                    checkBox4.setChecked(false);
                 }
             }
         });
@@ -294,9 +285,6 @@ public class Caozuojiemian2 extends Activity
                 } else
                 {
                     checkBox4.setChecked(true);
-                    checkBox2.setChecked(false);
-                    checkBox3.setChecked(false);
-                    checkBox1.setChecked(false);
                 }
             }
         });
@@ -358,7 +346,7 @@ public class Caozuojiemian2 extends Activity
 //            }
 //        });
 
-        Button kaishi = (Button) findViewById(R.id.kaishi);
+        Button kaishi = (Button) findViewById(com.diyikeji.homefarm.R.id.kaishi);
         kaishi.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -382,7 +370,7 @@ public class Caozuojiemian2 extends Activity
             }
         });
 
-        Button tingzhi = (Button) findViewById(R.id.tingzhi);
+        Button tingzhi = (Button) findViewById(com.diyikeji.homefarm.R.id.tingzhi);
         tingzhi.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -403,7 +391,7 @@ public class Caozuojiemian2 extends Activity
             }
         });
 
-        Button fanhui = (Button) findViewById(R.id.fanhui);
+        Button fanhui = (Button) findViewById(com.diyikeji.homefarm.R.id.fanhui);
         fanhui.setOnClickListener(new View.OnClickListener()
         {
             @Override

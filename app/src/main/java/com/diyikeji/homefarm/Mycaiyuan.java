@@ -1,4 +1,4 @@
-package diyikeji.homefarm;
+package com.diyikeji.homefarm;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -90,7 +90,7 @@ public class Mycaiyuan extends Fragment
 
         if (view == null)
         {
-            view = inflater.inflate(R.layout.mycaiyuan, null);
+            view = inflater.inflate(com.diyikeji.homefarm.R.layout.mycaiyuan, null);
         }
         ViewGroup parent = (ViewGroup) view.getParent();
         if (parent != null)
@@ -98,13 +98,13 @@ public class Mycaiyuan extends Fragment
             parent.removeView(view);
         }
 
-        shanchulayout = (LinearLayout) view.findViewById(R.id.shanchulayout);
-        daorulayout = (LinearLayout) view.findViewById(R.id.daorualayout);
+        shanchulayout = (LinearLayout) view.findViewById(com.diyikeji.homefarm.R.id.shanchulayout);
+        daorulayout = (LinearLayout) view.findViewById(com.diyikeji.homefarm.R.id.daorualayout);
 
-        zhixingzhuangtai = (TextView) view.findViewById(R.id.zhixingzhuangtai);
-        mingcheng = (TextView) view.findViewById(R.id.mingcheng);
-        shouhuoshijian = (TextView) view.findViewById(R.id.shouhuoshijian);
-        jianjie = (TextView) view.findViewById(R.id.jianjie);
+        zhixingzhuangtai = (TextView) view.findViewById(com.diyikeji.homefarm.R.id.zhixingzhuangtai);
+        mingcheng = (TextView) view.findViewById(com.diyikeji.homefarm.R.id.mingcheng);
+        shouhuoshijian = (TextView) view.findViewById(com.diyikeji.homefarm.R.id.shouhuoshijian);
+        jianjie = (TextView) view.findViewById(com.diyikeji.homefarm.R.id.jianjie);
 
         //第0层方案导入
         new Thread()
@@ -149,7 +149,7 @@ public class Mycaiyuan extends Fragment
         }.start();
 
 
-        Button daoru = (Button) view.findViewById(R.id.daoru);
+        Button daoru = (Button) view.findViewById(com.diyikeji.homefarm.R.id.daoru);
         daoru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -159,7 +159,7 @@ public class Mycaiyuan extends Fragment
             }
         });
 
-        quedingdaoru = (Button) view.findViewById(R.id.quedingdaoru);
+        quedingdaoru = (Button) view.findViewById(com.diyikeji.homefarm.R.id.quedingdaoru);
         quedingdaoru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -220,7 +220,7 @@ public class Mycaiyuan extends Fragment
             }
         });
 
-        shanchufangan = (Button) view.findViewById(R.id.shanchufangan);
+        shanchufangan = (Button) view.findViewById(com.diyikeji.homefarm.R.id.shanchufangan);
         shanchufangan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

@@ -1,4 +1,4 @@
-package diyikeji.homefarm;
+package com.diyikeji.homefarm;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,19 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import bean.Cljson;
-import bean.MD5;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -185,14 +177,14 @@ public class FloatView extends LinearLayout
             final boolean tongxingmod = MainActivity.mainActivitythis.udp.tongxingmod;
             //获取浮动窗口视图所在布局
             View view = LayoutInflater.from(context).inflate(
-                    R.layout.xuanfuchuang, null);
+                    com.diyikeji.homefarm.R.layout.xuanfuchuang, null);
             windowManager = FloatWindowService.floatWindowServicethis.windowManager;
             // 此windowManagerParams变量为获取的全局变量，用以保存悬浮窗口的属性
             windowManagerParams = FloatWindowService.floatWindowServicethis.params;
             this.addView(view);
 
-            wendu_shuju = (TextView) view.findViewById(R.id.wendu_shuju);
-            shidu_shuju = (TextView) view.findViewById(R.id.shidu_shuju);
+            wendu_shuju = (TextView) view.findViewById(com.diyikeji.homefarm.R.id.wendu_shuju);
+            shidu_shuju = (TextView) view.findViewById(com.diyikeji.homefarm.R.id.shidu_shuju);
 
 //            String sqlstr = "SELECT d_name,d_lastvalue FROM device where d_type = 'cl'  and d_status = 1 and EQID = '" + FloatWindowService.floatWindowServicethis.EQID + "' and d_name like 'turangshidu%' or d_name like 'turangwendu%'";
 //            requestBody = new FormBody.Builder()

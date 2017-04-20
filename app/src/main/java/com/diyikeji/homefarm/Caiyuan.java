@@ -1,4 +1,4 @@
-package diyikeji.homefarm;
+package com.diyikeji.homefarm;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -95,12 +95,12 @@ public class Caiyuan extends FragmentActivity
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.caiyuan);
+        setContentView(com.diyikeji.homefarm.R.layout.caiyuan);
         caiyuanthis = this;
 
-        pager = (ViewPager) findViewById(R.id.viewpager1);
-        tabStrip = (PagerTabStrip) findViewById(R.id.tabstrip1);
-        colorAnimationView = (ColorAnimationView) findViewById(R.id.ColorAnimationView);
+        pager = (ViewPager) findViewById(com.diyikeji.homefarm.R.id.viewpager1);
+        tabStrip = (PagerTabStrip) findViewById(com.diyikeji.homefarm.R.id.tabstrip1);
+        colorAnimationView = (ColorAnimationView) findViewById(com.diyikeji.homefarm.R.id.ColorAnimationView);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)

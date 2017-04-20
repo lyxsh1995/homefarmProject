@@ -1,4 +1,4 @@
-package diyikeji.homefarm;
+package com.diyikeji.homefarm;
 
 import android.Manifest;
 import android.app.Activity;
@@ -16,7 +16,6 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
@@ -106,7 +105,7 @@ public class Login extends Activity
                             {
                                 case Dialog.BUTTON_POSITIVE:
                                     Toast.makeText(getApplicationContext(), "开始下载", Toast.LENGTH_SHORT).show();
-                                    progressBar = (ProgressBar) findViewById(R.id.progressBar);
+                                    progressBar = (ProgressBar) findViewById(com.diyikeji.homefarm.R.id.progressBar);
                                     progressBar.setVisibility(View.VISIBLE);
                                     xizai();
                                     break;
@@ -166,8 +165,7 @@ public class Login extends Activity
                     Intent intent = new Intent();
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.setAction(android.content.Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/homefarm/", "apk.apk")),
-                                          "application/vnd.android.package-archive");
+                    intent.setDataAndType(Uri.fromFile(fileapk),"application/vnd.android.package-archive");
                     startActivity(intent);
                     break;
                 case 3:
@@ -197,8 +195,12 @@ public class Login extends Activity
                             switch (which)
                             {
                                 case Dialog.BUTTON_POSITIVE:
+                                    if (Build.VERSION.SDK_INT >= 23)
+                                    {
+                                        ActivityCompat.requestPermissions(Login.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+                                    }
                                     Toast.makeText(getApplicationContext(), "开始下载设备更新文件", Toast.LENGTH_SHORT).show();
-                                    progressBar = (ProgressBar) findViewById(R.id.progressBar);
+                                    progressBar = (ProgressBar) findViewById(com.diyikeji.homefarm.R.id.progressBar);
                                     progressBar.setVisibility(View.VISIBLE);
                                     shebeixizai();
                                     break;
@@ -513,13 +515,14 @@ public class Login extends Activity
             super.handleMessage(msg);
         }
     };
+    private File fileapk;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(com.diyikeji.homefarm.R.layout.login);
         loginthis = this;
 
         udp = new UDP(getApplicationContext());
@@ -545,9 +548,9 @@ public class Login extends Activity
         }
 
         //做动画的layout容器
-        login_layout = (LinearLayout) findViewById(R.id.login_layout);
+        login_layout = (LinearLayout) findViewById(com.diyikeji.homefarm.R.id.login_layout);
         //临时登录按钮,以后删除!!!!!!!!!!!!!!!!!!!!
-        Button denglu = (Button) findViewById(R.id.denglu);
+        Button denglu = (Button) findViewById(com.diyikeji.homefarm.R.id.denglu);
         denglu.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -562,7 +565,7 @@ public class Login extends Activity
             }
         });
 
-        Button login_button = (Button) findViewById(R.id.login_button);
+        Button login_button = (Button) findViewById(com.diyikeji.homefarm.R.id.login_button);
         login_button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -581,7 +584,7 @@ public class Login extends Activity
             }
         });
 
-        Button wifi_button = (Button) findViewById(R.id.wifi_button);
+        Button wifi_button = (Button) findViewById(com.diyikeji.homefarm.R.id.wifi_button);
         wifi_button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -624,7 +627,7 @@ public class Login extends Activity
 //        AlphaAnimation myAnimation_Alpha;
 //        myAnimation_Alpha=new AlphaAnimation(0.1f, 1.0f);
 //        myAnimation_Alpha.setDuration(5000);
-        Animation myAnimation = AnimationUtils.loadAnimation(this, R.anim.alpha);
+        Animation myAnimation = AnimationUtils.loadAnimation(this, com.diyikeji.homefarm.R.anim.alpha);
         login_layout.setAnimation(myAnimation);
     }
 
@@ -724,20 +727,20 @@ public class Login extends Activity
                 int len = 0;
                 FileOutputStream fos = null;
 
-                if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
-                {
-                    sdPath = Environment.getExternalStorageDirectory() + "/homefarm/";
-                } else
-                {
-                    sdPath = getFilesDir().getPath() + "/homefarm/";
-                }
+//                if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+//                {
+//                    sdPath = Environment.getExternalStorageDirectory() + "/homefarm/";
+//                } else
+//                {
+                    sdPath = Login.this.getExternalFilesDir(null).getPath();
+//                }
 
                 try
                 {
                     is = response.body().byteStream();
                     long total = response.body().contentLength();
-                    File file = new File(sdPath, "apk.apk");
-                    fos = new FileOutputStream(file);
+                    fileapk = new File(sdPath, "apk.apk");
+                    fos = new FileOutputStream(fileapk);
                     long sum = 0;
                     while ((len = is.read(buf)) != -1)
                     {
@@ -811,13 +814,8 @@ public class Login extends Activity
                     int len = 0;
                     FileOutputStream fos = null;
 
-                    if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
-                    {
-                        sdPath = Environment.getExternalStorageDirectory() + "/homefarm/";
-                    } else
-                    {
-                        sdPath = getFilesDir().getPath() + "/homefarm/";
-                    }
+
+                    sdPath = Login.this.getExternalFilesDir(null).getPath();
 
                     try
                     {

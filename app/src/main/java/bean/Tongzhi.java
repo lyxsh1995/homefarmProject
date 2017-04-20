@@ -10,7 +10,7 @@ import android.support.v7.app.NotificationCompat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import diyikeji.homefarm.R;
+import com.diyikeji.homefarm.R;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 

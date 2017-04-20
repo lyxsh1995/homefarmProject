@@ -65,7 +65,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import diyikeji.homefarm.R;
+import com.diyikeji.homefarm.R;
 
 
 public class MainActivity extends Activity {

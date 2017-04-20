@@ -1,4 +1,4 @@
-package diyikeji.homefarm;
+package com.diyikeji.homefarm;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,7 +11,6 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,16 +84,16 @@ public class About extends Activity
     {
         aboutthis = this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.guanyu);
+        setContentView(com.diyikeji.homefarm.R.layout.guanyu);
 
-        ImageButton gengxing = (ImageButton) findViewById(R.id.gengxing);
+        ImageButton gengxing = (ImageButton) findViewById(com.diyikeji.homefarm.R.id.gengxing);
 
-        TextView text1 = (TextView)findViewById(R.id.text1);
-        final TextView text2 = (TextView)findViewById(R.id.text2);
-        TextView text3 = (TextView)findViewById(R.id.text3);
-        final TextView text4 = (TextView)findViewById(R.id.text4);
-        TextView text5 = (TextView)findViewById(R.id.text5);
-        final TextView text6 = (TextView)findViewById(R.id.text6);
+        TextView text1 = (TextView)findViewById(com.diyikeji.homefarm.R.id.text1);
+        final TextView text2 = (TextView)findViewById(com.diyikeji.homefarm.R.id.text2);
+        TextView text3 = (TextView)findViewById(com.diyikeji.homefarm.R.id.text3);
+        final TextView text4 = (TextView)findViewById(com.diyikeji.homefarm.R.id.text4);
+        TextView text5 = (TextView)findViewById(com.diyikeji.homefarm.R.id.text5);
+        final TextView text6 = (TextView)findViewById(com.diyikeji.homefarm.R.id.text6);
 
 
         gengxing.setOnClickListener(new View.OnClickListener() {

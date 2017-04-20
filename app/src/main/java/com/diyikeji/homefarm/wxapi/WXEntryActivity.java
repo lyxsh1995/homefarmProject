@@ -1,11 +1,11 @@
-package diyikeji.homefarm.wxapi;
+package com.diyikeji.homefarm.wxapi;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import diyikeji.homefarm.MainActivity;
+import com.diyikeji.homefarm.MainActivity;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;

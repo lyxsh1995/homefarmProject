@@ -1,4 +1,4 @@
-package diyikeji.homefarm;
+package com.diyikeji.homefarm;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

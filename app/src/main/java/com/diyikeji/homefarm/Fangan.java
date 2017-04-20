@@ -1,4 +1,4 @@
-package diyikeji.homefarm;
+package com.diyikeji.homefarm;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -72,10 +72,10 @@ public class Fangan extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fangan);
+        setContentView(com.diyikeji.homefarm.R.layout.fangan);
         fanganthis = this;
 
-        fangan_list = (ListView) findViewById(R.id.fangan_list);
+        fangan_list = (ListView) findViewById(com.diyikeji.homefarm.R.id.fangan_list);
         fangan_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -87,7 +87,7 @@ public class Fangan extends Activity
         });
 
         //确定按钮按下后
-        Button daoru = (Button) findViewById(R.id.daoru_button);
+        Button daoru = (Button) findViewById(com.diyikeji.homefarm.R.id.daoru_button);
         daoru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

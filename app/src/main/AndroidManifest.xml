@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="diyikeji.homefarm">
+    package="com.diyikeji.homefarm">
 
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
     <application
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/ImageTranslucentTheme">
 
-        <activity android:name="diyikeji.homefarm.Login">
+        <activity android:name="com.diyikeji.homefarm.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,23 +19,23 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="diyikeji.homefarm.MainActivity"/>
-        <activity android:name="diyikeji.homefarm.Caozuojiemian"/>
-        <activity android:name="diyikeji.homefarm.Caozuojiemian2"/>
-        <activity android:name="diyikeji.homefarm.Zhuangtai"/>
-        <activity android:name="diyikeji.homefarm.Caiyuan"/>
-        <activity android:name="diyikeji.homefarm.Fangan"/>
-        <activity android:name="diyikeji.homefarm.Zhilian"/>
-        <activity android:name="diyikeji.homefarm.About"/>
+        <activity android:name="com.diyikeji.homefarm.MainActivity"/>
+        <activity android:name="com.diyikeji.homefarm.Caozuojiemian"/>
+        <activity android:name="com.diyikeji.homefarm.Caozuojiemian2"/>
+        <activity android:name="com.diyikeji.homefarm.Zhuangtai"/>
+        <activity android:name="com.diyikeji.homefarm.Caiyuan"/>
+        <activity android:name="com.diyikeji.homefarm.Fangan"/>
+        <activity android:name="com.diyikeji.homefarm.Zhilian"/>
+        <activity android:name="com.diyikeji.homefarm.About"/>
 
         //悬浮窗
         <service
-            android:name="diyikeji.homefarm.FloatWindowService"
+            android:name="com.diyikeji.homefarm.FloatWindowService"
             android:enabled="true" >
         </service>
         //后台
         <service
-            android:name="diyikeji.homefarm.HoutaiService"
+            android:name="com.diyikeji.homefarm.HoutaiService"
             android:enabled="true" >
         </service>
 
@@ -84,7 +84,7 @@
 
         //微信
         <activity
-            android:name="diyikeji.homefarm.wxapi.WXEntryActivity"
+            android:name="com.diyikeji.homefarm.wxapi.WXEntryActivity"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent" >
         </activity>
@@ -124,7 +124,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     //悬浮窗
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />

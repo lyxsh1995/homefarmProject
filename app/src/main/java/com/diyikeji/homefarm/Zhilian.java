@@ -1,4 +1,4 @@
-package diyikeji.homefarm;
+package com.diyikeji.homefarm;
 
 import android.app.Activity;
 import android.content.Context;
@@ -51,7 +51,7 @@ public class Zhilian extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.zhilian);
+        setContentView(com.diyikeji.homefarm.R.layout.zhilian);
 
         //读取本地IP
         WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -106,7 +106,7 @@ public class Zhilian extends Activity
             e.printStackTrace();
         }
 
-        Button fasong = (Button) findViewById(R.id.fasong);
+        Button fasong = (Button) findViewById(com.diyikeji.homefarm.R.id.fasong);
         fasong.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -146,7 +146,7 @@ public class Zhilian extends Activity
             }
         });
 
-        Button fasong2 = (Button) findViewById(R.id.fasong2);
+        Button fasong2 = (Button) findViewById(com.diyikeji.homefarm.R.id.fasong2);
         fasong2.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -186,7 +186,7 @@ public class Zhilian extends Activity
             }
         });
 
-        Button fasong3 = (Button) findViewById(R.id.fasong3);
+        Button fasong3 = (Button) findViewById(com.diyikeji.homefarm.R.id.fasong3);
         fasong3.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -226,8 +226,8 @@ public class Zhilian extends Activity
             }
         });
 
-        final EditText fasongneirong = (EditText) findViewById(R.id.fasongneirong);
-        Button fasong4 = (Button) findViewById(R.id.fasong4);
+        final EditText fasongneirong = (EditText) findViewById(com.diyikeji.homefarm.R.id.fasongneirong);
+        Button fasong4 = (Button) findViewById(com.diyikeji.homefarm.R.id.fasong4);
         fasong4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -266,7 +266,7 @@ public class Zhilian extends Activity
             }
         });
 
-        Button fasong5 = (Button) findViewById(R.id.fasong5);
+        Button fasong5 = (Button) findViewById(com.diyikeji.homefarm.R.id.fasong5);
         fasong5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
