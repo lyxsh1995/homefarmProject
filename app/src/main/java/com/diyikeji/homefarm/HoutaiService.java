@@ -46,7 +46,7 @@ public class HoutaiService extends Service
     RequestBody requestBody;
 
     String EQID;
-    String url = "http://192.168.0.104:80/app/";
+    String url = "http://iotserver.csnc.cc/app/";
 
     Sqlite sqlite;
     SQLiteDatabase db;

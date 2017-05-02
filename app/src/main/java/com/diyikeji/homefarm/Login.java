@@ -55,7 +55,7 @@ public class Login extends Activity
     //APP版本号
     int banben = 1;
     //服务器地址
-    public String url = "http://192.168.0.104:80/app/";
+    public String url = "http://iotserver.csnc.cc/app/";
 
     //服务器设备版本
     int edatabanben = 0;
